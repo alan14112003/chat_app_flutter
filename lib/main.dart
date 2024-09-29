@@ -1,22 +1,25 @@
+import 'package:chat_app_flutter/app.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/init_dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
-}
+  // load file .env
+  await dotenv.load(fileName: '.env');
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // cấu hình cây phụ thuộc
+  await initDependencies();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (_) => serviceLocator<MessageBloc>(),
       ),
-    );
-  }
+    ],
+    child: const App(),
+  ));
 }
