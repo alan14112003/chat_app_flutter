@@ -4,4 +4,9 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class MessageRepository {
   Future<Either<Failure, List<Message>>> getAllMessages(String chatId);
+  Future<Either<Failure, Message>> sendTextMessages(
+    String chatId, {
+    required String content,
+    int? replyId,
+  });
 }

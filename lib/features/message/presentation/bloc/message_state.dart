@@ -16,8 +16,6 @@ final class MessageFailure extends MessageState {
   const MessageFailure(this.error);
 }
 
-final class MessageUploadSuccess extends MessageState {}
-
 final class MessagesDisplaySuccess extends MessageState {
   final List<Message> messages;
   const MessagesDisplaySuccess(this.messages);

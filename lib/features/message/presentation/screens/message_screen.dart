@@ -62,6 +62,18 @@ class _MessageScreenState extends State<MessageScreen> {
           return const SizedBox();
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<MessageBloc>().add(
+                SendMessageEvent(
+                  chatId: widget.chatId,
+                  content: 'hello 456',
+                ),
+              );
+        },
+        tooltip: 'Nhắn tin',
+        child: const Icon(Icons.message),
+      ),
     );
   }
 }
