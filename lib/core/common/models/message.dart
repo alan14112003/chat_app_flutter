@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/reaction.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 class Message extends Equatable {
@@ -12,10 +12,10 @@ class Message extends Equatable {
   final bool? isRecall;
   final bool? isPinned;
   final String? createdAt;
-  final UserInfo? sender;
+  final User? sender;
   final Message? reply;
   final List<Reaction>? reactions;
-  final List<UserInfo>? seens;
+  final List<User>? seens;
 
   const Message({
     this.id,
@@ -46,10 +46,10 @@ class Message extends Equatable {
     bool? isPinned,
     String? createdAt,
     String? updatedAt,
-    UserInfo? sender,
+    User? sender,
     Message? reply,
     List<Reaction>? reactions,
-    List<UserInfo>? seens,
+    List<User>? seens,
   }) {
     return Message(
       id: id ?? this.id,
@@ -102,7 +102,7 @@ class Message extends Equatable {
       createdAt: json['createdAt'] == null ? null : json['createdAt'] as String,
       sender: json['sender'] == null
           ? null
-          : UserInfo.fromJson(json['sender'] as Map<String, Object?>),
+          : User.fromJson(json['sender'] as Map<String, Object?>),
       reply: json['reply'] is Map<String, dynamic>
           ? Message.fromJson(json['reply'] as Map<String, Object?>)
           : null,
@@ -115,8 +115,7 @@ class Message extends Equatable {
       seens: json['seens'] == null
           ? null
           : (json['seens'] as List)
-              .map<UserInfo>(
-                  (data) => UserInfo.fromJson(data as Map<String, Object?>))
+              .map<User>((data) => User.fromJson(data as Map<String, Object?>))
               .toList(),
     );
   }

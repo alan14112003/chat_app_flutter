@@ -1,12 +1,12 @@
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 class Friend extends Equatable {
   final int? status;
   final String? userFrom;
   final String? userTo;
-  final UserInfo? from;
-  final UserInfo? to;
+  final User? from;
+  final User? to;
 
   const Friend({
     this.status,
@@ -20,8 +20,8 @@ class Friend extends Equatable {
     int? status,
     String? userFrom,
     String? userTo,
-    UserInfo? from,
-    UserInfo? to,
+    User? from,
+    User? to,
   }) {
     return Friend(
       status: status ?? this.status,
@@ -49,10 +49,10 @@ class Friend extends Equatable {
       userTo: json['userTo'] == null ? null : json['userTo'] as String,
       from: json['from'] == null
           ? null
-          : UserInfo.fromJson(json['from'] as Map<String, Object?>),
+          : User.fromJson(json['from'] as Map<String, Object?>),
       to: json['to'] == null
           ? null
-          : UserInfo.fromJson(json['to'] as Map<String, Object?>),
+          : User.fromJson(json['to'] as Map<String, Object?>),
     );
   }
 

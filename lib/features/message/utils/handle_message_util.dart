@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/model_bottom_sheet.dart';
@@ -34,7 +34,7 @@ class HandleMessageUtil {
     BuildContext context, {
     required Message message,
   }) {
-    final auth = UserInfo(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
+    final auth = User(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
     return message.sender?.id == auth.id;
   }
 

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class UserInfo extends Equatable {
+class User extends Equatable {
   final String? fullName;
   final String? id;
   final String? firstName;
@@ -8,7 +8,7 @@ class UserInfo extends Equatable {
   final String? avatar;
   final String? email;
 
-  const UserInfo({
+  const User({
     this.fullName,
     this.id,
     this.firstName,
@@ -17,7 +17,7 @@ class UserInfo extends Equatable {
     this.email,
   });
 
-  UserInfo copyWith({
+  User copyWith({
     String? fullName,
     String? id,
     String? firstName,
@@ -25,7 +25,7 @@ class UserInfo extends Equatable {
     String? avatar,
     String? email,
   }) {
-    return UserInfo(
+    return User(
       fullName: fullName ?? this.fullName,
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
@@ -46,8 +46,8 @@ class UserInfo extends Equatable {
     };
   }
 
-  static UserInfo fromJson(Map<String, Object?> json) {
-    return UserInfo(
+  static User fromJson(Map<String, Object?> json) {
+    return User(
       fullName: json['fullName'] == null ? null : json['fullName'] as String,
       id: json['id'] == null ? null : json['id'] as String,
       firstName: json['firstName'] == null ? null : json['firstName'] as String,

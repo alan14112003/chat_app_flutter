@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 class Chat extends Equatable {
@@ -7,8 +7,8 @@ class Chat extends Equatable {
   final String? groupName;
   final bool? isGroup;
   final Message? lastMsg;
-  final List<UserInfo>? members;
-  final UserInfo? adm;
+  final List<User>? members;
+  final User? adm;
 
   const Chat({
     this.id,
@@ -24,8 +24,8 @@ class Chat extends Equatable {
     String? groupName,
     bool? isGroup,
     Message? lastMsg,
-    List<UserInfo>? members,
-    UserInfo? adm,
+    List<User>? members,
+    User? adm,
   }) {
     return Chat(
       id: id ?? this.id,
@@ -60,8 +60,8 @@ class Chat extends Equatable {
         members: json['members'] == null
             ? null
             : (json['members'] as List)
-                .map<UserInfo>(
-                  (data) => UserInfo.fromJson(data as Map<String, Object?>),
+                .map<User>(
+                  (data) => User.fromJson(data as Map<String, Object?>),
                 )
                 .toList(),
         adm: json['adm'] as dynamic);

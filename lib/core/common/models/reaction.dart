@@ -1,12 +1,12 @@
 import 'package:chat_app_flutter/core/common/models/emoji.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 class Reaction extends Equatable {
   final String? userId;
   final int? messageId;
   final int? emojiId;
-  final UserInfo? sender;
+  final User? sender;
   final Emoji? emoji;
 
   const Reaction({
@@ -21,7 +21,7 @@ class Reaction extends Equatable {
     String? userId,
     int? messageId,
     int? emojiId,
-    UserInfo? sender,
+    User? sender,
     Emoji? emoji,
   }) {
     return Reaction(
@@ -50,7 +50,7 @@ class Reaction extends Equatable {
       emojiId: json['emojiId'] == null ? null : json['emojiId'] as int,
       sender: json['sender'] == null
           ? null
-          : UserInfo.fromJson(json['sender'] as Map<String, Object?>),
+          : User.fromJson(json['sender'] as Map<String, Object?>),
       emoji: json['emoji'] == null
           ? null
           : Emoji.fromJson(json['emoji'] as Map<String, Object?>),
