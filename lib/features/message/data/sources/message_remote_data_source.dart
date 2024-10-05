@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/features/message/data/sources/send_message_body.dart';
 import 'package:dio/dio.dart';
 
 class MessageRemoteDataSource {
@@ -18,24 +19,20 @@ class MessageRemoteDataSource {
         .toList();
   }
 
+  Future<Message> getMessage(int messageId) async {
+    final Response<dynamic> message = await _dio.get('/messages/$messageId');
+
+    // trả về message sau khi được map
+    return Message.fromJson(message.data);
+  }
+
   Future<Message> sendMessage(
-    String chatId, {
-    required int type,
-    String? text,
-    String? file,
-    String? image,
-    int? replyId,
-  }) async {
+    String chatId,
+    SendMessageBody sendMessageBody,
+  ) async {
     final Response<dynamic> message = await _dio.post(
       '/chats/$chatId/messages',
-      data: {
-        'chatId': chatId,
-        'type': type,
-        'text': text,
-        'file': file,
-        'image': image,
-        'replyId': replyId,
-      },
+      data: sendMessageBody.toJson(),
     );
 
     // trả về Message đã map từ response

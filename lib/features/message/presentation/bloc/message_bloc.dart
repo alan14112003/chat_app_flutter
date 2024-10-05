@@ -19,9 +19,6 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   })  : _getAllMessages = getAllMessages,
         _sendTextMessage = sendTextMessage,
         super(MessageInitial()) {
-    on<MessageEvent>(
-      (event, emit) => emit(MessageLoading()),
-    );
     on<FetchAllMessagesEvent>(_onFetchAllMessages);
     on<SendMessageEvent>(_onSendMessage);
   }
@@ -30,7 +27,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     FetchAllMessagesEvent event,
     Emitter<MessageState> emit,
   ) async {
-    final res = await _getAllMessages.call(event.chatId);
+    emit(MessageLoading());
+
+    final res = await _getAllMessages.call(
+      GetAllMessagesParams(chatId: event.chatId),
+    );
 
     res.fold(
       (l) => emit(MessageFailure(l.message)),
@@ -52,9 +53,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
     res.fold(
       (error) => emit(MessageFailure(error.message)),
-      (message) {
-        add(FetchAllMessagesEvent(chatId: event.chatId));
-      },
+      (messages) => emit(MessagesDisplaySuccess(messages)),
     );
   }
 }

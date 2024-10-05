@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/core/utils/http.dart';
 import 'package:chat_app_flutter/features/message/data/repositories/message_repository_impl.dart';
+import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_remote_data_source.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
@@ -18,6 +19,9 @@ Future<void> initDependencies() async {
   _initMessage();
 
   // core project
+  // Shared Preferences
+  serviceLocator.registerLazySingleton(() => preferences);
+
   // http
   serviceLocator.registerLazySingleton(
     () => Http(preferences: preferences).dio,
@@ -27,6 +31,11 @@ Future<void> initDependencies() async {
 void _initMessage() {
   // data source
   serviceLocator
+    ..registerFactory<MessageLocalDataSource>(
+      () => MessageLocalDataSource(
+        preferences: serviceLocator(),
+      ),
+    )
     ..registerFactory<MessageRemoteDataSource>(
       () => MessageRemoteDataSource(
         dio: serviceLocator(),
@@ -36,6 +45,7 @@ void _initMessage() {
     // repository
     ..registerFactory<MessageRepository>(
       () => MessageRepositoryImpl(
+        messageLocalDataSource: serviceLocator(),
         messageRemoteDataSource: serviceLocator(),
       ),
     )

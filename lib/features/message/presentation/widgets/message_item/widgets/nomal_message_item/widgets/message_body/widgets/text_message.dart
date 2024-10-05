@@ -1,7 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_body.dart';
-import 'package:chat_app_flutter/features/message/utils/handle_message_item_util.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 
 class TextMessage extends StatelessWidget {

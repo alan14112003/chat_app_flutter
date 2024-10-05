@@ -1,12 +1,16 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/error/failures.dart';
-import 'package:fpdart/fpdart.dart';
 
 abstract interface class MessageRepository {
-  Future<Either<Failure, List<Message>>> getAllMessages(String chatId);
-  Future<Either<Failure, Message>> sendTextMessages(
+  Future<List<Message>> getAllMessages(String chatId);
+
+  Future<Message> getMessage(int messageId);
+
+  Future<Message> sendTextMessages(
     String chatId, {
     required String content,
     int? replyId,
   });
+
+  List<Message> getLocalMessages(String chatId);
+  Future<bool> setLocalMessages(String chatId, List<Message> messages);
 }

@@ -6,28 +6,26 @@ import 'package:chat_app_flutter/features/message/domain/repositories/message_re
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetAllMessagesParams {
-  final String chatId;
+class GetMessageParams {
+  final int messageId;
 
-  GetAllMessagesParams({
-    required this.chatId,
+  GetMessageParams({
+    required this.messageId,
   });
 }
 
-class GetAllMessages implements UseCase<List<Message>, GetAllMessagesParams> {
+class GetMessage implements UseCase<Message, GetMessageParams> {
   final MessageRepository _messageRepository;
 
-  GetAllMessages({
+  GetMessage({
     required MessageRepository messageRepository,
   }) : _messageRepository = messageRepository;
 
   @override
-  Future<Either<Failure, List<Message>>> call(
-    GetAllMessagesParams params,
-  ) async {
+  Future<Either<Failure, Message>> call(GetMessageParams params) async {
     try {
-      final messages = await _messageRepository.getAllMessages(params.chatId);
-      return right(messages);
+      final message = await _messageRepository.getMessage(params.messageId);
+      return right(message);
     } on DioException catch (e) {
       return HandleErrorDio.call(e);
     } catch (e) {

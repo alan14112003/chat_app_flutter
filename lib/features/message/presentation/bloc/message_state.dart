@@ -19,4 +19,7 @@ final class MessageFailure extends MessageState {
 final class MessagesDisplaySuccess extends MessageState {
   final List<Message> messages;
   const MessagesDisplaySuccess(this.messages);
+
+  @override
+  List<Object> get props => [messages];
 }
