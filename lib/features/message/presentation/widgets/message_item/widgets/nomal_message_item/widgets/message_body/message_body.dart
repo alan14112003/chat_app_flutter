@@ -1,0 +1,105 @@
+import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/core/common/models/user_info.dart';
+import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
+import 'package:chat_app_flutter/core/theme/app_theme.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/text_message.dart';
+import 'package:flutter/material.dart';
+
+enum MessageBodyType { normal, reply }
+
+class MessageBody extends StatelessWidget {
+  final Message message;
+  final MessageBodyType type;
+  final auth = UserInfo(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
+
+  MessageBody({
+    super.key,
+    required this.message,
+    this.type = MessageBodyType.normal,
+  });
+
+  Widget _loadBody() {
+    // nếu message đã bị thu hồi
+    if (message.isRecall != null) {
+      final messageRecall = message.copyWith(
+        text: '${message.sender?.firstName} đã thu hồi tin nhắn',
+      );
+
+      return TextMessage(
+        message: messageRecall,
+        messageBodyType: MessageBodyType.reply,
+      );
+    }
+
+    switch (message.type) {
+      case MessageTypeEnum.TEXT:
+        return TextMessage(
+          message: message,
+          messageBodyType: type,
+        );
+      default:
+        return const SizedBox();
+    }
+  }
+
+  Color _setColorBgMessage(BuildContext context) {
+    if (type == MessageBodyType.reply || message.isRecall != null) {
+      return Theme.of(context).onSurface40;
+    }
+
+    if (auth.id == message.sender?.id) {
+      return Theme.of(context).primary;
+    }
+
+    return Theme.of(context).secondarySurface;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.6,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          color: _setColorBgMessage(context),
+        ),
+        child: type == MessageBodyType.normal
+            ?
+            // message thường
+            _loadBody()
+            :
+            // message phản hồi
+            Container(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.reply,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          message.sender?.fullName ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    _loadBody(),
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+}

@@ -117,7 +117,9 @@ class Message extends Equatable {
       sender: json['sender'] == null
           ? null
           : UserInfo.fromJson(json['sender'] as Map<String, Object?>),
-      reply: json['reply'] == null ? null : json['reply'] as Message,
+      reply: json['reply'] is Map<String, dynamic>
+          ? Message.fromJson(json['reply'] as Map<String, Object?>)
+          : null,
       reactions: json['reactions'] == null
           ? null
           : (json['reactions'] as List)
@@ -156,7 +158,6 @@ class Message extends Equatable {
   // }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         id,
         userId,
@@ -177,6 +178,5 @@ class Message extends Equatable {
       ];
 
   @override
-  // TODO: implement stringify
   bool get stringify => true;
 }

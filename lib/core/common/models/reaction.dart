@@ -57,7 +57,6 @@ class Reaction extends Equatable {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         userId,
         messageId,
@@ -67,6 +66,5 @@ class Reaction extends Equatable {
       ];
 
   @override
-  // TODO: implement stringify
   bool? get stringify => true;
 }

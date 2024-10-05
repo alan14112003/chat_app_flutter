@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppPalette {
   static DarkPalette dark = DarkPalette();
+  static LightPalette light = LightPalette();
 }
 
 class DarkPalette {

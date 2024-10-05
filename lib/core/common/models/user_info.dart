@@ -5,7 +5,7 @@ class UserInfo extends Equatable {
   final String? id;
   final String? firstName;
   final String? lastName;
-  final dynamic avatar;
+  final String? avatar;
   final String? email;
 
   const UserInfo({
@@ -22,7 +22,7 @@ class UserInfo extends Equatable {
     String? id,
     String? firstName,
     String? lastName,
-    dynamic avatar,
+    String? avatar,
     String? email,
   }) {
     return UserInfo(
@@ -58,7 +58,6 @@ class UserInfo extends Equatable {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         fullName,
         id,
@@ -69,18 +68,5 @@ class UserInfo extends Equatable {
       ];
 
   @override
-  // TODO: implement stringify
   bool? get stringify => true;
-
-//   @override
-//   String toString() {
-//     return '''UserInfo(
-//                 fullName:$fullName,
-// id:$id,
-// firstName:$firstName,
-// lastName:$lastName,
-// avatar:$avatar,
-// email:$email
-//     ) ''';
-//   }
 }

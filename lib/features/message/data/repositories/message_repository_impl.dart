@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/error/failures.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_remote_data_source.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
@@ -39,7 +40,7 @@ class MessageRepositoryImpl implements MessageRepository {
     try {
       final message = await _messageRemoteDataSource.sendMessage(
         chatId,
-        type: 1,
+        type: MessageTypeEnum.TEXT,
         text: content,
         replyId: replyId,
       );
