@@ -8,6 +8,7 @@ class Reaction extends Equatable {
   final int? emojiId;
   final UserInfo? sender;
   final Emoji? emoji;
+
   const Reaction({
     this.userId,
     this.messageId,
