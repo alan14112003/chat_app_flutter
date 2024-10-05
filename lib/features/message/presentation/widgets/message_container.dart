@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/message_item.dart';
@@ -31,13 +32,7 @@ class _MessageContainerState extends State<MessageContainer> {
         child: BlocConsumer<MessageBloc, MessageState>(
           listener: (context, state) {
             if (state is MessageFailure) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(
-                    content: Text(state.error),
-                  ),
-                );
+              showSnackBar(context, state.error);
             }
           },
           builder: (context, state) {
