@@ -1,6 +1,6 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
-import 'package:chat_app_flutter/features/message/utils/handle_message_item_util.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/nomal_message_item.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/system_message_item.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class MessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        top: HandleMessageItemUtil.checkSameSenderMessage(
+        top: HandleMessageUtil.isSameSenderMessage(
           messages,
           message,
           index,

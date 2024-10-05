@@ -6,13 +6,13 @@ import 'package:chat_app_flutter/features/message/presentation/widgets/model_bot
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HandleMessageItemUtil {
-  static bool checkRenderInfoSender(
-    UserInfo auth,
-    List<Message> messages,
-    Message message,
-    int index,
-  ) {
+class HandleMessageUtil {
+  static bool isRenderInfoSender(
+    BuildContext context, {
+    required List<Message> messages,
+    required Message message,
+    required int index,
+  }) {
     // là tin nhắn cuối cùng
     if (index == messages.length - 1) {
       return true;
@@ -30,15 +30,12 @@ class HandleMessageItemUtil {
     return false;
   }
 
-  static MainAxisAlignment getMainAxisAlignmentByMessage(
-    Message message,
-    UserInfo auth,
-  ) {
-    if (message.sender?.id == auth.id) {
-      return MainAxisAlignment.end;
-    }
-
-    return MainAxisAlignment.start;
+  static bool isMessageByAuth(
+    BuildContext context, {
+    required Message message,
+  }) {
+    final auth = UserInfo(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
+    return message.sender?.id == auth.id;
   }
 
   static void showMessageOptions(BuildContext context) {
@@ -50,20 +47,27 @@ class HandleMessageItemUtil {
     );
   }
 
-  static void handleReplyMessage(BuildContext context,
-      {required Message message}) {
+  static void setReplyMessage(
+    BuildContext context, {
+    required Message message,
+  }) {
     context.read<MessageHandleCubit>().setMessageReply(message);
   }
 
-  static bool checkSameSenderMessage(
+  static bool isRecallMessage(Message message) {
+    return message.isRecall != null;
+  }
+
+  static bool hasReplyMessage(Message message) {
+    return message.reply != null;
+  }
+
+  static bool isSameSenderMessage(
     List<Message> messages,
     Message message,
     int index,
   ) {
-    if (index != messages.length - 1 &&
-        messages[index + 1].sender?.id == message.sender?.id) {
-      return true;
-    }
-    return false;
+    return index != messages.length - 1 &&
+        messages[index + 1].sender?.id == message.sender?.id;
   }
 }

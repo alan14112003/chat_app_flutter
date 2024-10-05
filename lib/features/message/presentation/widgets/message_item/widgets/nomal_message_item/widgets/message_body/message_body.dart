@@ -1,8 +1,8 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/text_message.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 
 enum MessageBodyType { normal, reply }
@@ -10,9 +10,8 @@ enum MessageBodyType { normal, reply }
 class MessageBody extends StatelessWidget {
   final Message message;
   final MessageBodyType type;
-  final auth = UserInfo(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
 
-  MessageBody({
+  const MessageBody({
     super.key,
     required this.message,
     this.type = MessageBodyType.normal,
@@ -20,7 +19,7 @@ class MessageBody extends StatelessWidget {
 
   Widget _loadBody() {
     // nếu message đã bị thu hồi
-    if (message.isRecall != null) {
+    if (HandleMessageUtil.isRecallMessage(message)) {
       final messageRecall = message.copyWith(
         text: '${message.sender?.firstName} đã thu hồi tin nhắn',
       );
@@ -43,11 +42,12 @@ class MessageBody extends StatelessWidget {
   }
 
   Color _setColorBgMessage(BuildContext context) {
-    if (type == MessageBodyType.reply || message.isRecall != null) {
+    if (type == MessageBodyType.reply ||
+        HandleMessageUtil.isRecallMessage(message)) {
       return Theme.of(context).onSurface40;
     }
 
-    if (auth.id == message.sender?.id) {
+    if (HandleMessageUtil.isMessageByAuth(context, message: message)) {
       return Theme.of(context).primary;
     }
 

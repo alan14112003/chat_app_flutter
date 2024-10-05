@@ -37,6 +37,8 @@ class _MessageReplyBoxState extends State<MessageReplyBox> {
             widget.inputFocusNode.unfocus();
           }
 
+          // nếu message reply đã lưu khác với message reply hiện tại
+          // thì thực hiện request focus
           if (messageReplyPre != messageReply) {
             Future.delayed(
               const Duration(milliseconds: 100),

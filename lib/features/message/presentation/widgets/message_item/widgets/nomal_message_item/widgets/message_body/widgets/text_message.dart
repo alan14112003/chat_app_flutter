@@ -1,7 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/common/models/user_info.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_body.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_item_util.dart';
 import 'package:flutter/material.dart';
 
 class TextMessage extends StatelessWidget {
@@ -16,7 +16,6 @@ class TextMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const auth = UserInfo(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
     if (messageBodyType == MessageBodyType.reply) {
       return Text(
         message.text!,
@@ -30,7 +29,7 @@ class TextMessage extends StatelessWidget {
     return Text(
       message.text!,
       style: TextStyle(
-        color: auth.id == message.sender?.id
+        color: HandleMessageUtil.isMessageByAuth(context, message: message)
             ? Colors.white
             : Theme.of(context).onSurface20,
       ),
