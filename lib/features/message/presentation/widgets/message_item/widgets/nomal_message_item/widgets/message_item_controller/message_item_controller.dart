@@ -82,7 +82,10 @@ class _MessageItemControllerState extends State<MessageItemController> {
         context.read<MessageHandleCubit>().activeMessage(widget.message.id!);
       },
       onLongPress: () {
-        HandleMessageUtil.showMessageOptions(context);
+        HandleMessageUtil.showMessageOptions(
+          context,
+          message: widget.message,
+        );
       },
       onPanUpdate: _handleDragUpdate,
       onPanEnd: _handleDragEnd,

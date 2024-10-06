@@ -42,11 +42,14 @@ class HandleMessageUtil {
     return message.sender?.id == auth.id;
   }
 
-  static void showMessageOptions(BuildContext context) {
+  static void showMessageOptions(BuildContext context,
+      {required Message message}) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return const ModelBottomSheet();
+        return ModelBottomSheet(
+          message: message,
+        );
       },
     );
   }
@@ -103,6 +106,27 @@ class HandleMessageUtil {
     // lưu lại vào shared
     messageRepository.setLocalMessages(
       messageFull.chatId as String,
+      messages,
+    );
+
+    return messages;
+  }
+
+  static List<Message> removeMessageFromLocal(
+    Message message,
+    MessageRepository messageRepository,
+  ) {
+    // lấy ra messages trong shared
+    final messages = messageRepository.getLocalMessages(
+      message.chatId as String,
+    );
+
+    // thêm vào danh sách
+    messages.removeWhere((messageItem) => messageItem.id == message.id);
+
+    // lưu lại vào shared
+    messageRepository.setLocalMessages(
+      message.chatId as String,
       messages,
     );
 

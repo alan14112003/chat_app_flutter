@@ -1,7 +1,16 @@
+import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ModelBottomSheet extends StatelessWidget {
-  const ModelBottomSheet({super.key});
+  final Message message;
+
+  const ModelBottomSheet({
+    super.key,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +23,18 @@ class ModelBottomSheet extends StatelessWidget {
           GestureDetector(
             onTap: () {
               // Xử lý hành động trả lời
+              HandleMessageUtil.setReplyMessage(
+                context,
+                message: message,
+              );
+
               Navigator.pop(context); // Đóng hộp thoại
             },
             child: const Column(
               children: [
                 Icon(Icons.reply),
                 SizedBox(height: 8),
-                Text('Reply'),
+                Text('Phản hồi'),
               ],
             ),
           ),
@@ -33,7 +47,7 @@ class ModelBottomSheet extends StatelessWidget {
               children: [
                 Icon(Icons.copy),
                 SizedBox(height: 8),
-                Text('Copy'),
+                Text('Sao chép'),
               ],
             ),
           ),
@@ -41,17 +55,61 @@ class ModelBottomSheet extends StatelessWidget {
             onTap: () {
               // Xử lý hành động xóa
               Navigator.pop(context); // Đóng hộp thoại
+              _showDeleteOptions(context);
             },
             child: const Column(
               children: [
                 Icon(Icons.delete),
                 SizedBox(height: 8),
-                Text('Delete'),
+                Text('Xóa'),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void _showDeleteOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Bạn muốn gỡ tin nhắn này ở phía ai?'),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context);
+                context.read<MessageBloc>().add(
+                      DeleteMessageEvent(
+                        message: message,
+                      ),
+                    );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Chỉ mình tôi'),
+                  Icon(Icons.delete),
+                ],
+              ),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context);
+                // Xử lý sự kiện Forward
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Đối với mọi người'),
+                  Icon(Icons.delete),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

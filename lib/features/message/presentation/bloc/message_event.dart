@@ -36,3 +36,11 @@ final class SendImageMessageEvent extends MessageEvent {
     this.replyId,
   });
 }
+
+final class DeleteMessageEvent extends MessageEvent {
+  final Message message;
+
+  const DeleteMessageEvent({
+    required this.message,
+  });
+}

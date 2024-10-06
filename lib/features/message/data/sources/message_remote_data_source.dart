@@ -38,4 +38,11 @@ class MessageRemoteDataSource {
     // trả về Message đã map từ response
     return Message.fromJson(message.data);
   }
+
+  Future<bool> deleteMessage(int messageId) async {
+    await _dio.delete('/messages/$messageId/delete');
+
+    // trả về Message đã map từ response
+    return true;
+  }
 }

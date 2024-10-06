@@ -54,4 +54,9 @@ class MessageRepositoryImpl implements MessageRepository {
   Future<bool> setLocalMessages(String chatId, List<Message> messages) {
     return _messageLocalDataSource.setMessages(chatId, messages);
   }
+
+  @override
+  Future<bool> deleteMessage(int messageId) {
+    return _messageRemoteDataSource.deleteMessage(messageId);
+  }
 }

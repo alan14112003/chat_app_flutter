@@ -7,6 +7,7 @@ import 'package:chat_app_flutter/features/message/data/repositories/message_repo
 import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_remote_data_source.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/delete_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
@@ -95,12 +96,19 @@ void _initMessage() {
         uploadFile: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => DeleteMessage(
+        messageRepository: serviceLocator(),
+      ),
+    )
 
     // bloc
     ..registerLazySingleton(
       () => MessageBloc(
-          getAllMessages: serviceLocator(),
-          sendTextMessage: serviceLocator(),
-          sendImageMessage: serviceLocator()),
+        getAllMessages: serviceLocator(),
+        sendTextMessage: serviceLocator(),
+        sendImageMessage: serviceLocator(),
+        deleteMessage: serviceLocator(),
+      ),
     );
 }
