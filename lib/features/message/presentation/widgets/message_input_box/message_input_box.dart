@@ -1,8 +1,8 @@
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
-import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/message_reply_box.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_file_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_image_button.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_message_button.dart';
 import 'package:flutter/material.dart';
 
 class MessageInputBox extends StatefulWidget {

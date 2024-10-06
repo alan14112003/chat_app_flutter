@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/image_message.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/text_message.dart';
 import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,11 @@ class MessageBody extends StatelessWidget {
     switch (message.type) {
       case MessageTypeEnum.TEXT:
         return TextMessage(
+          message: message,
+          messageBodyType: type,
+        );
+      case MessageTypeEnum.IMAGE:
+        return ImageMessage(
           message: message,
           messageBodyType: type,
         );

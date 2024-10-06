@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,16 +32,15 @@ class SendMessageButton extends StatelessWidget {
           return;
         }
         context.read<MessageBloc>().add(
-              SendMessageEvent(
+              SendTextMessageEvent(
                 chatId: chatId!,
                 content: content,
                 replyId: messageReply?.id,
               ),
             );
         // làm sạch input
-        if (messageReply != null) {
-          context.read<MessageHandleCubit>().setMessageReply(null);
-        }
+        HandleMessageUtil.clearReplyMessage(context);
+
         controller.clear();
       }, // Gọi hàm gửi khi nhấn nút gửi
     );

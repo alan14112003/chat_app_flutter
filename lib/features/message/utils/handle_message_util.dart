@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
+import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/model_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HandleMessageUtil {
   static bool isRenderInfoSender(
@@ -69,5 +73,47 @@ class HandleMessageUtil {
   ) {
     return index != messages.length - 1 &&
         messages[index + 1].sender?.id == message.sender?.id;
+  }
+
+  static Future<File?> pickImage(
+      [ImageSource imageSource = ImageSource.gallery]) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: imageSource);
+    if (image != null) {
+      return File(image.path);
+    }
+    return null;
+  }
+
+  static Future<List<Message>> addFetchedMessageToLocal(
+    Message message,
+    MessageRepository messageRepository,
+  ) async {
+    // lấy về message đầy đủ
+    final messageFull = await messageRepository.getMessage(message.id as int);
+
+    // lấy ra messages trong shared
+    final messages = messageRepository.getLocalMessages(
+      messageFull.chatId as String,
+    );
+
+    // thêm vào danh sách
+    messages.insert(0, messageFull);
+
+    // lưu lại vào shared
+    messageRepository.setLocalMessages(
+      messageFull.chatId as String,
+      messages,
+    );
+
+    return messages;
+  }
+
+  static void clearReplyMessage(BuildContext context) {
+    final messageReply = context.read<MessageHandleCubit>().state.messageReply;
+
+    if (messageReply != null) {
+      context.read<MessageHandleCubit>().setMessageReply(null);
+    }
   }
 }

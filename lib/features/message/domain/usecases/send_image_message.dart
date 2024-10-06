@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:chat_app_flutter/core/common/domain/usecases/upload_file.dart';
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/error/failures.dart';
@@ -9,41 +12,59 @@ import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
-class SendTextMessageParam {
+class SendFileMessageParams {
   final String chatId;
-  final String content;
+  final File content;
   final int? replyId;
 
-  SendTextMessageParam({
+  SendFileMessageParams({
     required this.chatId,
     required this.content,
     this.replyId,
   });
 }
 
-class SendTextMessage implements UseCase<List<Message>, SendTextMessageParam> {
+class SendImageMessage
+    implements UseCase<List<Message>, SendFileMessageParams> {
   final MessageRepository _messageRepository;
+  final UploadFile _uploadFile;
 
-  SendTextMessage({
+  SendImageMessage({
     required MessageRepository messageRepository,
-  }) : _messageRepository = messageRepository;
+    required UploadFile uploadFile,
+  })  : _messageRepository = messageRepository,
+        _uploadFile = uploadFile;
 
   @override
   Future<Either<Failure, List<Message>>> call(
-    SendTextMessageParam params,
+    SendFileMessageParams params,
   ) async {
     try {
-      // gửi message đi
+      // upload ảnh lên cloud
+      final response = await _uploadFile.call(
+        UploadFileParams(
+          file: params.content,
+        ),
+      );
+
+      if (response.isLeft()) {
+        return Left(
+          response.getLeft().getOrElse(() => Failure()),
+        );
+      }
+
+      final imageUrl = response.getRight().getOrElse(() => '');
+
       final message = await _messageRepository.sendMessage(
         params.chatId,
         SendMessageBody(
-          type: MessageTypeEnum.TEXT,
-          text: params.content,
+          type: MessageTypeEnum.IMAGE,
+          image: imageUrl,
           replyId: params.replyId,
         ),
       );
 
-      //  cập nhật messages
+      // cập nhật messages
       final messages = await HandleMessageUtil.addFetchedMessageToLocal(
         message,
         _messageRepository,

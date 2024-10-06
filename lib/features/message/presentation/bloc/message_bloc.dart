@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
 import 'package:equatable/equatable.dart';
 
@@ -12,15 +14,19 @@ part 'message_state.dart';
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final GetAllMessages _getAllMessages;
   final SendTextMessage _sendTextMessage;
+  final SendImageMessage _sendImageMessage;
 
   MessageBloc({
     required GetAllMessages getAllMessages,
     required SendTextMessage sendTextMessage,
+    required SendImageMessage sendImageMessage,
   })  : _getAllMessages = getAllMessages,
         _sendTextMessage = sendTextMessage,
+        _sendImageMessage = sendImageMessage,
         super(MessageInitial()) {
     on<FetchAllMessagesEvent>(_onFetchAllMessages);
-    on<SendMessageEvent>(_onSendMessage);
+    on<SendTextMessageEvent>(_onSendTextMessage);
+    on<SendImageMessageEvent>(_onSendImageMessage);
   }
 
   FutureOr<void> _onFetchAllMessages(
@@ -39,12 +45,30 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     );
   }
 
-  FutureOr<void> _onSendMessage(
-    SendMessageEvent event,
+  FutureOr<void> _onSendTextMessage(
+    SendTextMessageEvent event,
     Emitter<MessageState> emit,
   ) async {
     final res = await _sendTextMessage.call(
       SendTextMessageParam(
+        chatId: event.chatId,
+        content: event.content,
+        replyId: event.replyId,
+      ),
+    );
+
+    res.fold(
+      (error) => emit(MessageFailure(error.message)),
+      (messages) => emit(MessagesDisplaySuccess(messages)),
+    );
+  }
+
+  FutureOr<void> _onSendImageMessage(
+    SendImageMessageEvent event,
+    Emitter<MessageState> emit,
+  ) async {
+    final res = await _sendImageMessage.call(
+      SendFileMessageParams(
         chatId: event.chatId,
         content: event.content,
         replyId: event.replyId,

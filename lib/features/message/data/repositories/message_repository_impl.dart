@@ -1,5 +1,4 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_remote_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/send_message_body.dart';
@@ -34,18 +33,13 @@ class MessageRepositoryImpl implements MessageRepository {
   }
 
   @override
-  Future<Message> sendTextMessages(
-    String chatId, {
-    required String content,
-    int? replyId,
-  }) async {
+  Future<Message> sendMessage(
+    String chatId,
+    SendMessageBody messageBody,
+  ) async {
     final message = await _messageRemoteDataSource.sendMessage(
       chatId,
-      SendMessageBody(
-        type: MessageTypeEnum.TEXT,
-        text: content,
-        replyId: replyId,
-      ),
+      messageBody,
     );
 
     return message;
