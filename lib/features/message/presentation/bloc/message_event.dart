@@ -9,8 +9,12 @@ sealed class MessageEvent extends Equatable {
 
 final class FetchAllMessagesEvent extends MessageEvent {
   final String chatId;
+  final bool isNew;
 
-  const FetchAllMessagesEvent({required this.chatId});
+  const FetchAllMessagesEvent({
+    required this.chatId,
+    this.isNew = true,
+  });
 }
 
 final class SendTextMessageEvent extends MessageEvent {

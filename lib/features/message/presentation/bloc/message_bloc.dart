@@ -38,7 +38,9 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     FetchAllMessagesEvent event,
     Emitter<MessageState> emit,
   ) async {
-    emit(MessageLoading());
+    if (event.isNew) {
+      emit(MessageLoading());
+    }
 
     final res = await _getAllMessages.call(
       GetAllMessagesParams(chatId: event.chatId),
@@ -98,7 +100,12 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
     res.fold(
       (error) => emit(MessageFailure(error.message)),
-      (messages) => emit(MessagesDisplaySuccess(messages)),
+      (messages) => add(
+        FetchAllMessagesEvent(
+          chatId: event.message.chatId!,
+          isNew: false,
+        ),
+      ),
     );
   }
 }

@@ -112,27 +112,6 @@ class HandleMessageUtil {
     return messages;
   }
 
-  static List<Message> removeMessageFromLocal(
-    Message message,
-    MessageRepository messageRepository,
-  ) {
-    // lấy ra messages trong shared
-    final messages = messageRepository.getLocalMessages(
-      message.chatId as String,
-    );
-
-    // thêm vào danh sách
-    messages.removeWhere((messageItem) => messageItem.id == message.id);
-
-    // lưu lại vào shared
-    messageRepository.setLocalMessages(
-      message.chatId as String,
-      messages,
-    );
-
-    return messages;
-  }
-
   static void clearReplyMessage(BuildContext context) {
     final messageReply = context.read<MessageHandleCubit>().state.messageReply;
 
