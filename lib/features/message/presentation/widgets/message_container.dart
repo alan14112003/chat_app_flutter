@@ -13,15 +13,54 @@ class MessageContainer extends StatefulWidget {
 }
 
 class _MessageContainerState extends State<MessageContainer> {
+  late ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
+    // khởi tạo scroll controller
+    _scrollController = ScrollController();
+
+    // lắng nghe sự kiện scroll
+    _scrollController.addListener(_onScroll);
 
     // Sử dụng context.select để lấy chatId từ MessageHandleCubit
     final chatId = context.read<MessageHandleCubit>().state.chatId;
 
     // Gửi sự kiện để fetch messages từ MessageBloc
     context.read<MessageBloc>().add(FetchAllMessagesEvent(chatId: chatId));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  void _onScroll() {
+    // kiểm tra xem đã kéo đến cuối chưa
+    bool isAtTop = _scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent;
+
+    if (!isAtTop) {
+      return;
+    }
+
+    final messageState = context.read<MessageBloc>().state;
+    if (messageState is! MessagesDisplaySuccess) {
+      return;
+    }
+
+    final message = messageState.messages.last;
+    final chatId = context.read<MessageHandleCubit>().state.chatId;
+
+    context.read<MessageBloc>().add(
+          FetchAllMessagesEvent(
+            chatId: chatId,
+            before: message.id,
+            isNew: false,
+          ),
+        );
   }
 
   @override
@@ -45,6 +84,7 @@ class _MessageContainerState extends State<MessageContainer> {
               return ListView.builder(
                 reverse: true,
                 itemCount: state.messages.length,
+                controller: _scrollController,
                 itemBuilder: (context, index) {
                   return MessageItem(
                     message: state.messages[index],

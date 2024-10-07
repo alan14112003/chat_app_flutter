@@ -53,7 +53,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     }
 
     final res = await _getAllMessages.call(
-      GetAllMessagesParams(chatId: event.chatId),
+      GetAllMessagesParams(
+        chatId: event.chatId,
+        before: event.before,
+      ),
     );
 
     res.fold(

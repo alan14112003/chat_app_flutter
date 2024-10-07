@@ -17,13 +17,32 @@ class MessageRepositoryImpl implements MessageRepository {
         _messageLocalDataSource = messageLocalDataSource;
 
   @override
-  Future<List<Message>> getAllMessages(String chatId) async {
-    final messages = await _messageRemoteDataSource.getAllMessage(chatId);
+  Future<List<Message>> getAllMessages(
+    String chatId,
+    int? before,
+  ) async {
+    final messages = await _messageRemoteDataSource.getAllMessage(
+      chatId,
+      before,
+    );
 
-    // thêm vào local datasource
-    await setLocalMessages(chatId, messages);
+    if (before == null) {
+      // thêm vào local datasource
+      await setLocalMessages(chatId, messages);
 
-    return messages;
+      return messages;
+    }
+
+    // lấy ra message đã lưu
+    final oldMessages = getLocalMessages(chatId);
+
+    // thêm message mới vào
+    final fullMessages = [...oldMessages, ...messages];
+
+    // lưu lại danh sách full messages
+    await setLocalMessages(chatId, fullMessages);
+
+    return fullMessages;
   }
 
   @override

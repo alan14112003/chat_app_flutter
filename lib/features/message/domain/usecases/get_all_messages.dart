@@ -8,9 +8,11 @@ import 'package:fpdart/fpdart.dart';
 
 class GetAllMessagesParams {
   final String chatId;
+  final int? before;
 
   GetAllMessagesParams({
     required this.chatId,
+    this.before,
   });
 }
 
@@ -26,7 +28,10 @@ class GetAllMessages implements UseCase<List<Message>, GetAllMessagesParams> {
     GetAllMessagesParams params,
   ) async {
     try {
-      final messages = await _messageRepository.getAllMessages(params.chatId);
+      final messages = await _messageRepository.getAllMessages(
+        params.chatId,
+        params.before,
+      );
       return right(messages);
     } on DioException catch (e) {
       return HandleErrorDio.call(e);

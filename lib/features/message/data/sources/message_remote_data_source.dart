@@ -9,9 +9,16 @@ class MessageRemoteDataSource {
     required Dio dio,
   }) : _dio = dio;
 
-  Future<List<Message>> getAllMessage(String chatId) async {
-    final Response<List<dynamic>> messages =
-        await _dio.get('/chats/$chatId/messages');
+  Future<List<Message>> getAllMessage(
+    String chatId,
+    int? before,
+  ) async {
+    final Response<List<dynamic>> messages = await _dio.get(
+      '/chats/$chatId/messages',
+      queryParameters: {
+        'before': before,
+      },
+    );
 
     // trả về danh sách sau khi map qua Message
     return messages.data!
