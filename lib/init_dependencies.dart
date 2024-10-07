@@ -9,6 +9,7 @@ import 'package:chat_app_flutter/features/message/data/sources/message_remote_da
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/delete_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/recall_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
@@ -101,6 +102,11 @@ void _initMessage() {
         messageRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => RecallMessage(
+        messageRepository: serviceLocator(),
+      ),
+    )
 
     // bloc
     ..registerLazySingleton(
@@ -109,6 +115,7 @@ void _initMessage() {
         sendTextMessage: serviceLocator(),
         sendImageMessage: serviceLocator(),
         deleteMessage: serviceLocator(),
+        recallMessage: serviceLocator(),
       ),
     );
 }

@@ -59,4 +59,9 @@ class MessageRepositoryImpl implements MessageRepository {
   Future<bool> deleteMessage(int messageId) {
     return _messageRemoteDataSource.deleteMessage(messageId);
   }
+
+  @override
+  Future<Message> recallMessage(int messageId) {
+    return _messageRemoteDataSource.recallMessage(messageId);
+  }
 }

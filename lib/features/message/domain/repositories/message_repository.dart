@@ -5,6 +5,7 @@ abstract interface class MessageRepository {
   Future<List<Message>> getAllMessages(String chatId);
 
   Future<Message> getMessage(int messageId);
+  Future<Message> recallMessage(int messageId);
   Future<bool> deleteMessage(int messageId);
 
   Future<Message> sendMessage(

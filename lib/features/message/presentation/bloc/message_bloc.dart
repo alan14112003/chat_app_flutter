@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/delete_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/recall_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
 import 'package:equatable/equatable.dart';
@@ -17,21 +18,25 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final SendTextMessage _sendTextMessage;
   final SendImageMessage _sendImageMessage;
   final DeleteMessage _deleteMessage;
+  final RecallMessage _recallMessage;
 
   MessageBloc({
     required GetAllMessages getAllMessages,
     required SendTextMessage sendTextMessage,
     required SendImageMessage sendImageMessage,
     required DeleteMessage deleteMessage,
+    required RecallMessage recallMessage,
   })  : _getAllMessages = getAllMessages,
         _sendTextMessage = sendTextMessage,
         _sendImageMessage = sendImageMessage,
         _deleteMessage = deleteMessage,
+        _recallMessage = recallMessage,
         super(MessageInitial()) {
     on<FetchAllMessagesEvent>(_onFetchAllMessages);
     on<SendTextMessageEvent>(_onSendTextMessage);
     on<SendImageMessageEvent>(_onSendImageMessage);
     on<DeleteMessageEvent>(_onDeleteMessage);
+    on<RecallMessageEvent>(_onRecallMessage);
   }
 
   FutureOr<void> _onFetchAllMessages(
@@ -103,6 +108,25 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       (messages) => add(
         FetchAllMessagesEvent(
           chatId: event.message.chatId!,
+          isNew: false,
+        ),
+      ),
+    );
+  }
+
+  FutureOr<void> _onRecallMessage(
+    RecallMessageEvent event,
+    Emitter<MessageState> emit,
+  ) async {
+    final res = await _recallMessage.call(
+      RecallMessageParams(messageId: event.messageId),
+    );
+
+    res.fold(
+      (error) => emit(MessageFailure(error.message)),
+      (message) => add(
+        FetchAllMessagesEvent(
+          chatId: message.chatId!,
           isNew: false,
         ),
       ),

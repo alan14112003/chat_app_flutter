@@ -94,19 +94,28 @@ class ModelBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-            SimpleDialogOption(
-              onPressed: () {
-                Navigator.pop(context);
-                // Xử lý sự kiện Forward
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Đối với mọi người'),
-                  Icon(Icons.delete),
-                ],
+            if (HandleMessageUtil.isMessageByAuth(
+              context,
+              message: message,
+            ))
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context);
+                  // Xử lý sự kiện Forward
+                  context.read<MessageBloc>().add(
+                        RecallMessageEvent(
+                          messageId: message.id!,
+                        ),
+                      );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Đối với mọi người'),
+                    Icon(Icons.delete),
+                  ],
+                ),
               ),
-            ),
           ],
         );
       },

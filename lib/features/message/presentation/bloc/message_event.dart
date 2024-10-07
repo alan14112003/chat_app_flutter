@@ -48,3 +48,11 @@ final class DeleteMessageEvent extends MessageEvent {
     required this.message,
   });
 }
+
+final class RecallMessageEvent extends MessageEvent {
+  final int messageId;
+
+  const RecallMessageEvent({
+    required this.messageId,
+  });
+}

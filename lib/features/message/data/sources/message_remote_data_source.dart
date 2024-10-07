@@ -45,4 +45,12 @@ class MessageRemoteDataSource {
     // trả về Message đã map từ response
     return true;
   }
+
+  Future<Message> recallMessage(int messageId) async {
+    Response<dynamic> response =
+        await _dio.delete('/messages/$messageId/recall');
+
+    // trả về Message đã map từ response
+    return Message.fromJson(response.data);
+  }
 }
