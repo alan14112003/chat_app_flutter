@@ -56,3 +56,11 @@ final class RecallMessageEvent extends MessageEvent {
     required this.messageId,
   });
 }
+
+final class ReceiveNewMessageEvent extends MessageEvent {
+  final Message message;
+
+  const ReceiveNewMessageEvent({
+    required this.message,
+  });
+}

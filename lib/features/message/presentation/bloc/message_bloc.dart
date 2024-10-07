@@ -6,6 +6,7 @@ import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/delete_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messages.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/recall_message.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/receive_new_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
 import 'package:equatable/equatable.dart';
@@ -19,6 +20,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final SendImageMessage _sendImageMessage;
   final DeleteMessage _deleteMessage;
   final RecallMessage _recallMessage;
+  final ReceiveNewMessage _receiveNewMessage;
 
   MessageBloc({
     required GetAllMessages getAllMessages,
@@ -26,17 +28,20 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     required SendImageMessage sendImageMessage,
     required DeleteMessage deleteMessage,
     required RecallMessage recallMessage,
+    required ReceiveNewMessage receiveNewMessage,
   })  : _getAllMessages = getAllMessages,
         _sendTextMessage = sendTextMessage,
         _sendImageMessage = sendImageMessage,
         _deleteMessage = deleteMessage,
         _recallMessage = recallMessage,
+        _receiveNewMessage = receiveNewMessage,
         super(MessageInitial()) {
     on<FetchAllMessagesEvent>(_onFetchAllMessages);
     on<SendTextMessageEvent>(_onSendTextMessage);
     on<SendImageMessageEvent>(_onSendImageMessage);
     on<DeleteMessageEvent>(_onDeleteMessage);
     on<RecallMessageEvent>(_onRecallMessage);
+    on<ReceiveNewMessageEvent>(_onReceiveNewMessage);
   }
 
   FutureOr<void> _onFetchAllMessages(
@@ -130,6 +135,20 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           isNew: false,
         ),
       ),
+    );
+  }
+
+  FutureOr<void> _onReceiveNewMessage(
+    ReceiveNewMessageEvent event,
+    Emitter<MessageState> emit,
+  ) async {
+    final res = await _receiveNewMessage.call(
+      ReceiveNewMessageParam(message: event.message),
+    );
+
+    res.fold(
+      (error) => emit(MessageFailure(error.message)),
+      (messages) => emit(MessagesDisplaySuccess(messages)),
     );
   }
 }

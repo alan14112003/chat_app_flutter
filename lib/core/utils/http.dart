@@ -11,7 +11,7 @@ class Http {
     dio = Dio();
 
     // cấu hình option
-    dio.options.baseUrl = dotenv.env['URL']!;
+    dio.options.baseUrl = '${dotenv.env['URL']!}/v1';
     dio.options.headers['Content-Type'] = 'application/json';
 
     // fake access token để test

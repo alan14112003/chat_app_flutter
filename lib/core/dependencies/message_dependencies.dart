@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/features/message/domain/usecases/receive_new_message.dart';
 import 'package:get_it/get_it.dart';
 import 'package:chat_app_flutter/features/message/data/repositories/message_repository_impl.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
@@ -59,6 +60,11 @@ void messageDependencies(GetIt serviceLocator) {
         messageRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => ReceiveNewMessage(
+        messageRepository: serviceLocator(),
+      ),
+    )
 
     // bloc
     ..registerLazySingleton(
@@ -68,6 +74,7 @@ void messageDependencies(GetIt serviceLocator) {
         sendImageMessage: serviceLocator(),
         deleteMessage: serviceLocator(),
         recallMessage: serviceLocator(),
+        receiveNewMessage: serviceLocator(),
       ),
     );
 }
