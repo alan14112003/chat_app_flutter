@@ -1,7 +1,7 @@
 import 'package:chat_app_flutter/app.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
-import 'package:chat_app_flutter/init_dependencies.dart';
+import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
