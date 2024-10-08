@@ -33,6 +33,7 @@ class _MessageInputBoxState extends State<MessageInputBox> {
   void dispose() {
     super.dispose();
     _focusNode.dispose();
+    _controller.dispose();
   }
 
   @override

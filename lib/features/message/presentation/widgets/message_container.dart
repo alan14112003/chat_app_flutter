@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
-import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/message_item.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +27,8 @@ class _MessageContainerState extends State<MessageContainer> {
     // Sử dụng context.select để lấy chatId từ MessageHandleCubit
     final chatId = context.read<MessageHandleCubit>().state.chatId;
 
-    // Gửi sự kiện để fetch messages từ MessageBloc
-    context.read<MessageBloc>().add(FetchAllMessagesEvent(chatId: chatId));
+    // Gửi sự kiện để fetch messages từ MessageViewBloc
+    context.read<MessageViewBloc>().add(FetchAllMessagesEvent(chatId: chatId));
   }
 
   @override
@@ -46,7 +46,7 @@ class _MessageContainerState extends State<MessageContainer> {
       return;
     }
 
-    final messageState = context.read<MessageBloc>().state;
+    final messageState = context.read<MessageViewBloc>().state;
     if (messageState is! MessagesDisplaySuccess) {
       return;
     }
@@ -54,7 +54,7 @@ class _MessageContainerState extends State<MessageContainer> {
     final message = messageState.messages.last;
     final chatId = context.read<MessageHandleCubit>().state.chatId;
 
-    context.read<MessageBloc>().add(
+    context.read<MessageViewBloc>().add(
           FetchAllMessagesEvent(
             chatId: chatId,
             before: message.id,
@@ -68,7 +68,7 @@ class _MessageContainerState extends State<MessageContainer> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocConsumer<MessageBloc, MessageState>(
+        child: BlocConsumer<MessageViewBloc, MessageViewState>(
           listener: (context, state) {
             if (state is MessageFailure) {
               showSnackBar(context, state.error);

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class _SendImageButtonState extends State<SendImageButton> {
         // Xử lý khi nhấn vào icon ảnh
         File? image = await HandleMessageUtil.pickImage();
         if (image != null && context.mounted) {
-          context.read<MessageBloc>().add(
+          context.read<MessageUserHandleBloc>().add(
                 SendImageMessageEvent(
                   chatId: chatId,
                   content: image,

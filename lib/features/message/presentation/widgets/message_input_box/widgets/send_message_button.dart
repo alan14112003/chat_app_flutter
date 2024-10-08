@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class SendMessageButton extends StatelessWidget {
         if (content == '') {
           return;
         }
-        context.read<MessageBloc>().add(
+        context.read<MessageUserHandleBloc>().add(
               SendTextMessageEvent(
                 chatId: chatId!,
                 content: content,

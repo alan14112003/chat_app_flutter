@@ -1,4 +1,6 @@
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_new_message.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:chat_app_flutter/features/message/data/repositories/message_repository_impl.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
@@ -9,7 +11,7 @@ import 'package:chat_app_flutter/features/message/domain/usecases/get_all_messag
 import 'package:chat_app_flutter/features/message/domain/usecases/recall_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
-import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
 
 void messageDependencies(GetIt serviceLocator) {
   // data source
@@ -67,13 +69,21 @@ void messageDependencies(GetIt serviceLocator) {
     )
 
     // bloc
-    ..registerLazySingleton(
-      () => MessageBloc(
+    ..registerFactory(
+      () => MessageViewBloc(
         getAllMessages: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => MessageUserHandleBloc(
         sendTextMessage: serviceLocator(),
         sendImageMessage: serviceLocator(),
         deleteMessage: serviceLocator(),
         recallMessage: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => MessageSystemHandleBloc(
         receiveNewMessage: serviceLocator(),
       ),
     );

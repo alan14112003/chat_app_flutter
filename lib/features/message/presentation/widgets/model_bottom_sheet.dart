@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/features/message/presentation/bloc/message_bloc.dart';
+import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +80,7 @@ class ModelBottomSheet extends StatelessWidget {
             SimpleDialogOption(
               onPressed: () {
                 Navigator.pop(context);
-                context.read<MessageBloc>().add(
+                context.read<MessageUserHandleBloc>().add(
                       DeleteMessageEvent(
                         message: message,
                       ),
@@ -102,7 +102,7 @@ class ModelBottomSheet extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                   // Xử lý sự kiện Forward
-                  context.read<MessageBloc>().add(
+                  context.read<MessageUserHandleBloc>().add(
                         RecallMessageEvent(
                           messageId: message.id!,
                         ),
