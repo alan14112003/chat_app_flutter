@@ -45,7 +45,7 @@ class MessageItemByOther extends StatelessWidget {
 
         const SizedBox(width: 8),
         Column(
-          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (HandleMessageUtil.isRenderInfoSender(
               context,
