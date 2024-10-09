@@ -5,7 +5,7 @@ import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
-import 'package:chat_app_flutter/features/message/presentation/widgets/model_bottom_sheet.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_bottom_sheet/message_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,7 +47,7 @@ class HandleMessageUtil {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return ModelBottomSheet(
+        return MessageBottomSheet(
           message: message,
         );
       },
