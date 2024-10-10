@@ -17,6 +17,7 @@ class MessageRemoteDataSource {
       '/chats/$chatId/messages',
       queryParameters: {
         'before': before,
+        'limit': 20,
       },
     );
 

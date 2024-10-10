@@ -19,7 +19,10 @@ class MessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final messageItemKey = GlobalObjectKey("message_item_${message.id}");
+
     return Container(
+      key: messageItemKey,
       margin: EdgeInsets.only(
         top: HandleMessageUtil.isSameSenderMessage(
           messages,
