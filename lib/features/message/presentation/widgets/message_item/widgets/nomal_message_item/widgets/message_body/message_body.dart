@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_reply_after_active_handle.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_reply_controller.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/image_message.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/text_message.dart';
@@ -67,48 +68,51 @@ class MessageBody extends StatelessWidget {
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.6,
       ),
-      child: MessageReplyController(
+      child: MessageReplyAfterActiveHandle(
         message: message,
-        type: type,
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: _setColorBgMessage(context),
-          ),
-          child: type == MessageBodyType.normal
-              ?
-              // message thường
-              _loadBody()
-              :
-              // message phản hồi
-              Container(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.reply,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            message.sender?.fullName ?? '',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+        child: MessageReplyController(
+          message: message,
+          type: type,
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              color: _setColorBgMessage(context),
+            ),
+            child: type == MessageBodyType.normal
+                ?
+                // message thường
+                _loadBody()
+                :
+                // message phản hồi
+                Container(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.reply,
                               color: Colors.white,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      _loadBody(),
-                    ],
+                            Text(
+                              message.sender?.fullName ?? '',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        _loadBody(),
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

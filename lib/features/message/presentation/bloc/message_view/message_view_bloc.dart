@@ -36,7 +36,10 @@ class MessageViewBloc extends Bloc<MessageViewEvent, MessageViewState> {
 
     res.fold(
       (l) => emit(MessageFailure(l.message)),
-      (r) => emit(MessagesDisplaySuccess(r)),
+      (r) => emit(MessagesDisplaySuccess(
+        isLast: r.isLast,
+        messages: r.messages,
+      )),
     );
   }
 
@@ -44,6 +47,14 @@ class MessageViewBloc extends Bloc<MessageViewEvent, MessageViewState> {
     ReRenderMessagesEvent event,
     Emitter<MessageViewState> emit,
   ) async {
-    emit(MessagesDisplaySuccess(event.messsages));
+    bool isLast = false;
+    if (state is MessagesDisplaySuccess) {
+      final messagesDisplaySuccessState = state as MessagesDisplaySuccess;
+      isLast = messagesDisplaySuccessState.isLast;
+    }
+    emit(MessagesDisplaySuccess(
+      isLast: isLast,
+      messages: event.messsages,
+    ));
   }
 }

@@ -1,5 +1,4 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/features/message/events/handle_message_event.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_body.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ class _MessageReplyControllerState extends State<MessageReplyController> {
           )
         : GestureDetector(
             onTap: () {
-              print('ấn vào reply');
               context
                   .read<MessageHandleCubit>()
                   .toggleMessageReplyActive(widget.message);

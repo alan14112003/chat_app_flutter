@@ -1,7 +1,7 @@
-import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/error/failures.dart';
 import 'package:chat_app_flutter/core/error/handle_error_dio.dart';
 import 'package:chat_app_flutter/core/usecase/usecase.dart';
+import 'package:chat_app_flutter/features/message/domain/types/get_all_messages_return_type.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
@@ -16,7 +16,8 @@ class GetAllMessagesParams {
   });
 }
 
-class GetAllMessages implements UseCase<List<Message>, GetAllMessagesParams> {
+class GetAllMessages
+    implements UseCase<GetAllMessagesReturnType, GetAllMessagesParams> {
   final MessageRepository _messageRepository;
 
   GetAllMessages({
@@ -24,7 +25,7 @@ class GetAllMessages implements UseCase<List<Message>, GetAllMessagesParams> {
   }) : _messageRepository = messageRepository;
 
   @override
-  Future<Either<Failure, List<Message>>> call(
+  Future<Either<Failure, GetAllMessagesReturnType>> call(
     GetAllMessagesParams params,
   ) async {
     try {

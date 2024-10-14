@@ -26,4 +26,8 @@ class MessageHandleCubit extends Cubit<MessageHandleState> {
   void toggleMessageReplyActive(Message? messageReplyActive) {
     emit(state.copyWith(messageReplyActive: messageReplyActive));
   }
+
+  void toggleMessageReplyAfterActive(Message? messageReplyAfterActive) {
+    emit(state.copyWith(messageReplyAfterActive: messageReplyAfterActive));
+  }
 }
