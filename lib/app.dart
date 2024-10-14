@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
+import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _AppState extends State<App> {
         chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',
       ),
       // home: ChatScreen(),
+      // home: LoginScreen(),
     );
   }
 }
