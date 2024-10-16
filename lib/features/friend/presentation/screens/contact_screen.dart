@@ -5,12 +5,14 @@ import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation
 import 'package:flutter/material.dart';
 
 
-class ContactsScreen extends StatefulWidget {
+class ContactScreen extends StatefulWidget {
+  const ContactScreen({super.key});
+
   @override
-  _ContactsScreenState createState() => _ContactsScreenState();
+  _ContactScreenState createState() => _ContactScreenState();
 }
 
-class _ContactsScreenState extends State<ContactsScreen> {
+class _ContactScreenState extends State<ContactScreen> {
   int _currentIndex = 1;
 
   @override

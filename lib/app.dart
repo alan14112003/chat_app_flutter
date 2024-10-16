@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
+import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -39,6 +40,7 @@ class _AppState extends State<App> {
       ),
       // home: ChatScreen(),
       // home: LoginScreen(),
+      // home: ContactScreen(),
     );
   }
 }
