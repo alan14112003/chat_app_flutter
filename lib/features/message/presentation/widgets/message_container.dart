@@ -62,6 +62,11 @@ class _MessageContainerState extends State<MessageContainer> {
     final messageState = context.read<MessageViewBloc>().state;
     if (messageState is! MessagesDisplaySuccess) return;
 
+    // kiểm tra nếu là tin nhắn cuối cùng thì dừng lại
+    if (messageState.isLast) {
+      return;
+    }
+
     final messages = messageState.messages;
     final lastMessage = messages.last;
     final chatId = context.read<MessageHandleCubit>().state.chatId;
@@ -138,39 +143,66 @@ class _MessageContainerState extends State<MessageContainer> {
 
     final messages = messageState.messages;
 
+    // lấy ra vị trí của message reply active
     final checkMessageIndex = messages.indexWhere(
       (element) => element.id == messageReplyActive.id,
     );
 
-    if (checkMessageIndex != -1) {
-      // scrool message reply vào khung hình
-      _itemScrollController.scrollTo(
-        index: checkMessageIndex,
-        duration: Duration(seconds: 1),
-        alignment: 0.1,
-      );
+    // nếu không có thì thực hiện recall
+    if (checkMessageIndex == -1) {
+      print('nờ ô nô');
 
-      // active message sau khi scroll
+      if (isRecall) {
+        return;
+      }
+
+      _loadMoreMessages();
+      return;
+    }
+
+    // active message sau khi scroll
+    Future.delayed(
+      Duration(
+        milliseconds: 1500,
+      ),
+      () {
+        if (context.mounted) {
+          context
+              .read<MessageHandleCubit>()
+              .toggleMessageReplyAfterActive(messages[checkMessageIndex]);
+        }
+      },
+    );
+
+    // lấy ra vị trí message cuối được hiển thị trong danh sách
+    final lastMessageShowedIndex =
+        _itemPositionsListener.itemPositions.value.last.index;
+
+    // nếu vị trí message reply quá xa với message cuối trong danh sách
+    // thì dùng jumpTo cụ thể lớn hơn (vị trí cuối)
+    if (checkMessageIndex > lastMessageShowedIndex) {
+      print('too long');
       Future.delayed(
-        Duration(
-          milliseconds: 1050,
-        ),
+        Duration(milliseconds: 500),
         () {
-          if (context.mounted) {
-            context
-                .read<MessageHandleCubit>()
-                .activeMessage(messageReplyActive.id!);
-          }
+          _itemScrollController.jumpTo(
+            index: checkMessageIndex,
+            alignment: 0.1,
+          );
         },
       );
       return;
     }
 
-    print('nờ ô nô');
-
-    if (!isRecall) {
-      _loadMoreMessages();
-    }
+    // ngược lại dùng scrollTo để mượt
+    // scroll message reply vào khung hình
+    _itemScrollController.scrollTo(
+      index: checkMessageIndex,
+      duration: Duration(seconds: 1),
+      curve: Curves.ease,
+      alignment: 0.1,
+      opacityAnimationWeights: [20, 20, 30],
+    );
   }
 
   @override
@@ -199,18 +231,42 @@ class _MessageContainerState extends State<MessageContainer> {
               // lắng nghe sự kiện click vào message reply
               _listenMessageReplyActiveAndHandle(context);
 
-              return ScrollablePositionedList.builder(
-                reverse: true,
-                itemCount: state.messages.length,
-                itemPositionsListener: _itemPositionsListener,
-                itemScrollController: _itemScrollController,
-                itemBuilder: (context, index) {
-                  return MessageItem(
-                    message: state.messages[index],
-                    messages: state.messages,
-                    index: index,
-                  );
-                },
+              return Stack(
+                children: [
+                  ScrollablePositionedList.builder(
+                    reverse: true,
+                    itemCount: state.messages.length,
+                    itemPositionsListener: _itemPositionsListener,
+                    itemScrollController: _itemScrollController,
+                    itemBuilder: (context, index) {
+                      return MessageItem(
+                        message: state.messages[index],
+                        messages: state.messages,
+                        index: index,
+                      );
+                    },
+                  ),
+
+                  // Hiển thị loader trên cùng khi isLoading là true
+                  if (isRecall)
+                    Positioned(
+                      top: 20, // Khoảng cách từ trên cùng
+                      left: 0,
+                      right: 0, // Để loader căn giữa ngang
+                      child: Center(
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: CircularProgressIndicator(),
+                        ), // Loader ở giữa
+                      ),
+                    ),
+                ],
               );
             }
             return const SizedBox();

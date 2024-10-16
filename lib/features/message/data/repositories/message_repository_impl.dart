@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/features/message/domain/types/get_all_messages_return_type.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_local_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/message_remote_data_source.dart';
 import 'package:chat_app_flutter/features/message/data/sources/send_message_body.dart';
@@ -17,20 +18,29 @@ class MessageRepositoryImpl implements MessageRepository {
         _messageLocalDataSource = messageLocalDataSource;
 
   @override
-  Future<List<Message>> getAllMessages(
+  Future<GetAllMessagesReturnType> getAllMessages(
     String chatId,
     int? before,
   ) async {
+    bool isLastMessages = false;
+
     final messages = await _messageRemoteDataSource.getAllMessage(
       chatId,
       before,
     );
 
+    if (messages.isEmpty) {
+      isLastMessages = true;
+    }
+
     if (before == null) {
       // thêm vào local datasource
       await setLocalMessages(chatId, messages);
 
-      return messages;
+      return GetAllMessagesReturnType(
+        messages: messages,
+        isLast: isLastMessages,
+      );
     }
 
     // lấy ra message đã lưu
@@ -42,7 +52,10 @@ class MessageRepositoryImpl implements MessageRepository {
     // lưu lại danh sách full messages
     await setLocalMessages(chatId, fullMessages);
 
-    return fullMessages;
+    return GetAllMessagesReturnType(
+      messages: fullMessages,
+      isLast: isLastMessages,
+    );
   }
 
   @override

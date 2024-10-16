@@ -18,8 +18,16 @@ final class MessageFailure extends MessageViewState {
 
 final class MessagesDisplaySuccess extends MessageViewState {
   final List<Message> messages;
-  const MessagesDisplaySuccess(this.messages);
+  final bool isLast;
+
+  const MessagesDisplaySuccess({
+    required this.messages,
+    required this.isLast,
+  });
 
   @override
-  List<Object> get props => [messages];
+  List<Object> get props => [
+        messages,
+        isLast,
+      ];
 }
