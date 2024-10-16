@@ -1,44 +1,54 @@
-import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/app_bar_contact.dart';
-import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/list_contact.dart';
-import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/search_bar_contact.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/invite_contact/search_bar_invite_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation/bottom_navigation_bar.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/invite_contact/app_bar_invite_contact.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/invite_contact/user_list.dart';
 import 'package:flutter/material.dart';
 
-class ContactsScreen extends StatefulWidget {
+
+class SuggestScreen extends StatefulWidget {
+  const SuggestScreen({super.key});
+
   @override
-  _ContactsScreenState createState() => _ContactsScreenState();
+  _SuggestScreenState createState() => _SuggestScreenState();
 }
 
-class _ContactsScreenState extends State<ContactsScreen> {
+class _SuggestScreenState extends State<SuggestScreen> {
+  final List<Map<String, dynamic>> users = [
+    {
+      "name": "Lê Thị Đan Liên",
+      "mutualFriends": 266,
+      "avatar": "assets/avatar1.png",
+    },
+    {
+      "name": "Too Uyenn",
+      "mutualFriends": 266,
+      "avatar": "assets/avatar2.png",
+    },
+  ];
+
   int _currentIndex = 1;
 
-  @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        onInviteFriend: () {
-          Navigator.pushNamed(context, '/suggest');
-        },
-      ),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          children: [
-            SearchBarContact(),
-            ContactList(
-              contacts: [
-                {'name': 'Ánh', 'letter': 'A'},
-                {'name': 'An', 'letter': 'A'},
-                {'name': 'Bạn Liên', 'letter': 'B'},
-                {'name': 'Bạn Linh', 'letter': 'B'},
-                {'name': 'Ly A12', 'letter': 'L'},
-                {'name': 'Cindy', 'letter': 'C'},
-                {'name': 'Daisy', 'letter': 'D'},
-                {'name': 'Diana', 'letter': 'D'},
-              ],
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), 
+        child: Container(
+          padding: const EdgeInsets.only(top: 22.0, bottom: 6.0), 
+          child: SuggestAppBar(), 
         ),
+      ),
+      body: Column(
+        children: [
+          SearchBarInvite(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                return UserItem(user: users[index]);
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
@@ -57,4 +67,5 @@ class _ContactsScreenState extends State<ContactsScreen> {
       ),
     );
   }
+
 }

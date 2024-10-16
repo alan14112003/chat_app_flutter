@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 class SuggestAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const SuggestAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(

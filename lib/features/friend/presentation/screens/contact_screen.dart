@@ -18,10 +18,16 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        onInviteFriend: () {
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), 
+        child: Container(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 6.0),
+          child: CustomAppBar(
+          onInviteFriend: () {
           Navigator.pushNamed(context, '/suggest');
-        },
+            },
+          ), 
+        ),
       ),
       body: Container(
         color: Colors.white,

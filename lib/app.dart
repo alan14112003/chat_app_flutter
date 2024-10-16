@@ -2,6 +2,7 @@ import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
+import 'package:chat_app_flutter/features/friend/presentation/screens/invite_screen.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -35,12 +36,16 @@ class _AppState extends State<App> {
         useMaterial3: true,
       ),
       // mặc định phải để cái này để khỏi xung đột
-      home: const MessageScreen(
-        chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',
-      ),
+      // home: const MessageScreen(
+      //   chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',
+      // ),
       // home: ChatScreen(),
       // home: LoginScreen(),
-      // home: ContactScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ContactScreen(),
+        '/suggest': (context) => SuggestScreen()
+      },
     );
   }
 }

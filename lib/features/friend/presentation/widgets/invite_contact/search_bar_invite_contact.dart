@@ -1,41 +1,28 @@
 import 'package:flutter/material.dart';
-class SuggestAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: Text(
-        'Suggest',
-        style: TextStyle(color: Colors.black),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {},
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/suggest');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            child: Text('Accept Friend Request'),
-          ),
-        ),
-      ],
-    );
-  }
+
+class SearchBarInvite extends StatelessWidget {
+  const SearchBarInvite({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Search',
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.grey[600],
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: 14),
+        ),
+      ),
+    );
+  }
 }
