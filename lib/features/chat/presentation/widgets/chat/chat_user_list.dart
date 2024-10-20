@@ -14,16 +14,16 @@ class ChatUserList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: chatUsers.length,
       itemBuilder: (context, index) {
-        // Truy cập đối tượng ChatUser tại vị trí index
         ChatUsers user = chatUsers[index];
         user.isMessageRead = (index == 0 || index == 2) ? true : false;
 
         return GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const MessageScreen(chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',);
-            }
-            ));
+            Navigator.push(
+                context,
+                MessageScreen.route(
+                  '3bf8c507-8ef0-4931-ac15-92672195cb20',
+                ));
           },
           child: Container(
             padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
@@ -48,9 +48,7 @@ class ChatUserList extends StatelessWidget {
                               Text(
                                 user.text,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey.shade500
-                                ),
+                                    fontSize: 14, color: Colors.grey.shade500),
                               ),
                             ],
                           ),
@@ -63,8 +61,12 @@ class ChatUserList extends StatelessWidget {
                   user.time,
                   style: TextStyle(
                     fontSize: 12,
-                  color: user.isMessageRead ? Colors.black : Colors.grey.shade500, // Chọn màu sắc
-                    fontWeight: user.isMessageRead ? FontWeight.bold : FontWeight.normal, // Chọn kiểu chữ
+                    color: user.isMessageRead
+                        ? Colors.black
+                        : Colors.grey.shade500,
+                    fontWeight: user.isMessageRead
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 )
               ],

@@ -10,7 +10,7 @@ class SearchBarChat extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Tìm kiếm',
-          hintStyle: TextStyle(color: Colors.grey[400]), // Màu cho chữ "Tìm kiếm"
+          hintStyle: TextStyle(color: Colors.grey[400]),
           prefixIcon: Icon(
             Icons.search,
             color: Colors.grey[400],
@@ -23,9 +23,9 @@ class SearchBarChat extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(color: Colors.grey.shade100),
           ),
-          focusedBorder: OutlineInputBorder( // Thêm focusedBorder
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Colors.blueAccent), // Màu viền khi được chọn
+            borderSide: BorderSide(color: Colors.blueAccent),
           ),
         ),
       ),

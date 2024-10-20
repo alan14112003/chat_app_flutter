@@ -12,13 +12,11 @@ class UserListGroupCreate extends StatefulWidget {
 }
 
 class _UserListGroupCreateState extends State<UserListGroupCreate> {
-  // Tạo một danh sách để quản lý trạng thái của các checkbox
   late List<bool> _checked;
 
   @override
   void initState() {
     super.initState();
-    // Khởi tạo danh sách với giá trị false cho tất cả checkbox ban đầu
     _checked = List<bool>.filled(widget.chatUsers.length, false);
   }
 
@@ -29,7 +27,6 @@ class _UserListGroupCreateState extends State<UserListGroupCreate> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.chatUsers.length,
       itemBuilder: (context, index) {
-        // Truy cập đối tượng ChatUser tại vị trí index
         ChatUsers user = widget.chatUsers[index];
         user.isMessageRead = (index == 0 || index == 2) ? true : false;
 
