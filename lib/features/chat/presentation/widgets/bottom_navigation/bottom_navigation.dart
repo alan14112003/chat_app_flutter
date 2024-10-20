@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+  final int currentIndex;
+  final Function(int) onTap;
+
+  const BottomNavigation(
+      {super.key, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
+    return BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onTap,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey.shade400,
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
@@ -25,8 +30,6 @@ class BottomNavigation extends StatelessWidget {
             icon: Icon(Icons.settings),
             label: 'Cài đặt',
           ),
-        ]
-      ),
-    );
+        ]);
   }
 }

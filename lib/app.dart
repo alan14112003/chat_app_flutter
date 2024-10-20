@@ -39,13 +39,13 @@ class _AppState extends State<App> {
       // home: const MessageScreen(
       //   chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',
       // ),
-      // home: ChatScreen(),
+      home: ChatScreen(),
       // home: LoginScreen(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => ContactScreen(),
-        '/suggest': (context) => SuggestScreen()
-      },
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (context) => ContactScreen(),
+      //   '/suggest': (context) => SuggestScreen()
+      // },
     );
   }
 }
