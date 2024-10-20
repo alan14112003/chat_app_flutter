@@ -4,18 +4,18 @@ import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/user_list_group_create.dart';
 import 'package:flutter/material.dart';
 
-class GroupScreenCreate extends StatefulWidget {
+class GroupCreateScreen extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => GroupScreenCreate(),
+        builder: (context) => GroupCreateScreen(),
       );
 
-  const GroupScreenCreate({super.key});
+  const GroupCreateScreen({super.key});
 
   @override
-  State<GroupScreenCreate> createState() => _GroupScreenCreateState();
+  State<GroupCreateScreen> createState() => _GroupCreateScreenState();
 }
 
-class _GroupScreenCreateState extends State<GroupScreenCreate> {
+class _GroupCreateScreenState extends State<GroupCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

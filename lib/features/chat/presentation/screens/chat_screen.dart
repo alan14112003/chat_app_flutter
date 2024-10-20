@@ -27,7 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Scaffold(
         appBar: AppBarChat(
           group_button: () {
-            Navigator.push(context, GroupScreenCreate.route());
+            Navigator.push(context, GroupCreateScreen.route());
           },
         ),
         body: Container(
