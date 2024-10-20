@@ -77,6 +77,14 @@ class _MessageListenStateChangeState extends State<MessageListenStateChange> {
           );
       return;
     }
+
+    // nhận tin nhắn được ghim thành công
+    if (state is ReceivePinMessageSuccess) {
+      context.read<MessageViewBloc>().add(
+            ReRenderMessagesEvent(messsages: state.messages),
+          );
+      return;
+    }
   }
 
   @override

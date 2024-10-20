@@ -25,3 +25,9 @@ final class ReceiveNewMessageSuccess extends MessageSystemHandleState {
 
   const ReceiveNewMessageSuccess(this.messages);
 }
+
+final class ReceivePinMessageSuccess extends MessageSystemHandleState {
+  final List<Message> messages;
+
+  const ReceivePinMessageSuccess(this.messages);
+}

@@ -119,4 +119,10 @@ class HandleMessageUtil {
       context.read<MessageHandleCubit>().setMessageReply(null);
     }
   }
+
+  static bool isMessageInActiveChat(BuildContext context, Message message) {
+    // lấy ra chatId từ cubit
+    final chatId = context.read<MessageHandleCubit>().state.chatId;
+    return chatId == message.chatId;
+  }
 }
