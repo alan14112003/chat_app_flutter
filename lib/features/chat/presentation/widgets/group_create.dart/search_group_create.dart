@@ -11,9 +11,8 @@ class SearchBarGroupCreate extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Tìm kiếm',
-          border: InputBorder.none, // Loại bỏ tất cả đường viền
-          hintStyle:
-              TextStyle(color: Colors.grey[400]), // Màu cho chữ "Tìm kiếm"
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.grey[400]),
           prefixIcon: Icon(
             Icons.search,
             color: Colors.grey[400],
@@ -27,10 +26,8 @@ class SearchBarGroupCreate extends StatelessWidget {
             borderSide: BorderSide(color: Colors.grey.shade100),
           ),
           focusedBorder: OutlineInputBorder(
-            // Thêm focusedBorder
             borderRadius: BorderRadius.circular(30),
-            borderSide:
-                BorderSide(color: Colors.blueAccent), // Màu viền khi được chọn
+            borderSide: BorderSide(color: Colors.blueAccent),
           ),
         ),
       ),

@@ -11,14 +11,11 @@ class AppBarChat extends StatelessWidget implements PreferredSizeWidget {
       title: Text('Đoạn chat'),
       backgroundColor: Colors.blueAccent,
       actions: [
-        IconButton(
-          icon: Icon(Icons.group),
-          onPressed: group_button
-        ),
+        IconButton(icon: Icon(Icons.group), onPressed: group_button),
       ],
     );
   }
-  
+
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight); // Chiều cao của AppBar
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

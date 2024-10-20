@@ -35,14 +35,12 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Nhập tên nhóm',
-                    border: InputBorder.none, // Loại bỏ tất cả đường viền
+                    border: InputBorder.none,
                     hintStyle: TextStyle(color: Colors.grey[400]),
                     contentPadding: EdgeInsets.all(8.0),
                     focusedBorder: UnderlineInputBorder(
-                      // Viền dưới khi được chọn
-                      borderSide: BorderSide(
-                          color: Colors.blueAccent,
-                          width: 2.0), // Viền dưới khi TextField được chọn
+                      borderSide:
+                          BorderSide(color: Colors.blueAccent, width: 2.0),
                     ),
                   ),
                 ),
@@ -59,7 +57,6 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                   ),
                 ),
               ),
-              // Thêm nhiều widget khác vào ListView để kiểm tra khả năng cuộn
               UserListGroupCreate(
                 chatUsers: [
                   ChatUsers(

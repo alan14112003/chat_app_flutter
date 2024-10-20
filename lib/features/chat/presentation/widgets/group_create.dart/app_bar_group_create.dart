@@ -23,6 +23,5 @@ class AppBarGroupCreate extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight(kToolbarHeight); // Chiều cao của AppBar
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

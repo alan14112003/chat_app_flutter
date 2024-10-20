@@ -35,7 +35,6 @@ class _ChatScreenState extends State<ChatScreen> {
           child: ListView(
             children: [
               SearchBarChat(),
-              // Thêm nhiều widget khác vào ListView để kiểm tra khả năng cuộn
               ChatUserList(
                 chatUsers: [
                   ChatUsers(
@@ -95,9 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
               } else if (_currentIndex == 1) {
                 // Navigator.push(context, ContactScreen.route());
               } else if (_currentIndex == 2) {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //     return const SettingScreen();
-                // }));
+                // Navigator.push(context, SettingScreen.route());
               }
             });
           },
