@@ -14,6 +14,7 @@ class ChatUserList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: chatUsers.length,
       itemBuilder: (context, index) {
+        // Truy cập đối tượng ChatUser tại vị trí index
         ChatUsers user = chatUsers[index];
         user.isMessageRead = (index == 0 || index == 2) ? true : false;
 

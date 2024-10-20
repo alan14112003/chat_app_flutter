@@ -32,11 +32,11 @@ class _UserListGroupCreateState extends State<UserListGroupCreate> {
 
         return GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const MessageScreen(
-                chatId: '3bf8c507-8ef0-4931-ac15-92672195cb20',
-              );
-            }));
+            Navigator.push(
+                context,
+                MessageScreen.route(
+                  '3bf8c507-8ef0-4931-ac15-92672195cb20',
+                ));
           },
           child: Container(
             padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),

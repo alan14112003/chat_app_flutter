@@ -94,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
               } else if (_currentIndex == 1) {
                 // Navigator.push(context, ContactScreen.route());
               } else if (_currentIndex == 2) {
-                // Navigator.push(context, RouteSettings.route());
+                // Navigator.push(context, SettingScreen.route());
               }
             });
           },
