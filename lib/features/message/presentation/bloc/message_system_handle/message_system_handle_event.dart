@@ -22,3 +22,11 @@ final class ReceivePinMessageEvent extends MessageSystemHandleEvent {
     required this.message,
   });
 }
+
+final class ReceiveRecallMessageEvent extends MessageSystemHandleEvent {
+  final Message message;
+
+  const ReceiveRecallMessageEvent({
+    required this.message,
+  });
+}

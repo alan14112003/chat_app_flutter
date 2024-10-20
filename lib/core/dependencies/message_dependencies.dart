@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_new_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_pin_message.dart';
+import 'package:chat_app_flutter/features/message/domain/usecases/receive_recall_message.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -73,6 +74,11 @@ void messageDependencies(GetIt serviceLocator) {
         messageRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => ReceiveRecallMessage(
+        messageRepository: serviceLocator(),
+      ),
+    )
 
     // bloc
     ..registerFactory(
@@ -92,6 +98,7 @@ void messageDependencies(GetIt serviceLocator) {
       () => MessageSystemHandleBloc(
         receiveNewMessage: serviceLocator(),
         receivePinMessage: serviceLocator(),
+        receiveRecallMessage: serviceLocator(),
       ),
     );
 }

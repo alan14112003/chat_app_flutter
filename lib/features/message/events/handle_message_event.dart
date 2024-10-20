@@ -61,4 +61,28 @@ class HandleMessageEvent {
           );
     };
   }
+
+  // receive recall message
+  void onReceiveRecallMessage(BuildContext context) {
+    _socket.on(MessageEventEnum.RECALL, _handleReceiveRecallMessage(context));
+  }
+
+  void offReceiveRecallMessage(BuildContext context) {
+    _socket.off(MessageEventEnum.RECALL, _handleReceiveRecallMessage(context));
+  }
+
+  dynamic _handleReceiveRecallMessage(BuildContext context) {
+    return (data) {
+      Message message = Message.fromJson(data);
+      // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
+      if (!HandleMessageUtil.isMessageInActiveChat(context, message)) {
+        return;
+      }
+      context.read<MessageSystemHandleBloc>().add(
+            ReceiveRecallMessageEvent(
+              message: message,
+            ),
+          );
+    };
+  }
 }

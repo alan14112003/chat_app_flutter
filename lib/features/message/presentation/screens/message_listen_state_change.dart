@@ -85,6 +85,14 @@ class _MessageListenStateChangeState extends State<MessageListenStateChange> {
           );
       return;
     }
+
+    // nhận tin nhắn đã thu hồi thành công
+    if (state is ReceiveRecallMessageSuccess) {
+      context.read<MessageViewBloc>().add(
+            ReRenderMessagesEvent(messsages: state.messages),
+          );
+      return;
+    }
   }
 
   @override
