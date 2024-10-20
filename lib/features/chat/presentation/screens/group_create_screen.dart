@@ -1,42 +1,66 @@
 import 'package:chat_app_flutter/features/chat/domain/types/chat_user.dart';
-import 'package:chat_app_flutter/features/chat/presentation/screens/group_create_screen.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_navigation/bottom_navigation.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/app_bar_chat.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/chat_user_list.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/search_chat.dart';
-import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
+import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/app_bar_group_create.dart';
+import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/search_group_create.dart';
+import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/user_list_group_create.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
+class GroupCreateScreen extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => ChatScreen(),
+        builder: (context) => GroupCreateScreen(),
       );
 
-  const ChatScreen({super.key});
+  const GroupCreateScreen({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<GroupCreateScreen> createState() => _GroupCreateScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
-  int _currentIndex = 0;
-
+class _GroupCreateScreenState extends State<GroupCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBarChat(
-          group_button: () {
-            Navigator.push(context, GroupCreateScreen.route());
+        appBar: AppBarGroupCreate(
+          group_create_button: () {
+            //Chưa có màn hình nhóm chat
           },
         ),
         body: Container(
           color: Colors.white,
           child: ListView(
             children: [
-              SearchBarChat(),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 5.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Nhập tên nhóm',
+                    border: InputBorder.none, // Loại bỏ tất cả đường viền
+                    hintStyle: TextStyle(color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.all(8.0),
+                    focusedBorder: UnderlineInputBorder(
+                      // Viền dưới khi được chọn
+                      borderSide: BorderSide(
+                          color: Colors.blueAccent,
+                          width: 2.0), // Viền dưới khi TextField được chọn
+                    ),
+                  ),
+                ),
+              ),
+              SearchBarGroupCreate(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Gợi ý',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
               // Thêm nhiều widget khác vào ListView để kiểm tra khả năng cuộn
-              ChatUserList(
+              UserListGroupCreate(
                 chatUsers: [
                   ChatUsers(
                       name: 'Hòa',
@@ -84,23 +108,6 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigation(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              if (_currentIndex == 0) {
-                Navigator.push(context, ChatScreen.route());
-              } else if (_currentIndex == 1) {
-                // Navigator.push(context, ContactScreen.route());
-              } else if (_currentIndex == 2) {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //     return const SettingScreen();
-                // }));
-              }
-            });
-          },
         ),
       ),
     );
