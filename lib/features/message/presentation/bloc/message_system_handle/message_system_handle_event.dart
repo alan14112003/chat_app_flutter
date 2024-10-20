@@ -14,3 +14,11 @@ final class ReceiveNewMessageEvent extends MessageSystemHandleEvent {
     required this.message,
   });
 }
+
+final class ReceivePinMessageEvent extends MessageSystemHandleEvent {
+  final Message message;
+
+  const ReceivePinMessageEvent({
+    required this.message,
+  });
+}

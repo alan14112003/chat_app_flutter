@@ -36,6 +36,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
     context.read<MessageHandleCubit>().selectedChat(widget.chatId);
     _messageEvent.onReceiveNewMessage(context);
+    _messageEvent.onReceivePinMessage(context);
   }
 
   @override
@@ -43,6 +44,7 @@ class _MessageScreenState extends State<MessageScreen> {
     super.dispose();
 
     _messageEvent.offReceiveNewMessage(context);
+    _messageEvent.offReceivePinMessage(context);
   }
 
   @override
