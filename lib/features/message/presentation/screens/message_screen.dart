@@ -2,6 +2,7 @@ import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/message/events/handle_message_event.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_listen_state_change.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_appbar.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_container.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/message_input_box.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,7 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MessageAppbar(chatId: widget.chatId),
       body: MessageListenStateChange(
         child: const Column(
           children: [
