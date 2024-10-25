@@ -15,4 +15,13 @@ class ChatRemoteDataSource {
     // trả về danh sách sau khi map qua Chat
     return chats.data!.map<Chat>((chat) => Chat.fromJson(chat)).toList();
   }
+
+  Future<Chat> getChat(String chatId) async {
+    final Response<dynamic> chat = await _dio.get(
+      '/chats/$chatId',
+    );
+
+    // trả về danh sách sau khi map qua Chat
+    return Chat.fromJson(chat.data as Map<String, Object?>);
+  }
 }

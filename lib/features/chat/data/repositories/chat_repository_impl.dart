@@ -13,4 +13,9 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<List<Chat>> getAllChats() {
     return _chatRemoteDataSource.getAllChats();
   }
+
+  @override
+  Future<Chat> getChat(String chatId) {
+    return _chatRemoteDataSource.getChat(chatId);
+  }
 }
