@@ -126,12 +126,10 @@ class HandleMessageUtil {
     return chatId == message.chatId;
   }
 
-  static String getInfoFriend(List<User> users) {
+  static User getInfoFriend(List<User> users) {
     final auth = User(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
-    return users
-        .firstWhere(
-          (user) => user.id != auth.id,
-        )
-        .fullName!;
+    return users.firstWhere(
+      (user) => user.id != auth.id,
+    );
   }
 }
