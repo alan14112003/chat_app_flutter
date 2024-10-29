@@ -1,9 +1,14 @@
+import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_event.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/app_bar_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/list_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/contact/search_bar_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation/bottom_navigation_bar.dart';
-import 'package:flutter/material.dart';
-
+import 'package:chat_app_flutter/features/friend/domain/usecases/get_friends.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -16,38 +21,47 @@ class _ContactScreenState extends State<ContactScreen> {
   int _currentIndex = 1;
 
   @override
+  void initState() {
+    super.initState();
+    context.read<FriendBloc>().add(LoadFriendsEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0), 
+        preferredSize: const Size.fromHeight(80.0),
         child: Container(
           padding: const EdgeInsets.only(top: 16.0, bottom: 6.0),
           child: CustomAppBar(
-          onInviteFriend: () {
-          Navigator.pushNamed(context, '/suggest');
+            onInviteFriend: () {
+              Navigator.pushNamed(context, '/suggest');
             },
-          ), 
+          ),
         ),
       ),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          children: [
-            SearchBarContact(),
-            ContactList(
-              contacts: [
-                {'name': 'Ánh', 'letter': 'A'},
-                {'name': 'An', 'letter': 'A'},
-                {'name': 'Bạn Liên', 'letter': 'B'},
-                {'name': 'Bạn Linh', 'letter': 'B'},
-                {'name': 'Ly A12', 'letter': 'L'},
-                {'name': 'Cindy', 'letter': 'C'},
-                {'name': 'Daisy', 'letter': 'D'},
-                {'name': 'Diana', 'letter': 'D'},
-              ],
+      body: Column(
+        children: [
+          const SearchBarContact(),
+          Expanded(
+            child: BlocBuilder<FriendBloc, FriendState>(
+              builder: (context, state) {
+                if (state is FriendLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is FriendLoaded) {
+                  final friends = state.users
+                      .map((friend) => {'name': friend.fullName, 'avatar': friend.avatar})
+                      .toList();
+                  return ContactList(contacts: friends);
+                } else if (state is FriendError) {
+                  return Center(child: Text(state.message));
+                } else {
+                  return const Center(child: Text('Chưa kết bạn'));
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
