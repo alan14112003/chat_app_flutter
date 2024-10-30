@@ -1,9 +1,9 @@
-import 'package:chat_app_flutter/features/chat/domain/types/chat_user.dart';
+import 'package:chat_app_flutter/core/common/models/chat.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserListGroupCreate extends StatefulWidget {
-  final List<ChatUsers> chatUsers;
+  final List<Chat> chatUsers;
 
   const UserListGroupCreate({super.key, required this.chatUsers});
 

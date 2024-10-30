@@ -1,4 +1,3 @@
-import 'package:chat_app_flutter/features/chat/domain/types/chat_user.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/app_bar_group_create.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/search_group_create.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/user_list_group_create.dart';
@@ -59,48 +58,48 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
               ),
               UserListGroupCreate(
                 chatUsers: [
-                  ChatUsers(
-                      name: 'Hòa',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: 'bây giờ',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'A',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: '12:30',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'B',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: 'bây giờ',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'C',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: '3:30',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'D',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: '8:30',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'E',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: '8:30',
-                      isMessageRead: false),
-                  ChatUsers(
-                      name: 'F',
-                      text: 'aa',
-                      image: 'images/avatar.jpg',
-                      // time: '8:30',
-                      isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'Hòa',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: 'bây giờ',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'A',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: '12:30',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'B',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: 'bây giờ',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'C',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: '3:30',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'D',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: '8:30',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'E',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: '8:30',
+                  //     isMessageRead: false),
+                  // ChatUsers(
+                  //     name: 'F',
+                  //     text: 'aa',
+                  //     image: 'images/avatar.jpg',
+                  //     // time: '8:30',
+                  //     isMessageRead: false),
                 ],
               ),
             ],
