@@ -8,21 +8,19 @@ class ContactList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       itemCount: contacts.length,
       itemBuilder: (context, index) {
         final contact = contacts[index];
-        final letter = contact['letter'];
+        final letter = contact['name']!.substring(0, 1).toUpperCase();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (index == 0 || contacts[index - 1]['letter'] != letter)
+            if (index == 0 || contacts[index - 1]['name']!.substring(0, 1).toUpperCase() != letter)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                  letter!,
+                  letter,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -38,8 +36,7 @@ class ContactList extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
                       backgroundColor: Colors.grey[300],
-                      backgroundImage: const AssetImage(
-                          'assets/avatar_placeholder.png'),
+                      backgroundImage: NetworkImage(contact['avatar']!),
                     ),
                     title: Text(contact['name']!),
                   ),
