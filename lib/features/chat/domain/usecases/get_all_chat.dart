@@ -19,8 +19,10 @@ class GetAllChat implements UseCase<List<Chat>, NoParams> {
       final chats = await _chatRepository.getAllChats();
       return right(chats);
     } on DioException catch (e) {
+      print('DioException: ${e.message}');
       return HandleErrorDio.call(e);
     } catch (e) {
+      print('Catch Error: ${e.toString()}');
       return left(Failure(e.toString()));
     }
   }

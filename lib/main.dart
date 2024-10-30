@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/app.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
+import 'package:chat_app_flutter/features/chat/presentation/bloc/chat_view/chat_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
@@ -43,6 +44,10 @@ void main() async {
 
       BlocProvider(
         create: (_) => serviceLocator<ChatInfoViewBloc>(),
+      ),
+
+      BlocProvider(
+        create: (_) => serviceLocator<ChatViewBloc>(),
       ),
     ],
     child: const App(),
