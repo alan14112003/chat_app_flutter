@@ -19,7 +19,10 @@ class ChatInfoViewBloc extends Bloc<ChatInfoViewEvent, ChatInfoViewState> {
   }
 
   FutureOr<void> _onGetChat(
-      GetChatEvent event, Emitter<ChatInfoViewState> emit) async {
+    GetChatEvent event,
+    Emitter<ChatInfoViewState> emit,
+  ) async {
+    emit(ChatInfoViewLoading());
     final res = await _getChat.call(GetChatParams(
       chatId: event.chatId,
     ));

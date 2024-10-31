@@ -31,6 +31,7 @@ class _MessageContainerState extends State<MessageContainer> {
 
     // Gửi sự kiện để fetch messages từ MessageViewBloc
     context.read<MessageViewBloc>().add(FetchAllMessagesEvent(chatId: chatId));
+    context.read<MessageHandleCubit>().toggleMessageReplyActive(null);
   }
 
   @override
@@ -45,7 +46,6 @@ class _MessageContainerState extends State<MessageContainer> {
   void dispose() {
     super.dispose();
     _removeScrollListener();
-    context.read<MessageHandleCubit>().toggleMessageReplyActive(null);
   }
 
   void _resetItemPositionsListener() {
