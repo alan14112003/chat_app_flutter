@@ -8,6 +8,7 @@ import 'package:chat_app_flutter/core/dependencies/friend_dependencies.dart';
 import 'package:chat_app_flutter/core/dependencies/message_dependencies.dart';
 import 'package:chat_app_flutter/core/utils/http.dart';
 import 'package:chat_app_flutter/core/utils/socket_service.dart';
+import 'package:chat_app_flutter/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,7 +31,9 @@ Future<void> initDependencies() async {
 
   // http
   serviceLocator.registerLazySingleton(
-    () => Http(preferences: preferences).dio,
+    () => Http(
+      authLocalDataSource: serviceLocator<AuthLocalDataSource>(),
+    ).dio,
   );
 
   // socket

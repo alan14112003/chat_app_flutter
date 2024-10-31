@@ -17,7 +17,7 @@ class AuthLoginCubit extends Cubit<AuthLoginState> {
 
   void toggleIsSubmitted([bool isSubmitted = false]) {
     final isValidEmail = EmailValidator.validate(state.email);
-    final isValidPassword = state.password.length >= 6;
+    final isValidPassword = state.password.length >= 3;
 
     emit(
       state.copyWith(
