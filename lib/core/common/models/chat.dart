@@ -51,20 +51,23 @@ class Chat extends Equatable {
 
   static Chat fromJson(Map<String, Object?> json) {
     return Chat(
-        id: json['id'] == null ? null : json['id'] as String,
-        groupName: json['groupName'] as dynamic,
-        isGroup: json['isGroup'] == null ? null : json['isGroup'] as bool,
-        lastMsg: json['lastMsg'] == null
-            ? null
-            : Message.fromJson(json['lastMsg'] as Map<String, Object?>),
-        members: json['members'] == null
-            ? null
-            : (json['members'] as List)
-                .map<User>(
-                  (data) => User.fromJson(data as Map<String, Object?>),
-                )
-                .toList(),
-        adm: json['adm'] as dynamic);
+      id: json['id'] == null ? null : json['id'] as String,
+      groupName: json['groupName'] as dynamic,
+      isGroup: json['isGroup'] == null ? null : json['isGroup'] as bool,
+      lastMsg: json['lastMsg'] == null
+          ? null
+          : Message.fromJson(json['lastMsg'] as Map<String, Object?>),
+      members: json['members'] == null
+          ? null
+          : (json['members'] as List)
+              .map<User>(
+                (data) => User.fromJson(data as Map<String, Object?>),
+              )
+              .toList(),
+      adm: json['adm'] == null
+          ? null
+          : User.fromJson(json['adm'] as Map<String, Object?>),
+    );
   }
 
   @override

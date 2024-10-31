@@ -1,9 +1,9 @@
-import 'package:chat_app_flutter/features/chat/domain/types/chat_user.dart';
+import 'package:chat_app_flutter/core/common/models/chat.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserListGroupCreate extends StatefulWidget {
-  final List<ChatUsers> chatUsers;
+  final List<Chat> chatUsers;
 
   const UserListGroupCreate({super.key, required this.chatUsers});
 
@@ -13,6 +13,8 @@ class UserListGroupCreate extends StatefulWidget {
 
 class _UserListGroupCreateState extends State<UserListGroupCreate> {
   late List<bool> _checked;
+
+  get chatUsers => null;
 
   @override
   void initState() {
@@ -27,8 +29,9 @@ class _UserListGroupCreateState extends State<UserListGroupCreate> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.chatUsers.length,
       itemBuilder: (context, index) {
-        ChatUsers user = widget.chatUsers[index];
-        user.isMessageRead = (index == 0 || index == 2) ? true : false;
+        final user = chatUsers[index].copyWith(
+          isMessageRead: (index == 0 || index == 2), // Cập nhật trạng thái đọc
+        );
 
         return GestureDetector(
           onTap: () {

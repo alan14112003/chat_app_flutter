@@ -1,3 +1,5 @@
+
+import 'package:chat_app_flutter/features/friend/presentation/models/user.dart';
 import 'package:equatable/equatable.dart';
 import '../../domain/entities/friend.dart';
 
@@ -16,11 +18,11 @@ class FriendLoading extends FriendState {
 }
 
 class FriendLoaded extends FriendState {
-  final List<Friend> friends;
-  const FriendLoaded(this.friends);
+  final List<User> users;
+  const FriendLoaded(this.users);
 
   @override
-  List<Object?> get props => [friends];
+  List<Object?> get props => [users];
 }
 
 class FriendAdded extends FriendState {

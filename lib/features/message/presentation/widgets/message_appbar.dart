@@ -37,24 +37,35 @@ class _MessageAppbarState extends State<MessageAppbar> {
       builder: (context, state) {
         if (state is ChatInfoViewSuccess) {
           return AppBar(
-            leadingWidth: 100,
-            leading: Row(
-              children: [
-                SizedBox(width: 10),
-                CircleAvatar(
-                  radius: 20,
-                  // backgroundImage: NetworkImage(),
-                ),
-                SizedBox(width: 10),
-              ],
+            leadingWidth: 58,
+            leading: Padding(
+              padding: EdgeInsets.all(8),
+              child: (state.chat.isGroup == false)
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        HandleMessageUtil.getInfoFriend(
+                              state.chat.members!,
+                            ).avatar ??
+                            '',
+                      ),
+                    )
+                  : CircleAvatar(
+                      child: Text(state.chat.members!
+                          .map((member) => member.firstName![0])
+                          .join()
+                          .toUpperCase()),
+                    ),
             ),
             title: Text(
               state.chat.isGroup == true
                   ? state.chat.groupName!
                   : HandleMessageUtil.getInfoFriend(
                       state.chat.members!,
-                    ),
-              style: TextStyle(fontSize: 18),
+                    ).fullName!,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             centerTitle: false,
           );
