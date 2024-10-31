@@ -7,6 +7,7 @@ class User extends Equatable {
   final String? lastName;
   final String? avatar;
   final String? email;
+  final String? accessToken;
 
   const User({
     this.fullName,
@@ -15,6 +16,7 @@ class User extends Equatable {
     this.lastName,
     this.avatar,
     this.email,
+    this.accessToken,
   });
 
   User copyWith({
@@ -24,6 +26,7 @@ class User extends Equatable {
     String? lastName,
     String? avatar,
     String? email,
+    String? accessToken,
   }) {
     return User(
       fullName: fullName ?? this.fullName,
@@ -32,6 +35,7 @@ class User extends Equatable {
       lastName: lastName ?? this.lastName,
       avatar: avatar ?? this.avatar,
       email: email ?? this.email,
+      accessToken: accessToken ?? this.accessToken,
     );
   }
 
@@ -43,6 +47,7 @@ class User extends Equatable {
       'lastName': lastName,
       'avatar': avatar,
       'email': email,
+      'accessToken': accessToken,
     };
   }
 
@@ -54,6 +59,8 @@ class User extends Equatable {
       lastName: json['lastName'] == null ? null : json['lastName'] as String,
       avatar: json['avatar'] as dynamic,
       email: json['email'] == null ? null : json['email'] as String,
+      accessToken:
+          json['accessToken'] == null ? null : json['accessToken'] as String,
     );
   }
 
@@ -65,6 +72,7 @@ class User extends Equatable {
         lastName,
         avatar,
         email,
+        accessToken,
       ];
 
   @override

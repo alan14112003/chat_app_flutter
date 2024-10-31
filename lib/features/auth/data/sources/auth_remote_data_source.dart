@@ -11,9 +11,10 @@ class AuthRemoteDataSource {
 
   // Hàm xử lý đăng nhập
   Future<User> login(LoginBody loginBody) async {
+    // Chuyển loginBody thành JSON
     final Response<dynamic> response = await _dio.post(
       '/auth/login',
-      data: loginBody.toJson(), // Chuyển loginBody thành JSON
+      data: loginBody.toJson(),
     );
 
     // Trả về AuthResponse sau khi map từ response

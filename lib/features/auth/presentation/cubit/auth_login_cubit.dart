@@ -8,24 +8,23 @@ class AuthLoginCubit extends Cubit<AuthLoginState> {
   AuthLoginCubit() : super(AuthLoginState.initial());
 
   void emailChanged(String email) {
-    final isValidEmail = EmailValidator.validate(email);
-    emit(state.copyWith(email: email, isValidEmail: isValidEmail));
+    emit(state.copyWith(email: email));
   }
 
   void passwordChanged(String password) {
-    final isValidPassword = password.length >= 6;
-    emit(state.copyWith(password: password, isValidPassword: isValidPassword));
+    emit(state.copyWith(password: password));
   }
 
-  bool isFormValid() {
+  void toggleIsSubmitted([bool isSubmitted = false]) {
     final isValidEmail = EmailValidator.validate(state.email);
     final isValidPassword = state.password.length >= 6;
 
-    emit(state.copyWith(
-      isValidEmail: isValidEmail,
-      isValidPassword: isValidPassword,
-    ));
-
-    return isValidEmail && isValidPassword;
+    emit(
+      state.copyWith(
+        isSubmitted: isSubmitted,
+        isValidEmail: isValidEmail,
+        isValidPassword: isValidPassword,
+      ),
+    );
   }
 }

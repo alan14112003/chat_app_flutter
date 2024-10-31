@@ -5,4 +5,7 @@ import 'package:chat_app_flutter/features/auth/data/sources/auth_body.dart';
 abstract interface class AuthRepository {
   // Hàm đăng nhập, trả về đối tượng [User] khi đăng nhập thành công
   Future<User> login(LoginBody loginBody);
+  Future<void> setUserLoggedIn(User user);
+  User? getUserLoggedIn();
+  Future<void> logout();
 }

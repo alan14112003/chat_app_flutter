@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/features/auth/presentation/screens/setting_screen.dart';
 import 'package:chat_app_flutter/features/chat/domain/types/chat_user.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/group_create_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_navigation/bottom_navigation.dart';
@@ -94,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
               } else if (_currentIndex == 1) {
                 // Navigator.push(context, ContactScreen.route());
               } else if (_currentIndex == 2) {
-                // Navigator.push(context, SettingScreen.route());
+                Navigator.push(context, SettingScreen.route());
               }
             });
           },

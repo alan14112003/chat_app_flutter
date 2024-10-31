@@ -1,5 +1,8 @@
 import 'package:chat_app_flutter/app.dart';
+import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
+import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_login_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
@@ -43,6 +46,16 @@ void main() async {
 
       BlocProvider(
         create: (_) => serviceLocator<ChatInfoViewBloc>(),
+      ),
+
+      BlocProvider(
+        create: (_) => serviceLocator<AuthBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => serviceLocator<AuthLoginCubit>(),
+      ),
+      BlocProvider(
+        create: (_) => serviceLocator<AppAuthCubit>(),
       ),
     ],
     child: const App(),
