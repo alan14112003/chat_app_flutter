@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             return;
           }
           if (state is AuthFailure) {
-            showSnackBar(context, 'Đăng nhập thất bại!');
+            showSnackBar(context, state.error);
             return;
           }
         },

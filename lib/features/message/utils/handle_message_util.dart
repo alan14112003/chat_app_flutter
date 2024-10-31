@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
+import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_bottom_sheet/message_bottom_sheet.dart';
@@ -38,7 +39,7 @@ class HandleMessageUtil {
     BuildContext context, {
     required Message message,
   }) {
-    final auth = User(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
+    final auth = AuthGlobalUtils.getAuth();
     return message.sender?.id == auth.id;
   }
 
