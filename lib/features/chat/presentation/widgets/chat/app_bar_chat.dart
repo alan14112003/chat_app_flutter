@@ -8,6 +8,7 @@ class AppBarChat extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Text('Đoạn chat'),
       backgroundColor: Colors.blueAccent,
       actions: [

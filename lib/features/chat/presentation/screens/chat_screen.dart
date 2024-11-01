@@ -25,7 +25,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    print('ChatScreen initialized');
     context.read<ChatViewBloc>().add(GetAllChatEvent());
   }
 
