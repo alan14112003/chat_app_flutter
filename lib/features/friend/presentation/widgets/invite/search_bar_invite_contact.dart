@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchBarInvite extends StatelessWidget {
-  const SearchBarInvite({super.key});
+class SearchBarInviteContact extends StatelessWidget {
+  const SearchBarInviteContact({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class SearchBarInvite extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Search',
+          hintText: 'Tìm kiếm bạn bè...',
           prefixIcon: Icon(
             Icons.search,
             color: Colors.grey[600],
@@ -20,7 +20,7 @@ class SearchBarInvite extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.symmetric(vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 14),
         ),
       ),
     );

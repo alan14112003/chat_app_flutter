@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
-class SuggestAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SuggestAppBar({super.key});
+class AppBarInviteContact extends StatelessWidget implements PreferredSizeWidget {
+  final Widget leading;
+
+  const AppBarInviteContact({super.key, required this.leading});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
+      leading: leading,
       title: Text(
-        'Suggest',
-        style: TextStyle(color: Colors.black),
+        'Lời mời kết bạn',
+        style: TextStyle(color: Colors.black, fontSize: 18),
       ),
       actions: [
         TextButton(
@@ -32,7 +29,7 @@ class SuggestAppBar extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            child: Text('Accept Friend Request'),
+            child: Text('Đề xuất kết bạn', style: TextStyle(fontSize: 12),),
           ),
         ),
       ],

@@ -5,7 +5,7 @@ class RemoveFriend {
 
   RemoveFriend({required this.friendRepository});
 
-  Future<void> call(int friendId) async {
+  Future<void> call(String friendId) async {
     await friendRepository.removeFriend(friendId);
   }
 }

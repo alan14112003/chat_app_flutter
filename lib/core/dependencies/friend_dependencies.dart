@@ -3,16 +3,22 @@ import 'package:chat_app_flutter/features/friend/data/sources/friend_remote_data
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/get_friends.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/add_friend.dart';
+import 'package:chat_app_flutter/features/friend/domain/usecases/get_invite_friend.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/remove_friend.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/add_friend_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/invite_friends_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/remove_invite_friend_bloc.dart';
 import 'package:get_it/get_it.dart';
 
   void friendDependencies(GetIt serviceLocator) {
     // Đăng ký các use case
     serviceLocator
       ..registerLazySingleton(() => GetFriends(friendRepository: serviceLocator()))
+      ..registerLazySingleton(() => GetInviteFriends(friendRepository: serviceLocator()))
       ..registerLazySingleton(() => AddFriend(friendRepository: serviceLocator()))
       ..registerLazySingleton(() => RemoveFriend(friendRepository: serviceLocator()));
+
 
     // Đăng ký repository
     // Register Friend dependencies
@@ -28,4 +34,7 @@ import 'package:get_it/get_it.dart';
 
     // Đăng ký Bloc
     serviceLocator.registerFactory<FriendBloc>(() => FriendBloc(getFriends: serviceLocator()));
+    serviceLocator.registerFactory<InviteFriendsBloc>(() => InviteFriendsBloc(getInviteFriends: serviceLocator()));
+    serviceLocator.registerFactory<AddFriendBloc>(() => AddFriendBloc(addFriend: serviceLocator()));
+    serviceLocator.registerFactory<RemoveInviteFriendBloc>(() => RemoveInviteFriendBloc(removeFriend: serviceLocator()));
   }

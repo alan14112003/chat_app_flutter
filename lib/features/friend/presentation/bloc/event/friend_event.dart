@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/friend.dart';
+
 
 abstract class FriendEvent extends Equatable {
   const FriendEvent();
@@ -10,16 +10,25 @@ class LoadFriendsEvent extends FriendEvent {
   List<Object?> get props => [];
 }
 
+// class AddFriendEvent extends FriendEvent {
+//   final Friend friend;
+//   const AddFriendEvent(this.friend);
+//
+//   @override
+//   List<Object?> get props => [friend];
+// }
+
 class AddFriendEvent extends FriendEvent {
-  final Friend friend;
-  const AddFriendEvent(this.friend);
+  final String id;
+  const AddFriendEvent(this.id);
 
   @override
-  List<Object?> get props => [friend];
+  List<Object?> get props => [id];
 }
 
+
 class DeleteFriendEvent extends FriendEvent {
-  final int id;
+  final String id;
   const DeleteFriendEvent(this.id);
 
   @override

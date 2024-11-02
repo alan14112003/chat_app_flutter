@@ -1,7 +1,5 @@
-
+import 'package:chat_app_flutter/core/common/models/friend.dart';
 import 'package:chat_app_flutter/features/friend/data/sources/friend_remote_data_source.dart';
-import 'package:chat_app_flutter/features/friend/domain/entities/friend.dart';
-
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
 import 'package:chat_app_flutter/features/friend/presentation/models/user.dart';
 
@@ -11,17 +9,22 @@ class FriendRepositoryImpl implements FriendRepository {
   FriendRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<User>> getFriends() async {
+  Future<List<Friend>> getFriends() async {
     return await remoteDataSource.getFriends();
   }
 
   @override
-  Future<void> addFriend(Friend friend) async {
-
+  Future<List<Friend>> getInviteFriends() async {
+    return await remoteDataSource.getInviteFriends();
   }
 
   @override
-  Future<void> removeFriend(int friendId) async {
+  Future<void> addFriendById(String friendId) async {
+    return await remoteDataSource.addFriendById(friendId);
+  }
 
+  @override
+  Future<void> removeFriend(String friendId) async {
+    return await remoteDataSource.removeFriendById(friendId);
   }
 }

@@ -6,7 +6,8 @@ class AddFriend {
 
   AddFriend({required this.friendRepository});
 
-  Future<void> call(Friend friend) async {
-    await friendRepository.addFriend(friend);
+  Future<void> call(String id) async {
+    await friendRepository.addFriendById(id);
   }
+
 }

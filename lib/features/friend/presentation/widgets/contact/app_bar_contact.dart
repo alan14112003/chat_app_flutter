@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class AppBarContact extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onInviteFriend;
 
-  const CustomAppBar({super.key, required this.onInviteFriend});
+  const AppBarContact({super.key, required this.onInviteFriend});
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: const Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text(
-            'Contacts',
+            'Bạn bè',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 24,
+              fontSize: 22,
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text('Invite Friend'),
+              child: const Text('Lời mời kết bạn', style: TextStyle(fontSize: 12),),
             ),
           ),
         ],

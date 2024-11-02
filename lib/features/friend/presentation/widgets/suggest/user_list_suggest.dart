@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class UserItem extends StatelessWidget {
+class UserListSuggest extends StatelessWidget {
   final Map<String, dynamic> user;
 
-  UserItem({required this.user});
+  UserListSuggest({required this.user});
 
   @override
   Widget build(BuildContext context) {

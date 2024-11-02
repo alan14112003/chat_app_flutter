@@ -1,60 +1,71 @@
-// import 'package:flutter/material.dart';
-// import '../models/user.dart';
-// import '../widgets/friend_card.dart';
 
-// class SuggestScreen extends StatefulWidget {
-//   @override
-//   _SuggestScreenState createState() => _SuggestScreenState();
-// }
+import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation/bottom_navigation_bar.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/app_bar_suggest_contact.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/search_bar_suggest_contact.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/user_list_suggest.dart';
+import 'package:flutter/material.dart';
 
-// class _SuggestScreenState extends State<SuggestScreen> {
-//   final TextEditingController _searchController = TextEditingController();
-//   List<User> suggestedUsers = [
-//     User(name: 'Lê Thị Dân Liên', avatarUrl: 'https://example.com/avatar1.jpg', mutualFriends: 266),
-//     User(name: 'Tô Uyên', avatarUrl: 'https://example.com/avatar2.jpg', mutualFriends: 150),
-//     User(name: 'Cindy', avatarUrl: 'https://example.com/avatar3.jpg', mutualFriends: 100),
-//     // Dữ liệu gợi ý
-//   ];
 
-//   List<User> filteredUsers = [];
+class SuggestScreen extends StatefulWidget {
+  const SuggestScreen({super.key});
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     filteredUsers = suggestedUsers;
-//   }
+  @override
+  _SuggestScreenState createState() => _SuggestScreenState();
+}
 
-//   void _filterSuggestions(String query) {
-//     setState(() {
-//       filteredUsers = suggestedUsers
-//           .where((user) => user.name.toLowerCase().contains(query.toLowerCase()))
-//           .toList();
-//     });
-//   }
+class _SuggestScreenState extends State<SuggestScreen> {
+  final List<Map<String, dynamic>> users = [
+    {
+      "name": "Lê Thị Đan Liên",
+      "mutualFriends": 266,
+      "avatar": "assets/avatar1.png",
+    },
+    {
+      "name": "Too Uyenn",
+      "mutualFriends": 266,
+      "avatar": "assets/avatar2.png",
+    },
+  ];
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Suggest"),
-//         actions: [
-//           IconButton(
-//             icon: Icon(Icons.search),
-//             onPressed: () {
-//               showSearch(
-//                 context: context,
-//                 delegate: CustomSearchDelegate(),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//       body: ListView.builder(
-//         itemCount: filteredUsers.length,
-//         itemBuilder: (context, index) {
-//           return FriendCard(user: filteredUsers[index]);
-//         },
-//       ),
-//     );
-//   }
-// }
+  int _currentIndex = 1;
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: Container(
+          padding: const EdgeInsets.only(top: 22.0, bottom: 6.0),
+          child: AppBarSuggestContact(),
+        ),
+      ),
+      body: Column(
+        children: [
+          SearchBarSuggestContact(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                return UserListSuggest(user: users[index]);
+              },
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+            if (_currentIndex == 0) {
+              Navigator.pushReplacementNamed(context, '/chats');
+            } else if (_currentIndex == 1) {
+              Navigator.pushReplacementNamed(context, '/contacts');
+            } else if (_currentIndex == 2) {
+              Navigator.pushReplacementNamed(context, '/settings');
+            }
+          });
+        },
+      ),
+    );
+  }
+
+}

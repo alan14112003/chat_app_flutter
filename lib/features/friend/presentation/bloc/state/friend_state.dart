@@ -1,11 +1,11 @@
 
-import 'package:chat_app_flutter/features/friend/presentation/models/user.dart';
+import 'package:chat_app_flutter/core/common/models/friend.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/friend.dart';
 
 abstract class FriendState extends Equatable {
   const FriendState();
 }
+
 
 class FriendInitial extends FriendState {
   @override
@@ -18,19 +18,29 @@ class FriendLoading extends FriendState {
 }
 
 class FriendLoaded extends FriendState {
-  final List<User> users;
-  const FriendLoaded(this.users);
-
-  @override
-  List<Object?> get props => [users];
-}
-
-class FriendAdded extends FriendState {
-  final Friend friend;
-  const FriendAdded(this.friend);
+  final List<Friend> friend;
+  const FriendLoaded(this.friend);
 
   @override
   List<Object?> get props => [friend];
+}
+
+// class FriendAdded extends FriendState {
+//   final Friend friend;
+//   const FriendAdded(this.friend);
+//
+//   @override
+//   List<Object?> get props => [friend];
+// }
+
+class FriendAddedSuccessfully extends FriendState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FriendRemoveSuccessfully extends FriendState {
+  @override
+  List<Object?> get props => [];
 }
 
 class FriendDeleted extends FriendState {
