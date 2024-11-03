@@ -1,7 +1,7 @@
-import 'package:chat_app_flutter/features/friend/presentation/bloc/event/friend_event.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/invite_friends_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/state/friend_state.dart';
+
+import 'package:chat_app_flutter/features/friend/presentation/bloc/event/friend_view_event.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/state/friend_view_state.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/app_bar_invite_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/search_bar_invite_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/user_list_invite.dart';
@@ -22,12 +22,12 @@ class _InviteScreenState extends State<InviteScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<InviteFriendsBloc>().add(LoadFriendsEvent());
+    context.read<FriendViewBloc>().add(LoadInviteFriendsEvent());
   }
 
 
   void _goBack(BuildContext context) {
-    context.read<FriendBloc>().add(LoadFriendsEvent());
+    context.read<FriendViewBloc>().add(LoadFriendsEvent());
     Navigator.pop(context);
   }
 
@@ -55,7 +55,7 @@ class _InviteScreenState extends State<InviteScreen> {
           children: [
             const SearchBarInviteContact(),
             Expanded(
-              child: BlocBuilder<InviteFriendsBloc, FriendState>(
+              child: BlocBuilder<FriendViewBloc, FriendViewState>(
                 builder: (context, state) {
                   if (state is FriendLoading) {
                     return const Center(child: CircularProgressIndicator());

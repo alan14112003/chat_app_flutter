@@ -1,13 +1,13 @@
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
 
 
-class AddFriend {
+class AcceptFriend {
   final FriendRepository friendRepository;
 
-  AddFriend({required this.friendRepository});
+  AcceptFriend({required this.friendRepository});
 
   Future<void> call(String id) async {
-    await friendRepository.addFriendById(id);
+    await friendRepository.acceptFriendById(id);
   }
 
 }

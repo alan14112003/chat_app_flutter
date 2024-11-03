@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_app_flutter/core/common/models/chat.dart';
-import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/usecase/usecase.dart';
 import 'package:chat_app_flutter/features/chat/domain/usecases/get_all_chat.dart';
 import 'package:equatable/equatable.dart';

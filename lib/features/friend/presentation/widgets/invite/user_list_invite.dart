@@ -1,7 +1,7 @@
-import 'package:chat_app_flutter/features/friend/presentation/bloc/add_friend_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/event/friend_event.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/remove_invite_friend_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/state/friend_state.dart'; // Import state
+
+import 'package:chat_app_flutter/features/friend/presentation/bloc/event/friend_user_handle_event.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_user_handle_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/state/friend_user_handle_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,12 +52,12 @@ class UserListInvite extends StatelessWidget {
                   ],
                 ),
               ),
-              BlocBuilder<AddFriendBloc, FriendState>(
+              BlocBuilder<FriendUserHandleBloc, FriendUserHandleState>(
                 builder: (context, addFriendState) {
-                  return BlocBuilder<RemoveInviteFriendBloc, FriendState>(
+                  return BlocBuilder<FriendUserHandleBloc, FriendUserHandleState>(
                     builder: (context, removeFriendState) {
                       if (addFriendState is FriendAddedSuccessfully) {
-                        return const Text('Đã chấp nhận lời mời kết bạn', style: TextStyle(fontSize: 12),);
+                        return const Text('Đã chấp nhận lời mời kết bạn');
                       } else if (removeFriendState is FriendRemoveSuccessfully) {
                         return const Text('Đã gỡ lời mời');
                       } else {
@@ -67,7 +67,7 @@ class UserListInvite extends StatelessWidget {
                               onPressed: () {
                                 final friendId = inviteFriend['id'];
                                 if (friendId != null) {
-                                  context.read<AddFriendBloc>().add(AddFriendEvent(friendId));
+                                  context.read<FriendUserHandleBloc>().add(AcceptFriendEvent(friendId));
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -87,7 +87,7 @@ class UserListInvite extends StatelessWidget {
                               onPressed: () {
                                 final friendId = inviteFriend['id'];
                                 if (friendId != null) {
-                                  context.read<RemoveInviteFriendBloc>().add(DeleteFriendEvent(friendId));
+                                  context.read<FriendUserHandleBloc>().add(DeleteFriendEvent(friendId));
                                 }
                               },
                               style: OutlinedButton.styleFrom(

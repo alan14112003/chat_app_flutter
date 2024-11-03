@@ -1,14 +1,12 @@
 import 'package:chat_app_flutter/features/friend/data/repositories/friend_repository_impl.dart';
 import 'package:chat_app_flutter/features/friend/data/sources/friend_remote_data_source.dart';
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
+import 'package:chat_app_flutter/features/friend/domain/usecases/accept_friend.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/get_friends.dart';
-import 'package:chat_app_flutter/features/friend/domain/usecases/add_friend.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/get_invite_friend.dart';
 import 'package:chat_app_flutter/features/friend/domain/usecases/remove_friend.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/add_friend_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/invite_friends_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/remove_invite_friend_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_user_handle_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view_bloc.dart';
 import 'package:get_it/get_it.dart';
 
   void friendDependencies(GetIt serviceLocator) {
@@ -16,7 +14,7 @@ import 'package:get_it/get_it.dart';
     serviceLocator
       ..registerLazySingleton(() => GetFriends(friendRepository: serviceLocator()))
       ..registerLazySingleton(() => GetInviteFriends(friendRepository: serviceLocator()))
-      ..registerLazySingleton(() => AddFriend(friendRepository: serviceLocator()))
+      ..registerLazySingleton(() => AcceptFriend(friendRepository: serviceLocator()))
       ..registerLazySingleton(() => RemoveFriend(friendRepository: serviceLocator()));
 
 
@@ -33,8 +31,14 @@ import 'package:get_it/get_it.dart';
       );
 
     // Đăng ký Bloc
-    serviceLocator.registerFactory<FriendBloc>(() => FriendBloc(getFriends: serviceLocator()));
-    serviceLocator.registerFactory<InviteFriendsBloc>(() => InviteFriendsBloc(getInviteFriends: serviceLocator()));
-    serviceLocator.registerFactory<AddFriendBloc>(() => AddFriendBloc(addFriend: serviceLocator()));
-    serviceLocator.registerFactory<RemoveInviteFriendBloc>(() => RemoveInviteFriendBloc(removeFriend: serviceLocator()));
+    serviceLocator.registerFactory<FriendViewBloc>(() => FriendViewBloc(
+      getFriends: serviceLocator<GetFriends>(), // Lấy GetFriends từ serviceLocator
+      getInviteFriends: serviceLocator<GetInviteFriends>(), // Lấy GetInviteFriends từ serviceLocator
+    ));
+
+    serviceLocator.registerFactory<FriendUserHandleBloc>(() => FriendUserHandleBloc(
+      acceptFriend: serviceLocator<AcceptFriend>(),
+      removeFriend: serviceLocator<RemoveFriend>(),
+    ));
+
   }

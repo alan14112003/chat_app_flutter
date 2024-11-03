@@ -5,6 +5,7 @@ import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_navig
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/app_bar_chat.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/chat_user_list.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/search_chat.dart';
+import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +66,7 @@ class _ChatScreenState extends State<ChatScreen> {
               if (_currentIndex == 0) {
                 Navigator.push(context, ChatScreen.route());
               } else if (_currentIndex == 1) {
-                // Navigator.push(context, ContactScreen.route());
+                Navigator.push(context, ContactScreen.route());
               } else if (_currentIndex == 2) {
                 Navigator.push(context, SettingScreen.route());
               }

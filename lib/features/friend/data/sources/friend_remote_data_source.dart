@@ -21,8 +21,21 @@ class FriendRemoteDataSource {
     }).toList();
   }
 
-
   Future<void> addFriendById(String friendId) async {
+    final data = {
+      "userTo": friendId,
+    };
+    try {
+      await _dio.post('/friends/add', data: data);
+    } on DioError catch (dioError) {
+      final errorMessage = dioError.response?.data['message'] ?? "Lỗi mạng hoặc máy chủ";
+      throw Exception("Lỗi dio return: $errorMessage");
+    } catch (e) {
+      throw Exception("Lỗi xử lý return: $e");
+    }
+  }
+
+  Future<void> acceptFriendById(String friendId) async {
     final data = {
       "userFrom": friendId,
     };
