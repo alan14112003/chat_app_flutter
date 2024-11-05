@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
+import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
 import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Tài khoản cá nhân'),
         actions: [
           IconButton(
@@ -99,17 +101,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Cập nhật'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 textStyle: TextStyle(fontSize: 16),
               ),
+              child: Text('Cập nhật'),
             ),
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
 }

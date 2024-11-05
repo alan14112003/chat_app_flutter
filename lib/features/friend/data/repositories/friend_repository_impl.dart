@@ -1,7 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/friend.dart';
+import 'package:chat_app_flutter/core/common/models/user_with_friend.dart';
 import 'package:chat_app_flutter/features/friend/data/sources/friend_remote_data_source.dart';
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
-
 
 class FriendRepositoryImpl implements FriendRepository {
   final FriendRemoteDataSource remoteDataSource;
@@ -29,7 +29,12 @@ class FriendRepositoryImpl implements FriendRepository {
   }
 
   @override
-  Future<void> addFriendById(String friendId) async{
+  Future<void> addFriendById(String friendId) async {
     return await remoteDataSource.addFriendById(friendId);
+  }
+
+  @override
+  Future<UserWithFriend?> findFriendByEmail(String email) async {
+    return await remoteDataSource.findFriendByEmail(email);
   }
 }
