@@ -4,7 +4,6 @@ import 'package:chat_app_flutter/features/chat/presentation/screens/group_create
 import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_navigation/bottom_navigation.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/app_bar_chat.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/chat_user_list.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/search_chat.dart';
 import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         body: Column(
           children: [
-            SearchBarChat(),
             Expanded(
               child: BlocBuilder<ChatViewBloc, ChatViewState>(
                 builder: (context, state) {
