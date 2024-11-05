@@ -1,9 +1,10 @@
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
+import 'package:chat_app_flutter/features/auth/presentation/screens/register_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_login_cubit.dart';
+import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_login/auth_login_cubit.dart';
 import 'package:chat_app_flutter/features/auth/presentation/widgets/login_btn.dart';
 import 'package:chat_app_flutter/features/auth/presentation/widgets/login_input_field.dart';
 
@@ -41,8 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
           return SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 32.0, vertical: 80.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32.0,
+                vertical: 80.0,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,6 +106,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                     },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, RegisterScreen.route());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: Color.fromRGBO(76, 77, 79, 1),
+                      foregroundColor: Color.fromRGBO(211, 228, 255, 1.0),
+                    ),
+                    child: Text('Register'),
                   )
                 ],
               ),

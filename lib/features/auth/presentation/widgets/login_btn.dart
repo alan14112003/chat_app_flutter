@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class LoginBtn extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isEnabled;
+  final String name;
 
   const LoginBtn({
     super.key,
     required this.onPressed,
     this.isEnabled = true,
+    this.name = 'Đăng nhập',
   });
 
   @override
@@ -26,9 +28,9 @@ class _LoginBtnState extends State<LoginBtn> {
           backgroundColor: Color.fromRGBO(27, 114, 192, 1.0),
           foregroundColor: Color.fromRGBO(211, 228, 255, 1.0),
         ),
-        child: const Text(
-          'Đăng nhập',
-          style: TextStyle(
+        child: Text(
+          widget.name,
+          style: const TextStyle(
             fontSize: 18,
           ),
         ),
