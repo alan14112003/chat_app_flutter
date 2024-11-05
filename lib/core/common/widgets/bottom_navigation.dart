@@ -47,8 +47,8 @@ class BottomNavigation extends StatelessWidget {
               label: 'Danh bạ',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Cài đặt',
+              icon: Icon(Icons.person),
+              label: 'Tài khoản',
             ),
           ],
         );
