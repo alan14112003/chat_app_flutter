@@ -1,7 +1,9 @@
 import 'package:chat_app_flutter/core/common/models/user.dart';
+import 'package:chat_app_flutter/features/auth/data/sources/active_email_body.dart';
 import 'package:chat_app_flutter/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:chat_app_flutter/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:chat_app_flutter/features/auth/data/sources/auth_body.dart';
+import 'package:chat_app_flutter/features/auth/data/sources/register_body.dart';
 import 'package:chat_app_flutter/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -35,5 +37,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     await _authLocalDataSource.clearUser();
+  }
+
+  @override
+  Future<void> register(RegisterBody registerBody) async {
+    await _authRemoteDataSource.register(registerBody);
+  }
+
+  @override
+  Future<void> activeEmail(ActiveEmailBody activeEmailBody) async {
+    await _authRemoteDataSource.activeEmail(activeEmailBody);
   }
 }

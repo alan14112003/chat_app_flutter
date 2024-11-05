@@ -28,3 +28,7 @@ final class AuthFailure extends AuthState {
   @override
   List<Object?> get props => [error];
 }
+
+final class AuthRegisterSuccess extends AuthState {}
+
+final class ActiveEmailSuccess extends AuthState {}
