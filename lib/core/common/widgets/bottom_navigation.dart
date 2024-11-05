@@ -1,5 +1,5 @@
 import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
-import 'package:chat_app_flutter/features/auth/presentation/screens/setting_screen.dart';
+import 'package:chat_app_flutter/features/auth/presentation/screens/profile_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class BottomNavigation extends StatelessWidget {
             Navigator.push(context, ContactScreen.route());
             break;
           case 2:
-            Navigator.push(context, SettingScreen.route());
+            Navigator.push(context, ProfileScreen.route());
             break;
           default:
         }
