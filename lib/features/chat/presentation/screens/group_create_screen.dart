@@ -23,8 +23,10 @@ class GroupCreateScreen extends StatefulWidget {
 class _GroupCreateScreenState extends State<GroupCreateScreen> {
   late final String userId;
   String groupName = '';
-  // Lưu danh sách bạn đã chọn
+  // Lưu danh sách bạn bè đã chọn
   List<Map<String, String>> _selectedFriends = [];
+  // Lưu giá trị tìm kiếm
+  String searchQuery = '';
 
   @override
   void initState() {
@@ -54,6 +56,18 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
     }
   }
 
+  // Hàm lọc bạn bè dựa trên giá trị tìm kiếm
+  List<Map<String, String>> _filterFriends(List<Map<String, String>> friends) {
+    if (searchQuery.isEmpty) {
+      // Trả về toàn bộ danh sách nếu không có giá trị tìm kiếm
+      return friends;
+    }
+    return friends
+        .where((friend) =>
+            friend['name']!.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -81,12 +95,21 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      groupName = value; // Cập nhật tên nhóm
+                      // Cập nhật tên nhóm
+                      groupName = value;
                     });
                   },
                 ),
               ),
-              SearchBarGroupCreate(),
+              // Cập nhật để truyền hàm tìm kiếm vào SearchBarGroupCreate
+              SearchBarGroupCreate(
+                onSearchChanged: (value) {
+                  setState(() {
+                    // Cập nhật giá trị tìm kiếm
+                    searchQuery = value;
+                  });
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Align(
@@ -140,8 +163,13 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                             'avatar': relevantUser?.avatar ?? ''
                           };
                         }).toList();
+
+                        // Lọc bạn bè dựa trên giá trị tìm kiếm
+                        final visibleFriends = _filterFriends(filteredFriends);
+
                         return FriendListGroupCreate(
-                          friends: filteredFriends,
+                          // Hiển thị bạn bè đã lọc
+                          friends: visibleFriends,
                           onSelectedFriendsChange: (selectedFriends) {
                             setState(() {
                               _selectedFriends = selectedFriends;
@@ -149,7 +177,7 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                           },
                         );
                       } else {
-                        return Center(child: Text('No friend available'));
+                        return Center(child: Text('Chưa có bạn bè'));
                       }
                     },
                   ),

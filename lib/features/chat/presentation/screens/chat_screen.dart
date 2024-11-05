@@ -1,8 +1,10 @@
 import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
+import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/chat_view/chat_view_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/group_create_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/app_bar_chat.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/chat_user_list.dart';
+import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/search_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +20,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  // Lưu giá trị tìm kiếm
+  String searchQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +40,14 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         body: Column(
           children: [
+            SearchBarChat(
+              onSearchChanged: (value) {
+                setState(() {
+                  // Cập nhật giá trị tìm kiếm
+                  searchQuery = value;
+                });
+              },
+            ),
             Expanded(
               child: BlocBuilder<ChatViewBloc, ChatViewState>(
                 builder: (context, state) {
@@ -43,9 +56,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   } else if (state is ChatViewFailure) {
                     return Center(child: Text('Error: ${state.error}'));
                   } else if (state is ChatViewSuccess) {
-                    return ChatUserList(chats: state.chats);
+                    final filteredChats = state.chats.where((chat) {
+                      final chatName = chat.groupName ??
+                          ChatGlobalUtils.getChatFriend(chat).fullName;
+                      return chatName!
+                          .toLowerCase()
+                          .contains(searchQuery.toLowerCase());
+                    }).toList();
+
+                    return ChatUserList(chats: filteredChats);
                   } else {
-                    return Center(child: Text('No chats available'));
+                    return Center(child: Text('Chưa có đoạn chat'));
                   }
                 },
               ),

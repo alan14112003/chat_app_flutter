@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SearchBarGroupCreate extends StatelessWidget {
+class SearchBarChat extends StatelessWidget {
   final Function(String) onSearchChanged;
 
-  const SearchBarGroupCreate({super.key, required this.onSearchChanged});
+  const SearchBarChat({super.key, required this.onSearchChanged});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 30),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Tìm kiếm',
-          border: InputBorder.none,
           hintStyle: TextStyle(color: Colors.grey[400]),
           prefixIcon: Icon(
             Icons.search,
