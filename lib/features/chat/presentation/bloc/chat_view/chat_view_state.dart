@@ -24,5 +24,6 @@ final class ChatViewSuccess extends ChatViewState {
   });
 
   @override
+  // TODO: implement props
   List<Object> get props => [chats];
 }

@@ -1,7 +1,13 @@
+import 'package:chat_app_flutter/core/common/models/user.dart';
+import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
+import 'package:chat_app_flutter/features/chat/presentation/bloc/add_group/add_group_bloc.dart';
+import 'package:chat_app_flutter/features/chat/presentation/bloc/group_create_view/group_create_view_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/app_bar_group_create.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/search_group_create.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/user_list_group_create.dart';
+import 'package:chat_app_flutter/features/chat/presentation/widgets/group_create.dart/friend_list_group_create.dart';
+import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GroupCreateScreen extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -15,18 +21,49 @@ class GroupCreateScreen extends StatefulWidget {
 }
 
 class _GroupCreateScreenState extends State<GroupCreateScreen> {
+  late final String userId;
+  String groupName = '';
+  // Lưu danh sách bạn đã chọn
+  List<Map<String, String>> _selectedFriends = [];
+
+  @override
+  void initState() {
+    super.initState();
+    userId = AuthGlobalUtils.getAuth().id ?? '';
+    context.read<GroupCreateViewBloc>().add(GetAllFiendEvent());
+  }
+
+  void _createGroup() {
+    if (groupName.isNotEmpty && _selectedFriends.length >= 2) {
+      // print('Group Name: $groupName');
+      // print('In ra danh sách bạn bè được chọn:');
+
+      // for (var friend in _selectedFriends) {
+      //   print('ID: ${friend['id']}, Name: ${friend['name']}');
+      // }
+
+      context.read<AddGroupBloc>().add(AddGroupRequested(
+          groupName: groupName,
+          members: _selectedFriends.map((friend) {
+            return User(id: friend['id'], fullName: friend['name']);
+          }).toList()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Vui lòng nhập tên nhóm và chọn ít nhất 2 thành viên.'),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBarGroupCreate(
-          group_create_button: () {
-            //Chưa có màn hình nhóm chat
-          },
+          group_create_button: _createGroup,
         ),
         body: Container(
           color: Colors.white,
-          child: ListView(
+          child: Column(
             children: [
               Padding(
                 padding:
@@ -42,65 +79,81 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                           BorderSide(color: Colors.blueAccent, width: 2.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      groupName = value; // Cập nhật tên nhóm
+                    });
+                  },
                 ),
               ),
               SearchBarGroupCreate(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Gợi ý',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Gợi ý',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-              UserListGroupCreate(
-                chatUsers: [
-                  // ChatUsers(
-                  //     name: 'Hòa',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: 'bây giờ',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'A',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: '12:30',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'B',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: 'bây giờ',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'C',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: '3:30',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'D',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: '8:30',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'E',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: '8:30',
-                  //     isMessageRead: false),
-                  // ChatUsers(
-                  //     name: 'F',
-                  //     text: 'aa',
-                  //     image: 'images/avatar.jpg',
-                  //     // time: '8:30',
-                  //     isMessageRead: false),
-                ],
+              Expanded(
+                child: BlocListener<AddGroupBloc, AddGroupState>(
+                  listener: (context, state) {
+                    if (state is AddGroupLoading) {
+                    } else if (state is AddGroupSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Tạo nhóm thành công'),
+                      ));
+                      Navigator.push(
+                        context,
+                        MessageScreen.route(state.chatId),
+                      );
+                    } else if (state is AddGroupFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            Text('Đã xảy ra lỗi khi tạo nhóm: ${state.error}'),
+                      ));
+                    }
+                  },
+                  child: BlocBuilder<GroupCreateViewBloc, GroupCreateViewState>(
+                    builder: (context, state) {
+                      if (state is GroupCreateViewLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is GroupCreateViewFailure) {
+                        return Center(child: Text('Error: ${state.error}'));
+                      } else if (state is GroupCreateViewSuccess) {
+                        final filteredFriends = state.friends.where((friends) {
+                          return friends.userFrom != friends.userTo;
+                        }).map((friend) {
+                          final isUserFrom = friend.userFrom == userId;
+                          final relevantUser =
+                              isUserFrom ? friend.to : friend.from;
+
+                          return {
+                            'id': relevantUser?.id ?? '',
+                            'name': relevantUser?.fullName ?? '',
+                            'avatar': relevantUser?.avatar ?? ''
+                          };
+                        }).toList();
+                        return FriendListGroupCreate(
+                          friends: filteredFriends,
+                          onSelectedFriendsChange: (selectedFriends) {
+                            setState(() {
+                              _selectedFriends = selectedFriends;
+                            });
+                          },
+                        );
+                      } else {
+                        return Center(child: Text('No friend available'));
+                      }
+                    },
+                  ),
+                ),
               ),
             ],
           ),

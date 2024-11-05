@@ -25,8 +25,7 @@ class ChatUserList extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MessageScreen.route(
-                  chat.id!), // Sử dụng toán tử ! để lấy giá trị non-null
+              MessageScreen.route(chat.id!),
             );
           },
           child: Container(
@@ -77,18 +76,6 @@ class ChatUserList extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
                   ),
                 ],
-                // Text(
-                //   user.name,
-                //   style: TextStyle(
-                //     fontSize: 12,
-                //     color: user.isMessageRead
-                //         ? Colors.black
-                //         : Colors.grey.shade500,
-                //     fontWeight: user.isMessageRead
-                //         ? FontWeight.bold
-                //         : FontWeight.normal,
-                //   ),
-                // )
               ],
             ),
           ),

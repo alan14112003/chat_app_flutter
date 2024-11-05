@@ -4,9 +4,11 @@ import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navi
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_active_email/auth_active_email_cubit.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_register/auth_register_cubit.dart';
+import 'package:chat_app_flutter/features/chat/presentation/bloc/add_group/add_group_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/chat_view/chat_view_bloc.dart';
 import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_login/auth_login_cubit.dart';
+import 'package:chat_app_flutter/features/chat/presentation/bloc/group_create_view/group_create_view_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
@@ -55,10 +57,6 @@ void main() async {
       ),
 
       BlocProvider(
-        create: (_) => serviceLocator<ChatViewBloc>(),
-      ),
-
-      BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),
       ),
       BlocProvider(
@@ -72,6 +70,17 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => serviceLocator<AuthActiveEmailCubit>(),
+      ),
+
+      // BlocProvider cho Chat (PTH)
+      BlocProvider(
+        create: (_) => serviceLocator<ChatViewBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => serviceLocator<GroupCreateViewBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => serviceLocator<AddGroupBloc>(),
       ),
 
       BlocProvider(
