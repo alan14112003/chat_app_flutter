@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:chat_app_flutter/core/common/models/message.dart';
-import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
 import 'package:chat_app_flutter/features/message/domain/repositories/message_repository.dart';
@@ -125,12 +124,5 @@ class HandleMessageUtil {
     // lấy ra chatId từ cubit
     final chatId = context.read<MessageHandleCubit>().state.chatId;
     return chatId == message.chatId;
-  }
-
-  static User getInfoFriend(List<User> users) {
-    final auth = User(id: '4867a4a8-0a22-4af0-a15c-9d83a48e05b4');
-    return users.firstWhere(
-      (user) => user.id != auth.id,
-    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:chat_app_flutter/features/message/presentation/widgets/message_i
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_file_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_image_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_message_button.dart';
+import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/speech_to_text_button.dart';
 import 'package:flutter/material.dart';
 
 class MessageInputBox extends StatefulWidget {
@@ -54,6 +55,10 @@ class _MessageInputBoxState extends State<MessageInputBox> {
                 : CrossAxisAlignment.center,
             children: [
               if (!_isInputMessage) ...[
+                SpeechToTextButton(
+                  controller: _controller,
+                ),
+                const SizedBox(width: 12),
                 // nút gửi ảnh
                 SendImageButton(),
                 const SizedBox(

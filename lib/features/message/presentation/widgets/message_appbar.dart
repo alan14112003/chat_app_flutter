@@ -1,6 +1,6 @@
+import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
-import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +15,6 @@ class MessageAppbar extends StatefulWidget implements PreferredSizeWidget {
   State<MessageAppbar> createState() => _MessageAppbarState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
@@ -50,8 +49,9 @@ class _MessageAppbarState extends State<MessageAppbar> {
                   child: (state.chat.isGroup == false)
                       ? CircleAvatar(
                           backgroundImage: NetworkImage(
-                            HandleMessageUtil.getInfoFriend(state.chat.members!)
-                                    .avatar ??
+                            ChatGlobalUtils.getChatFriend(
+                                  state.chat,
+                                ).avatar ??
                                 '',
                           ),
                         )
@@ -67,8 +67,8 @@ class _MessageAppbarState extends State<MessageAppbar> {
             title: Text(
               state.chat.isGroup == true
                   ? state.chat.groupName!
-                  : HandleMessageUtil.getInfoFriend(
-                      state.chat.members!,
+                  : ChatGlobalUtils.getChatFriend(
+                      state.chat,
                     ).fullName!,
               style: TextStyle(
                 fontSize: 18,
