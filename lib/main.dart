@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/app.dart';
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
+import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_active_email/auth_active_email_cubit.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_register/auth_register_cubit.dart';
@@ -72,6 +73,10 @@ void main() async {
       BlocProvider(
         create: (_) => serviceLocator<AuthActiveEmailCubit>(),
       ),
+
+      BlocProvider(
+        create: (_) => serviceLocator<BottomNavigationCubit>(),
+      )
     ],
     child: const App(),
   ));

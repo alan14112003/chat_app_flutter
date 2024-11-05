@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:chat_app_flutter/core/common/data/repositories/upload_file_repository_impl.dart';
 import 'package:chat_app_flutter/core/common/data/sources/upload_file_data_source.dart';
 import 'package:chat_app_flutter/core/common/domain/repositories/upload_file_repository.dart';
@@ -39,6 +40,10 @@ Future<void> initDependencies() async {
   // socket
   serviceLocator.registerLazySingleton(
     () => SocketService().socket,
+  );
+
+  serviceLocator.registerFactory(
+    () => BottomNavigationCubit(),
   );
 }
 

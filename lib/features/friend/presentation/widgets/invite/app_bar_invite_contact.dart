@@ -1,6 +1,8 @@
+import 'package:chat_app_flutter/features/friend/presentation/screens/suggest_screen.dart';
 import 'package:flutter/material.dart';
 
-class AppBarInviteContact extends StatelessWidget implements PreferredSizeWidget {
+class AppBarInviteContact extends StatelessWidget
+    implements PreferredSizeWidget {
   final Widget leading;
 
   const AppBarInviteContact({super.key, required this.leading});
@@ -20,7 +22,10 @@ class AppBarInviteContact extends StatelessWidget implements PreferredSizeWidget
           onPressed: () {},
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/suggest');
+              Navigator.push(
+                context,
+                SuggestScreen.route(),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -29,7 +34,10 @@ class AppBarInviteContact extends StatelessWidget implements PreferredSizeWidget
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            child: Text('Đề xuất kết bạn', style: TextStyle(fontSize: 12),),
+            child: Text(
+              'Đề xuất kết bạn',
+              style: TextStyle(fontSize: 12),
+            ),
           ),
         ),
       ],

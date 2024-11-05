@@ -10,6 +10,7 @@ class AppBarContact extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(80),
       child: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Padding(
@@ -34,7 +35,10 @@ class AppBarContact extends StatelessWidget implements PreferredSizeWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text('Lời mời kết bạn', style: TextStyle(fontSize: 12),),
+              child: const Text(
+                'Lời mời kết bạn',
+                style: TextStyle(fontSize: 12),
+              ),
             ),
           ),
         ],

@@ -1,11 +1,9 @@
+import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/chat_view/chat_view_bloc.dart';
-import 'package:chat_app_flutter/features/auth/presentation/screens/setting_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/group_create_screen.dart';
-import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_navigation/bottom_navigation.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/app_bar_chat.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/chat_user_list.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/chat/search_chat.dart';
-import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,8 +19,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  int _currentIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -58,21 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigation(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              if (_currentIndex == 0) {
-                Navigator.push(context, ChatScreen.route());
-              } else if (_currentIndex == 1) {
-                Navigator.push(context, ContactScreen.route());
-              } else if (_currentIndex == 2) {
-                Navigator.push(context, SettingScreen.route());
-              }
-            });
-          },
-        ),
+        bottomNavigationBar: BottomNavigation(),
       ),
     );
   }

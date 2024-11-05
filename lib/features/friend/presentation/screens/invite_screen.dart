@@ -1,15 +1,17 @@
-
+import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/event/friend_view_event.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/state/friend_view_state.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/app_bar_invite_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/search_bar_invite_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/invite/user_list_invite.dart';
-import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InviteScreen extends StatefulWidget {
+  static route() => MaterialPageRoute(
+        builder: (context) => InviteScreen(),
+      );
   const InviteScreen({super.key});
 
   @override
@@ -17,14 +19,11 @@ class InviteScreen extends StatefulWidget {
 }
 
 class _InviteScreenState extends State<InviteScreen> {
-  int _currentIndex = 1;
-
   @override
   void initState() {
     super.initState();
     context.read<FriendViewBloc>().add(LoadInviteFriendsEvent());
   }
-
 
   void _goBack(BuildContext context) {
     context.read<FriendViewBloc>().add(LoadFriendsEvent());
@@ -62,10 +61,10 @@ class _InviteScreenState extends State<InviteScreen> {
                   } else if (state is FriendLoaded) {
                     final friends = state.friend
                         .map((friend) => {
-                      'id': friend.userFrom ?? '',
-                      'name': friend.from?.fullName ?? '',
-                      'avatar': friend.from?.avatar ?? ''
-                    })
+                              'id': friend.userFrom ?? '',
+                              'name': friend.from?.fullName ?? '',
+                              'avatar': friend.from?.avatar ?? ''
+                            })
                         .toList();
                     return UserListInvite(inviteFriends: friends);
                   } else if (state is FriendError) {
@@ -78,21 +77,7 @@ class _InviteScreenState extends State<InviteScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              if (_currentIndex == 0) {
-                Navigator.pushReplacementNamed(context, '/chats');
-              } else if (_currentIndex == 1) {
-                Navigator.pushReplacementNamed(context, '/contacts');
-              } else if (_currentIndex == 2) {
-                Navigator.pushReplacementNamed(context, '/settings');
-              }
-            });
-          },
-        ),
+        bottomNavigationBar: BottomNavigation(),
       ),
     );
   }

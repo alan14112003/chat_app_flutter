@@ -1,12 +1,13 @@
-
-import 'package:chat_app_flutter/features/friend/presentation/widgets/navigation/bottom_navigation_bar.dart';
+import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/app_bar_suggest_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/search_bar_suggest_contact.dart';
 import 'package:chat_app_flutter/features/friend/presentation/widgets/suggest/user_list_suggest.dart';
 import 'package:flutter/material.dart';
 
-
 class SuggestScreen extends StatefulWidget {
+  static route() => MaterialPageRoute(
+        builder: (context) => SuggestScreen(),
+      );
   const SuggestScreen({super.key});
 
   @override
@@ -27,7 +28,6 @@ class _SuggestScreenState extends State<SuggestScreen> {
     },
   ];
 
-  int _currentIndex = 1;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
@@ -50,22 +50,7 @@ class _SuggestScreenState extends State<SuggestScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-            if (_currentIndex == 0) {
-              Navigator.pushReplacementNamed(context, '/chats');
-            } else if (_currentIndex == 1) {
-              Navigator.pushReplacementNamed(context, '/contacts');
-            } else if (_currentIndex == 2) {
-              Navigator.pushReplacementNamed(context, '/settings');
-            }
-          });
-        },
-      ),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
-
 }
