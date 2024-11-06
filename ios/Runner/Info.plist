@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSMicrophoneUsageDescription</key>
+	<string>this package listens for speech on the device microphone on your request.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>this package recognizes words as you speak them and displays them.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
 	<key>CFBundleDisplayName</key>
 	<string>Chat App Flutter</string>
 	<key>CFBundleExecutable</key>
