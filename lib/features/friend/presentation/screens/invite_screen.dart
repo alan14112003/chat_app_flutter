@@ -38,6 +38,7 @@ class _InviteScreenState extends State<InviteScreen> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80.0),
           child: Container(

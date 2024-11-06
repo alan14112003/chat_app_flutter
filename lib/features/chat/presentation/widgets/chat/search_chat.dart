@@ -12,10 +12,10 @@ class SearchBarChat extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Tìm kiếm',
-          hintStyle: TextStyle(color: Colors.grey[400]),
+          hintStyle: TextStyle(color: Colors.grey[700]),
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.grey[400],
+            color: Colors.grey[700],
             size: 20,
           ),
           filled: true,

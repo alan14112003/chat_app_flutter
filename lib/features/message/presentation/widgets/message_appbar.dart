@@ -35,47 +35,58 @@ class _MessageAppbarState extends State<MessageAppbar> {
       },
       builder: (context, state) {
         if (state is ChatInfoViewSuccess) {
-          return AppBar(
-            leadingWidth: 90,
-            leading: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+          return Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey.shade300,
+                  width: 1.0,
                 ),
-                Expanded(
-                  child: (state.chat.isGroup == false)
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            ChatGlobalUtils.getChatFriend(
-                                  state.chat,
-                                ).avatar ??
-                                '',
-                          ),
-                        )
-                      : CircleAvatar(
-                          child: Text(state.chat.members!
-                              .map((member) => member.firstName![0])
-                              .join()
-                              .toUpperCase()),
-                        ),
-                ),
-              ],
-            ),
-            title: Text(
-              state.chat.isGroup == true
-                  ? state.chat.groupName!
-                  : ChatGlobalUtils.getChatFriend(
-                      state.chat,
-                    ).fullName!,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
               ),
             ),
-            centerTitle: false,
+            child: AppBar(
+              backgroundColor: Colors.white,
+              leadingWidth: 90,
+              leading: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Expanded(
+                    child: (state.chat.isGroup == false)
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              ChatGlobalUtils.getChatFriend(
+                                    state.chat,
+                                  ).avatar ??
+                                  '',
+                            ),
+                          )
+                        : CircleAvatar(
+                            child: Text(state.chat.members!
+                                .map((member) => member.firstName![0])
+                                .join()
+                                .toUpperCase()),
+                          ),
+                  ),
+                ],
+              ),
+              title: Text(
+                state.chat.isGroup == true
+                    ? state.chat.groupName!
+                    : ChatGlobalUtils.getChatFriend(
+                        state.chat,
+                      ).fullName!,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              centerTitle: false,
+            ),
           );
         }
         return AppBar();

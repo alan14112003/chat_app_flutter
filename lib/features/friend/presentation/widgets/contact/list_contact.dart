@@ -5,10 +5,16 @@ class ListContact extends StatelessWidget {
 
   const ListContact({super.key, required this.contacts});
 
-
   @override
   Widget build(BuildContext context) {
-      if (contacts.isEmpty) {
+    // Sắp xếp danh sách theo tên
+    contacts.sort((a, b) {
+      final nameA = a['name']?.toUpperCase() ?? '';
+      final nameB = b['name']?.toUpperCase() ?? '';
+      return nameA.compareTo(nameB);
+    });
+
+    if (contacts.isEmpty) {
       return Center(
         child: Text(
           'Danh sách bạn bè trống',
@@ -24,7 +30,8 @@ class ListContact extends StatelessWidget {
       itemBuilder: (context, index) {
         final contact = contacts[index];
         final name = contact['name'] ?? '';
-        final letter = name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?';
+        final letter =
+            name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?';
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +40,8 @@ class ListContact extends StatelessWidget {
                 ((contacts[index - 1]['name'] ?? '').isNotEmpty &&
                     contacts[index - 1]['name']![0].toUpperCase() != letter))
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
                   letter,
                   style: const TextStyle(
@@ -58,7 +66,7 @@ class ListContact extends StatelessWidget {
                     ),
                     title: Text(name.isNotEmpty ? name : 'No Name'),
                   ),
-                  if (index != contacts.length - 1) const Divider(),
+                  // if (index != contacts.length - 1) const Divider(),
                 ],
               ),
             ),
@@ -67,5 +75,4 @@ class ListContact extends StatelessWidget {
       },
     );
   }
-
 }

@@ -7,18 +7,31 @@ class AppBarGroupCreate extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Nhóm mới'),
-      backgroundColor: Colors.blueAccent,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade300,
+            width: 1.0,
+          ),
+        ),
       ),
-      actions: [
-        IconButton(icon: Icon(Icons.create), onPressed: group_create_button),
-      ],
+      child: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          'Nhóm mới',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(icon: Icon(Icons.create), onPressed: group_create_button),
+        ],
+      ),
     );
   }
 

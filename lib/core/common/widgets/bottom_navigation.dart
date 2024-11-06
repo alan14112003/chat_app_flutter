@@ -27,30 +27,41 @@ class BottomNavigation extends StatelessWidget {
       },
       builder: (context, index) {
         // Mặc định là 0
-        return BottomNavigationBar(
-          currentIndex: index,
-          onTap: (index) {
-            context.read<BottomNavigationCubit>().changeIndex(index);
-          },
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.grey.shade400,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.message),
-              label: 'Đoạn chat',
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey.shade300,
+                width: 1.0,
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.contacts),
-              label: 'Danh bạ',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Tài khoản',
-            ),
-          ],
+          ),
+          child: BottomNavigationBar(
+            currentIndex: index,
+            onTap: (index) {
+              context.read<BottomNavigationCubit>().changeIndex(index);
+            },
+            backgroundColor: Colors.white,
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey.shade400,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.message),
+                label: 'Đoạn chat',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.contacts),
+                label: 'Danh bạ',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Tài khoản',
+              ),
+            ],
+          ),
         );
       },
     );

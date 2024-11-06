@@ -23,7 +23,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final currentUser = AuthGlobalUtils.getAuth();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text('Tài khoản cá nhân'),
         actions: [

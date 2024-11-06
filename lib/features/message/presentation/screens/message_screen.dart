@@ -52,14 +52,17 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MessageAppbar(chatId: widget.chatId),
-      body: MessageListenStateChange(
-        child: const Column(
-          children: [
-            MessageContainer(),
-            MessageInputBox(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: MessageAppbar(chatId: widget.chatId),
+        body: MessageListenStateChange(
+          child: const Column(
+            children: [
+              MessageContainer(),
+              MessageInputBox(),
+            ],
+          ),
         ),
       ),
     );

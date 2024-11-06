@@ -3,8 +3,10 @@ import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart'
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_active_email/auth_active_email_cubit.dart';
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_register/auth_register_cubit.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/active_email_screen.dart';
+import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/auth/presentation/widgets/login_btn.dart';
 import 'package:chat_app_flutter/features/auth/presentation/widgets/login_input_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthRegisterSuccess) {
@@ -194,6 +197,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                     },
                     name: 'Đăng ký',
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Bạn đã có tài khoản? ',
+                      style: const TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: 'Đăng nhập',
+                          style: const TextStyle(color: Colors.red),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(context, LoginScreen.route());
+                            },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

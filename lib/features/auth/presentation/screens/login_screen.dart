@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/register_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -110,17 +112,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, RegisterScreen.route());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(16),
-                      backgroundColor: Color.fromRGBO(76, 77, 79, 1),
-                      foregroundColor: Color.fromRGBO(211, 228, 255, 1.0),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Bạn chưa có tài khoản? ',
+                      style: const TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: 'Đăng ký',
+                          style: const TextStyle(color: Colors.red),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(context, RegisterScreen.route());
+                            },
+                        ),
+                      ],
                     ),
-                    child: Text('Register'),
-                  )
+                  ),
                 ],
               ),
             ),

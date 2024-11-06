@@ -13,7 +13,7 @@ class ChatUserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
       itemCount: chats.length,
       itemBuilder: (context, index) {
         final chat = chats[index];
@@ -52,12 +52,13 @@ class ChatUserList extends StatelessWidget {
                                     : ChatGlobalUtils.getChatFriend(chat)
                                         .fullName!,
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 16,
+                                ),
                               ),
                               SizedBox(height: 6),
                               if (lastMsg != null) ...[
                                 Text(
-                                  lastMsg.text ?? 'No message',
+                                  lastMsg.text ?? '',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey.shade500),

@@ -33,6 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBarChat(
           group_button: () {
             Navigator.push(context, GroupCreateScreen.route());

@@ -18,6 +18,7 @@ class _SendFileButtonState extends State<SendFileButton> {
       child: const Icon(
         Icons.file_present_outlined,
         size: 24,
+        color: Colors.blueAccent,
       ),
     );
   }

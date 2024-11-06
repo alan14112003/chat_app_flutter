@@ -80,7 +80,7 @@ class _MessageInputBoxState extends State<MessageInputBox> {
                   child: TextField(
                     controller: _controller, // Gán controller cho TextField
                     decoration: const InputDecoration(
-                      hintText: 'nhắn tin',
+                      hintText: 'Nhắn tin',
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 8,

@@ -44,6 +44,7 @@ class _SendImageButtonState extends State<SendImageButton> {
       child: const Icon(
         Icons.image_outlined,
         size: 24,
+        color: Colors.blueAccent,
       ),
     );
   }

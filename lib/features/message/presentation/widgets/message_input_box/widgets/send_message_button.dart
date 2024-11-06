@@ -25,6 +25,7 @@ class SendMessageButton extends StatelessWidget {
       icon: const Icon(
         Icons.send,
         size: 30,
+        color: Colors.blueAccent,
       ),
       onPressed: () {
         String content = controller.text.trim();

@@ -34,6 +34,7 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
         child: Container(

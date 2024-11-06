@@ -18,6 +18,7 @@ class SpeechToTextButton extends StatelessWidget {
       child: const Icon(
         Icons.mic,
         size: 24,
+        color: Colors.blueAccent,
       ),
     );
   }

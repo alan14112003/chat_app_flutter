@@ -31,7 +31,7 @@ class _FriendListGroupCreateState extends State<FriendListGroupCreate> {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.friends.length,
       itemBuilder: (context, index) {
         // Lấy thông tin bạn bè từ widget.friends
