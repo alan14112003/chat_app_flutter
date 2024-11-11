@@ -9,13 +9,18 @@ class FriendRepositoryImpl implements FriendRepository {
   FriendRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<Friend>> getFriends() async {
-    return await remoteDataSource.getFriends();
+  Future<List<Friend>> allFriends() async {
+    return await remoteDataSource.allFriends();
   }
 
   @override
-  Future<List<Friend>> getInviteFriends() async {
-    return await remoteDataSource.getInviteFriends();
+  Future<List<Friend>> requestFriends() async {
+    return await remoteDataSource.requestFriends();
+  }
+
+  @override
+  Future<void> addFriendById(String friendId) async {
+    return await remoteDataSource.addFriendById(friendId);
   }
 
   @override
@@ -26,11 +31,6 @@ class FriendRepositoryImpl implements FriendRepository {
   @override
   Future<void> removeFriend(String friendId) async {
     return await remoteDataSource.removeFriendById(friendId);
-  }
-
-  @override
-  Future<void> addFriendById(String friendId) async {
-    return await remoteDataSource.addFriendById(friendId);
   }
 
   @override

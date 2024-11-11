@@ -1,4 +1,7 @@
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view/friend_view_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/buttons/delete_request_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListContact extends StatelessWidget {
   final List<Map<String, String>> contacts;
@@ -65,8 +68,15 @@ class ListContact extends StatelessWidget {
                       child: contact['avatar'] == null ? Text(letter) : null,
                     ),
                     title: Text(name.isNotEmpty ? name : 'No Name'),
+                    trailing: DeleteRequestButton(
+                      friendId: contact['id']!,
+                      onDeleteSuccess: () {
+                        context
+                            .read<FriendViewBloc>()
+                            .add(ReloadAllFriendsEvent());
+                      },
+                    ),
                   ),
-                  // if (index != contacts.length - 1) const Divider(),
                 ],
               ),
             ),

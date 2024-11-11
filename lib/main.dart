@@ -10,8 +10,8 @@ import 'package:chat_app_flutter/features/auth/presentation/bloc/auth_bloc.dart'
 import 'package:chat_app_flutter/features/auth/presentation/cubit/auth_login/auth_login_cubit.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/group_create_view/group_create_view_bloc.dart';
 import 'package:chat_app_flutter/features/friend/presentation/bloc/find_friend_by_email/find_friend_by_email_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_user_handle_bloc.dart';
-import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_user_handle/friend_user_handle_bloc.dart';
+import 'package:chat_app_flutter/features/friend/presentation/bloc/friend_view/friend_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';

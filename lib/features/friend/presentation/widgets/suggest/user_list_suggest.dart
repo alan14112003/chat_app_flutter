@@ -1,4 +1,6 @@
 import 'package:chat_app_flutter/core/common/models/user_with_friend.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/buttons/accept_button.dart';
+import 'package:chat_app_flutter/features/friend/presentation/widgets/buttons/add_friend_button.dart';
 import 'package:flutter/material.dart';
 
 class UserListSuggest extends StatelessWidget {
@@ -34,40 +36,17 @@ class UserListSuggest extends StatelessWidget {
           Row(
             children: [
               if (user.friend == null)
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
-                  child: const Text(
-                    'Thêm bạn',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.white),
-                  ),
+                AddFriendButton(
+                  friendId: user.user.id!,
                 ),
               if (user.friend?.status == 0 &&
                   user.friend?.userFrom == user.user.id)
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
-                  child: const Text(
-                    'Chấp nhận',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.white),
-                  ),
+                AcceptButton(
+                  friendId: user.friend!.userFrom!,
                 ),
-              if (user.friend?.status == 1 ||
-                  user.friend?.userTo == user.user.id)
+              if (user.friend != null &&
+                  (user.friend?.status == 1 ||
+                      user.friend?.userTo == user.user.id))
                 OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(

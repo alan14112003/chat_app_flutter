@@ -1,13 +1,34 @@
+import 'package:chat_app_flutter/core/error/failures.dart';
+import 'package:chat_app_flutter/core/error/handle_error_dio.dart';
+import 'package:chat_app_flutter/core/usecase/usecase.dart';
 import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:fpdart/fpdart.dart';
 
+class AddFriendParrams {
+  final String friendId;
 
-class AddFriend {
-  final FriendRepository friendRepository;
+  AddFriendParrams({
+    required this.friendId,
+  });
+}
 
-  AddFriend({required this.friendRepository});
+class AddFriend implements UseCase<void, AddFriendParrams> {
+  final FriendRepository _friendRepository;
 
-  Future<void> call(String id) async {
-    await friendRepository.addFriendById(id);
+  AddFriend({
+    required FriendRepository friendRepository,
+  }) : _friendRepository = friendRepository;
+
+  @override
+  Future<Either<Failure, void>> call(AddFriendParrams params) async {
+    try {
+      await _friendRepository.addFriendById(params.friendId);
+      return Right(null);
+    } on DioException catch (e) {
+      return HandleErrorDio.call(e);
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
-
 }

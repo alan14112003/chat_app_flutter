@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AppBarSuggestContact extends StatelessWidget implements PreferredSizeWidget {
+class AppBarSuggestContact extends StatelessWidget
+    implements PreferredSizeWidget {
   const AppBarSuggestContact({super.key});
 
   @override
@@ -15,27 +16,9 @@ class AppBarSuggestContact extends StatelessWidget implements PreferredSizeWidge
         },
       ),
       title: Text(
-        'Đề xuất kết bạn',
+        'Tìm kiếm',
         style: TextStyle(color: Colors.black, fontSize: 18),
       ),
-      actions: [
-        // TextButton(
-        //   onPressed: () {},
-        //   child: ElevatedButton(
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, '/invite');
-        //     },
-        //     style: ElevatedButton.styleFrom(
-        //       backgroundColor: Colors.blue,
-        //       foregroundColor: Colors.white,
-        //       shape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(20),
-        //       ),
-        //     ),
-        //     child: Text('Accept Friend Request'),
-        //   ),
-        // ),
-      ],
     );
   }
 

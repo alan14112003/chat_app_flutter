@@ -7,16 +7,17 @@ class FriendRemoteDataSource {
 
   FriendRemoteDataSource({required Dio dio}) : _dio = dio;
 
-  Future<List<Friend>> getFriends() async {
+  Future<List<Friend>> allFriends() async {
     final Response<List<dynamic>> response = await _dio.get('/friends');
     return response.data!.map<Friend>((friendJson) {
       return Friend.fromJson(friendJson as Map<String, dynamic>);
     }).toList();
   }
 
-  Future<List<Friend>> getInviteFriends() async {
+  Future<List<Friend>> requestFriends() async {
     final Response<List<dynamic>> response =
         await _dio.get('/friends/requests');
+
     return response.data!.map<Friend>((friendJson) {
       return Friend.fromJson(friendJson as Map<String, dynamic>);
     }).toList();
@@ -26,53 +27,34 @@ class FriendRemoteDataSource {
     final data = {
       "userTo": friendId,
     };
-    try {
-      await _dio.post('/friends/add', data: data);
-    } on DioError catch (dioError) {
-      final errorMessage =
-          dioError.response?.data['message'] ?? "Lỗi mạng hoặc máy chủ";
-      throw Exception("Lỗi dio return: $errorMessage");
-    } catch (e) {
-      throw Exception("Lỗi xử lý return: $e");
-    }
+
+    await _dio.post('/friends/add', data: data);
   }
 
   Future<void> acceptFriendById(String friendId) async {
     final data = {
       "userFrom": friendId,
     };
-    try {
-      await _dio.post('/friends/accept', data: data);
-    } on DioError catch (dioError) {
-      final errorMessage =
-          dioError.response?.data['message'] ?? "Lỗi mạng hoặc máy chủ";
-      throw Exception("Lỗi dio return: $errorMessage");
-    } catch (e) {
-      throw Exception("Lỗi xử lý return: $e");
-    }
+
+    await _dio.post('/friends/accept', data: data);
   }
 
   Future<void> removeFriendById(String friendId) async {
     final data = {
       "userTo": friendId,
     };
-    try {
-      await _dio.post('/friends/remove', data: data);
-    } on DioError catch (dioError) {
-      final errorMessage =
-          dioError.response?.data['message'] ?? "Lỗi mạng hoặc máy chủ";
-      throw Exception("Lỗi dio return: $errorMessage");
-    } catch (e) {
-      throw Exception("Lỗi xử lý return: $e");
-    }
+
+    await _dio.post('/friends/remove', data: data);
   }
 
   Future<UserWithFriend?> findFriendByEmail(String email) async {
     final response = await _dio.get('/users', queryParameters: {'key': email});
     final data = response.data as List<dynamic>;
+
     if (data.isEmpty) {
       return null;
     }
+
     return UserWithFriend.fromJson(response.data[0]);
   }
 }

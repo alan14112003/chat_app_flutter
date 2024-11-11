@@ -1,4 +1,4 @@
-import 'package:chat_app_flutter/core/common/models/user_with_friend.dart';
+import 'package:chat_app_flutter/core/common/models/friend.dart';
 import 'package:chat_app_flutter/core/error/failures.dart';
 import 'package:chat_app_flutter/core/error/handle_error_dio.dart';
 import 'package:chat_app_flutter/core/usecase/usecase.dart';
@@ -6,32 +6,22 @@ import 'package:chat_app_flutter/features/friend/domain/repositories/friend_repo
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
-class FindFriendByEmailParams {
-  final String email;
-
-  FindFriendByEmailParams({
-    required this.email,
-  });
-}
-
-class FindFriendByEmail
-    implements UseCase<UserWithFriend?, FindFriendByEmailParams> {
+class AllFriends implements UseCase<List<Friend>, NoParams> {
   final FriendRepository _friendRepository;
 
-  FindFriendByEmail({
+  AllFriends({
     required FriendRepository friendRepository,
   }) : _friendRepository = friendRepository;
 
   @override
-  Future<Either<Failure, UserWithFriend?>> call(
-      FindFriendByEmailParams params) async {
+  Future<Either<Failure, List<Friend>>> call(NoParams params) async {
     try {
-      final user = await _friendRepository.findFriendByEmail(params.email);
-      return Right(user);
+      final friends = await _friendRepository.allFriends();
+      return right(friends);
     } on DioException catch (e) {
       return HandleErrorDio.call(e);
     } catch (e) {
-      return Left(Failure(e.toString()));
+      return left(Failure(e.toString()));
     }
   }
 }
