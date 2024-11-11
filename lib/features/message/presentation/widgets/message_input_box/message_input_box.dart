@@ -1,6 +1,5 @@
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/message_reply_box.dart';
-import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_file_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_image_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_message_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/speech_to_text_button.dart';
@@ -64,8 +63,8 @@ class _MessageInputBoxState extends State<MessageInputBox> {
                 const SizedBox(
                     width: 12), // Khoảng cách giữa các icon và TextField
                 // nút gửi file
-                SendFileButton(),
-                const SizedBox(width: 12)
+                // SendFileButton(),
+                // const SizedBox(width: 12)
               ], // Khoảng cách giữa icon và TextField
               Expanded(
                 // Sử dụng Expanded để TextField chiếm không gian còn lại

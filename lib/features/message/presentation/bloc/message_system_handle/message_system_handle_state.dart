@@ -36,4 +36,7 @@ final class ReceiveRecallMessageSuccess extends MessageSystemHandleState {
   final List<Message> messages;
 
   const ReceiveRecallMessageSuccess(this.messages);
+
+  @override
+  List<Object> get props => [messages];
 }
