@@ -32,8 +32,9 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void deactivate() {
+    context.read<MessageHandleCubit>().clear();
+    super.deactivate();
   }
 
   @override

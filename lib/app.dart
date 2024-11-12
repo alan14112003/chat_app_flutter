@@ -34,7 +34,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // return MaterialApp(
+      navigatorKey: serviceLocator<GlobalKey<NavigatorState>>(),
       debugShowCheckedModeBanner: false,
       title: 'Chat app',
       theme: ThemeData(

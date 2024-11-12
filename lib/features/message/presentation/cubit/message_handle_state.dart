@@ -39,6 +39,16 @@ class MessageHandleState extends Equatable {
       messageReplyAfterActive: messageReplyAfterActive,
     );
   }
+
+  MessageHandleState clear() {
+    return MessageHandleState(
+      chatId: '',
+      messageReply: null,
+      messageActive: null,
+      messageReplyActive: null,
+      messageReplyAfterActive: null,
+    );
+  }
 }
 
 final class MessageInitial extends MessageHandleState {

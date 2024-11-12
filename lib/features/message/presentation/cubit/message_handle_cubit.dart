@@ -11,6 +11,10 @@ class MessageHandleCubit extends Cubit<MessageHandleState> {
     emit(state.copyWith(chatId: chatId));
   }
 
+  void clear() {
+    emit(state.clear());
+  }
+
   void activeMessage(int messageId) {
     if (messageId == state.messageActive) {
       emit(state.copyWith(messageId: null));

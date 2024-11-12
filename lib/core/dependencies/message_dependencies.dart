@@ -88,6 +88,7 @@ void messageDependencies(GetIt serviceLocator) {
     ..registerFactory<MessageEventSocket>(
       () => MessageEventSocket(
         socket: serviceLocator<Socket>(),
+        messageRepository: serviceLocator(),
       ),
     )
     // bloc
