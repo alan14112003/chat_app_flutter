@@ -14,4 +14,12 @@ class ChatGlobalUtils {
       (user) => user.id != auth.id,
     );
   }
+
+  static String getNameAvatarGroupChat(Chat chat) {
+    return chat.members!
+        .map((member) => member.firstName![0])
+        .take(3) // Lấy tối đa 3 ký tự
+        .join()
+        .toUpperCase();
+  }
 }

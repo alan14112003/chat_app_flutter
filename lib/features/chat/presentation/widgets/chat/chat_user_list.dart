@@ -18,8 +18,6 @@ class ChatUserList extends StatelessWidget {
       itemBuilder: (context, index) {
         final chat = chats[index];
         final lastMsg = chat.lastMsg;
-        final member =
-            chat.members?.isNotEmpty == true ? chat.members![0] : null;
 
         return GestureDetector(
           onTap: () {
@@ -29,16 +27,34 @@ class ChatUserList extends StatelessWidget {
             );
           },
           child: Container(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 10,
+              bottom: 10,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(member?.avatar ?? ''),
-                        maxRadius: 30,
-                      ),
+                      if (ChatGlobalUtils.isGroupChat(chat))
+                        CircleAvatar(
+                          maxRadius: 30,
+                          child: Text(
+                            ChatGlobalUtils.getNameAvatarGroupChat(chat),
+                          ),
+                        )
+                      else
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            ChatGlobalUtils.getChatFriend(
+                                  chat,
+                                ).avatar ??
+                                '',
+                          ),
+                          maxRadius: 30,
+                        ),
                       SizedBox(width: 16),
                       Expanded(
                         child: Container(
@@ -58,10 +74,11 @@ class ChatUserList extends StatelessWidget {
                               SizedBox(height: 6),
                               if (lastMsg != null) ...[
                                 Text(
-                                  lastMsg.text ?? '',
+                                  '${lastMsg.sender?.firstName}: ${lastMsg.text}',
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade500),
+                                    fontSize: 14,
+                                    color: Colors.grey.shade500,
+                                  ),
                                 ),
                               ]
                             ],
@@ -74,7 +91,10 @@ class ChatUserList extends StatelessWidget {
                 if (lastMsg != null) ...[
                   Text(
                     formatTimeDifference(lastMsg.createdAt!),
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade500,
+                    ),
                   ),
                 ],
               ],

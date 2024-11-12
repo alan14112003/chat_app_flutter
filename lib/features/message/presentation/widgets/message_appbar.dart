@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
+import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,24 +53,25 @@ class _MessageAppbarState extends State<MessageAppbar> {
                   IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context, ChatScreen.route());
                     },
                   ),
                   Expanded(
-                    child: (state.chat.isGroup == false)
+                    child: ChatGlobalUtils.isGroupChat(state.chat)
                         ? CircleAvatar(
+                            child: Text(
+                              ChatGlobalUtils.getNameAvatarGroupChat(
+                                state.chat,
+                              ),
+                            ),
+                          )
+                        : CircleAvatar(
                             backgroundImage: NetworkImage(
                               ChatGlobalUtils.getChatFriend(
                                     state.chat,
                                   ).avatar ??
                                   '',
                             ),
-                          )
-                        : CircleAvatar(
-                            child: Text(state.chat.members!
-                                .map((member) => member.firstName![0])
-                                .join()
-                                .toUpperCase()),
                           ),
                   ),
                 ],
