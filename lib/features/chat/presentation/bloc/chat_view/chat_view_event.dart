@@ -10,3 +10,7 @@ sealed class ChatViewEvent extends Equatable {
 final class GetAllChatEvent extends ChatViewEvent {
   const GetAllChatEvent();
 }
+
+final class ReloadAllChatEvent extends ChatViewEvent {
+  const ReloadAllChatEvent();
+}

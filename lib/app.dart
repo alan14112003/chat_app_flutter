@@ -1,8 +1,10 @@
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_state.dart';
+import 'package:chat_app_flutter/core/common/socket/socket_builder.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
+import 'package:chat_app_flutter/features/message/events/message_event_socket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -42,7 +44,14 @@ class _AppState extends State<App> {
         builder: (context, state) {
           if (state is Authenticated) {
             // Trạng thái đã đăng nhập, hiển thị màn hình
-            return const ChatScreen();
+            return MultiSocketBuilder(
+              builders: [
+                SocketBuilder(
+                  instant: serviceLocator<MessageEventSocket>(),
+                )
+              ],
+              child: const ChatScreen(),
+            );
           } else if (state is Unauthenticated) {
             // Trạng thái chưa đăng nhập, hiển thị màn hình Login
             return const LoginScreen();

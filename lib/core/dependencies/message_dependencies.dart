@@ -2,6 +2,7 @@ import 'package:chat_app_flutter/features/chat/domain/usecases/get_chat.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_new_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_pin_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/receive_recall_message.dart';
+import 'package:chat_app_flutter/features/message/events/message_event_socket.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:chat_app_flutter/features/message/domain/usecases/recall_message
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_view/message_view_bloc.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 void messageDependencies(GetIt serviceLocator) {
   // data source
@@ -82,6 +84,12 @@ void messageDependencies(GetIt serviceLocator) {
       ),
     )
 
+    // event
+    ..registerFactory<MessageEventSocket>(
+      () => MessageEventSocket(
+        socket: serviceLocator<Socket>(),
+      ),
+    )
     // bloc
     ..registerFactory(
       () => MessageViewBloc(

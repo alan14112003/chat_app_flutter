@@ -19,17 +19,29 @@ class ChatViewBloc extends Bloc<ChatViewEvent, ChatViewState> {
   })  : _getAllChat = getAllChat,
         super(ChatViewInitial()) {
     on<GetAllChatEvent>(_onGetAllChat);
+    on<ReloadAllChatEvent>(_onReloadAllChat);
   }
 
   Future<void> _onGetAllChat(
       GetAllChatEvent event, Emitter<ChatViewState> emit) async {
     emit(ChatViewLoading());
     final result = await _getAllChat(NoParams());
-    print('Result: $result');
 
     result.fold(
       (failure) => emit(ChatViewFailure(failure.message)),
       (chat) => emit(ChatViewSuccess(chats: chat)),
+    );
+  }
+
+  Future<void> _onReloadAllChat(
+    ReloadAllChatEvent event,
+    Emitter<ChatViewState> emit,
+  ) async {
+    final result = await _getAllChat(NoParams());
+
+    result.fold(
+      (failure) => emit(ChatViewFailure(failure.message)),
+      (chats) => emit(ChatViewSuccess(chats: chats)),
     );
   }
 }

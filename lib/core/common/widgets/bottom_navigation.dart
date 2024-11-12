@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
+import 'package:chat_app_flutter/core/constants/navigation_enum.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/profile_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/friend/presentation/screens/contact_screen.dart';
@@ -10,16 +11,16 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BottomNavigationCubit, int>(
+    return BlocConsumer<BottomNavigationCubit, NavigationEnum>(
       listener: (context, index) {
         switch (index) {
-          case 0:
+          case NavigationEnum.CHAT:
             Navigator.push(context, ChatScreen.route());
             break;
-          case 1:
+          case NavigationEnum.FRIEND:
             Navigator.push(context, ContactScreen.route());
             break;
-          case 2:
+          case NavigationEnum.PROFILE:
             Navigator.push(context, ProfileScreen.route());
             break;
           default:
@@ -37,9 +38,11 @@ class BottomNavigation extends StatelessWidget {
             ),
           ),
           child: BottomNavigationBar(
-            currentIndex: index,
+            currentIndex: index.index,
             onTap: (index) {
-              context.read<BottomNavigationCubit>().changeIndex(index);
+              context
+                  .read<BottomNavigationCubit>()
+                  .changeIndex(getNavigationEnumFromIndex(index));
             },
             backgroundColor: Colors.white,
             selectedItemColor: Colors.blue,
