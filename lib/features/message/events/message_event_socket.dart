@@ -34,38 +34,42 @@ class MessageEventSocket extends SocketListener {
 
   dynamic _handleReceiveNewMessage(BuildContext context) {
     return (data) async {
-      Message message = Message.fromJson(data);
-
-      // nếu message của đoạn chat đang mở thì thực hiện thêm nó vào danh sách
-      if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
-        context.read<MessageSystemHandleBloc>().add(
-              ReceiveNewMessageEvent(
-                message: message,
-              ),
-            );
-        return;
-      }
-
       try {
-        final fullMessage = await _messageRepository.getMessage(message.id!);
+        Message message = Message.fromJson(data);
 
-        LocalNotifications.showNotify(
-          id: fullMessage.id,
-          title: fullMessage.sender?.fullName ?? '',
-          content: fullMessage.text ?? '',
-          payload: 'message@:${fullMessage.chatId}',
-        );
-      } catch (e) {
-        if (context.mounted) {
-          showSnackBar(context, e.toString());
+        // nếu message của đoạn chat đang mở thì thực hiện thêm nó vào danh sách
+        if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
+          context.read<MessageSystemHandleBloc>().add(
+                ReceiveNewMessageEvent(
+                  message: message,
+                ),
+              );
+          return;
         }
-      } finally {
-        if (context.mounted) {
-          final navigationState = context.read<BottomNavigationCubit>().state;
-          if (navigationState == NavigationEnum.CHAT) {
-            context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+
+        try {
+          final fullMessage = await _messageRepository.getMessage(message.id!);
+
+          LocalNotifications.showNotify(
+            id: fullMessage.id,
+            title: fullMessage.sender?.fullName ?? '',
+            content: fullMessage.text ?? '',
+            payload: 'message@:${fullMessage.chatId}',
+          );
+        } catch (e) {
+          if (context.mounted) {
+            showSnackBar(context, e.toString());
+          }
+        } finally {
+          if (context.mounted) {
+            final navigationState = context.read<BottomNavigationCubit>().state;
+            if (navigationState.current == NavigationEnum.CHAT) {
+              context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+            }
           }
         }
+      } catch (e) {
+        print(e);
       }
     };
   }
@@ -81,37 +85,41 @@ class MessageEventSocket extends SocketListener {
 
   dynamic _handleReceivePinMessage(BuildContext context) {
     return (data) async {
-      Message message = Message.fromJson(data);
-      // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
-      if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
-        context.read<MessageSystemHandleBloc>().add(
-              ReceivePinMessageEvent(
-                message: message,
-              ),
-            );
-        return;
-      }
-
       try {
-        final fullMessage = await _messageRepository.getMessage(message.id!);
-
-        LocalNotifications.showNotify(
-          id: fullMessage.id,
-          title: 'Hệ thống',
-          content: fullMessage.text ?? '',
-          payload: 'message@:${fullMessage.chatId}',
-        );
-      } catch (e) {
-        if (context.mounted) {
-          showSnackBar(context, e.toString());
+        Message message = Message.fromJson(data);
+        // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
+        if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
+          context.read<MessageSystemHandleBloc>().add(
+                ReceivePinMessageEvent(
+                  message: message,
+                ),
+              );
+          return;
         }
-      } finally {
-        if (context.mounted) {
-          final navigationState = context.read<BottomNavigationCubit>().state;
-          if (navigationState == NavigationEnum.CHAT) {
-            context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+
+        try {
+          final fullMessage = await _messageRepository.getMessage(message.id!);
+
+          LocalNotifications.showNotify(
+            id: fullMessage.id,
+            title: 'Hệ thống',
+            content: fullMessage.text ?? '',
+            payload: 'message@:${fullMessage.chatId}',
+          );
+        } catch (e) {
+          if (context.mounted) {
+            showSnackBar(context, e.toString());
+          }
+        } finally {
+          if (context.mounted) {
+            final navigationState = context.read<BottomNavigationCubit>().state;
+            if (navigationState.current == NavigationEnum.CHAT) {
+              context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+            }
           }
         }
+      } catch (e) {
+        print(e);
       }
     };
   }
@@ -127,39 +135,43 @@ class MessageEventSocket extends SocketListener {
 
   dynamic _handleReceiveRecallMessage(BuildContext context) {
     return (data) async {
-      Message message = Message.fromJson(data);
-      // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
-      if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
-        context.read<MessageSystemHandleBloc>().add(
-              ReceiveRecallMessageEvent(
-                message: message,
-              ),
-            );
-        return;
-      }
-
       try {
-        final fullMessage = await _messageRepository.getMessage(message.id!);
-
-        LocalNotifications.hideNotify(id: fullMessage.id);
-
-        LocalNotifications.showNotify(
-          id: fullMessage.id,
-          title: fullMessage.sender?.fullName ?? '',
-          content: 'Đã thu hồi một tin nhắn',
-          payload: 'message@:${fullMessage.chatId}',
-        );
-      } catch (e) {
-        if (context.mounted) {
-          showSnackBar(context, e.toString());
+        Message message = Message.fromJson(data);
+        // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
+        if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
+          context.read<MessageSystemHandleBloc>().add(
+                ReceiveRecallMessageEvent(
+                  message: message,
+                ),
+              );
+          return;
         }
-      } finally {
-        if (context.mounted) {
-          final navigationState = context.read<BottomNavigationCubit>().state;
-          if (navigationState == NavigationEnum.CHAT) {
-            context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+
+        try {
+          final fullMessage = await _messageRepository.getMessage(message.id!);
+
+          LocalNotifications.hideNotify(id: fullMessage.id);
+
+          LocalNotifications.showNotify(
+            id: fullMessage.id,
+            title: fullMessage.sender?.fullName ?? '',
+            content: 'Đã thu hồi một tin nhắn',
+            payload: 'message@:${fullMessage.chatId}',
+          );
+        } catch (e) {
+          if (context.mounted) {
+            showSnackBar(context, e.toString());
+          }
+        } finally {
+          if (context.mounted) {
+            final navigationState = context.read<BottomNavigationCubit>().state;
+            if (navigationState.current == NavigationEnum.CHAT) {
+              context.read<ChatViewBloc>().add(ReloadAllChatEvent());
+            }
           }
         }
+      } catch (e) {
+        print(e);
       }
     };
   }

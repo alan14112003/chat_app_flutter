@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/register_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
@@ -28,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is AuthSuccess) {
             showSnackBar(context, 'Đăng nhập thành công!');
+            context.read<AppAuthCubit>().setUserLoggedIn(state.user);
             // Điều hướng khi đăng nhập thành công
             Navigator.push(context, ChatScreen.route());
             return;

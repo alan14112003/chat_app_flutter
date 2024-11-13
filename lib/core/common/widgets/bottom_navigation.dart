@@ -11,22 +11,8 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BottomNavigationCubit, NavigationEnum>(
-      listener: (context, index) {
-        switch (index) {
-          case NavigationEnum.CHAT:
-            Navigator.push(context, ChatScreen.route());
-            break;
-          case NavigationEnum.FRIEND:
-            Navigator.push(context, ContactScreen.route());
-            break;
-          case NavigationEnum.PROFILE:
-            Navigator.push(context, ProfileScreen.route());
-            break;
-          default:
-        }
-      },
-      builder: (context, index) {
+    return BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+      builder: (context, state) {
         // Mặc định là 0
         return Container(
           decoration: BoxDecoration(
@@ -38,8 +24,21 @@ class BottomNavigation extends StatelessWidget {
             ),
           ),
           child: BottomNavigationBar(
-            currentIndex: index.index,
+            currentIndex: state.current.index,
             onTap: (index) {
+              switch (index) {
+                case 0:
+                  Navigator.push(context, ChatScreen.route());
+                  break;
+                case 1:
+                  Navigator.push(context, ContactScreen.route());
+                  break;
+                case 2:
+                  Navigator.push(context, ProfileScreen.route());
+                  break;
+                default:
+              }
+
               context
                   .read<BottomNavigationCubit>()
                   .changeIndex(getNavigationEnumFromIndex(index));

@@ -24,13 +24,15 @@ class _SocketBuilderState<T extends SocketListener>
   @override
   void initState() {
     super.initState();
+    print('-------------init listener--------------');
     widget.instant.initListeners(context);
   }
 
   @override
-  void dispose() {
+  void deactivate() {
+    print('-------------remove listener--------------');
     widget.instant.removeListeners(context);
-    super.dispose();
+    super.deactivate();
   }
 
   @override

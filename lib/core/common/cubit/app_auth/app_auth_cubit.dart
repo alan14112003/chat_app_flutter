@@ -60,10 +60,12 @@ class AppAuthCubit extends Cubit<AppAuthState> {
   }
 
   void _joinRoomSocket(User user) {
+    print('------------------join room----------------');
     _socket.emit('join', user.id);
   }
 
   void _leaveRoomSocket(User user) {
+    print('------------------leave room----------------');
     _socket.emit('leave', user.id);
   }
 }

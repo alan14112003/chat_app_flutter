@@ -74,7 +74,6 @@ void authDependencies(GetIt serviceLocator) {
     ..registerFactory<AuthBloc>(
       () => AuthBloc(
         loginUseCase: serviceLocator(),
-        appAuthCubit: serviceLocator(),
         registerUsecase: serviceLocator(),
         activeEmailUsecase: serviceLocator(),
       ),

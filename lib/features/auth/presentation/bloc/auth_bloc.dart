@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/features/auth/domain/usecases/active_email_usecase.dart';
 import 'package:chat_app_flutter/features/auth/domain/usecases/login_usecase.dart';
@@ -12,17 +11,14 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase _loginUseCase;
-  final AppAuthCubit _appAuthCubit;
   final RegisterUsecase _registerUsecase;
   final ActiveEmailUsecase _activeEmailUsecase;
 
   AuthBloc({
     required LoginUseCase loginUseCase,
-    required AppAuthCubit appAuthCubit,
     required RegisterUsecase registerUsecase,
     required ActiveEmailUsecase activeEmailUsecase,
   })  : _loginUseCase = loginUseCase,
-        _appAuthCubit = appAuthCubit,
         _registerUsecase = registerUsecase,
         _activeEmailUsecase = activeEmailUsecase,
         super(AuthInitial()) {
@@ -47,9 +43,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (user) {
         emit(AuthSuccess(user: user));
-
-        // Lưu thông tin người dùng
-        _appAuthCubit.setUserLoggedIn(user);
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
+import 'package:chat_app_flutter/core/common/widgets/pop_scope_screen_navigation.dart';
 import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/chat_view/chat_view_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/group_create_screen.dart';
@@ -32,49 +33,51 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBarChat(
-          group_button: () {
-            Navigator.push(context, GroupCreateScreen.route());
-          },
-        ),
-        body: Column(
-          children: [
-            SearchBarChat(
-              onSearchChanged: (value) {
-                setState(() {
-                  // Cập nhật giá trị tìm kiếm
-                  searchQuery = value;
-                });
-              },
-            ),
-            Expanded(
-              child: BlocBuilder<ChatViewBloc, ChatViewState>(
-                builder: (context, state) {
-                  if (state is ChatViewLoading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is ChatViewFailure) {
-                    return Center(child: Text('Error: ${state.error}'));
-                  } else if (state is ChatViewSuccess) {
-                    final filteredChats = state.chats.where((chat) {
-                      final chatName = chat.groupName ??
-                          ChatGlobalUtils.getChatFriend(chat).fullName;
-                      return chatName!
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase());
-                    }).toList();
-
-                    return ChatUserList(chats: filteredChats);
-                  } else {
-                    return Center(child: Text('Chưa có đoạn chat'));
-                  }
+      child: PopScopeScreenNavigation(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBarChat(
+            group_button: () {
+              Navigator.push(context, GroupCreateScreen.route());
+            },
+          ),
+          body: Column(
+            children: [
+              SearchBarChat(
+                onSearchChanged: (value) {
+                  setState(() {
+                    // Cập nhật giá trị tìm kiếm
+                    searchQuery = value;
+                  });
                 },
               ),
-            ),
-          ],
+              Expanded(
+                child: BlocBuilder<ChatViewBloc, ChatViewState>(
+                  builder: (context, state) {
+                    if (state is ChatViewLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is ChatViewFailure) {
+                      return Center(child: Text('Error: ${state.error}'));
+                    } else if (state is ChatViewSuccess) {
+                      final filteredChats = state.chats.where((chat) {
+                        final chatName = chat.groupName ??
+                            ChatGlobalUtils.getChatFriend(chat).fullName;
+                        return chatName!
+                            .toLowerCase()
+                            .contains(searchQuery.toLowerCase());
+                      }).toList();
+
+                      return ChatUserList(chats: filteredChats);
+                    } else {
+                      return Center(child: Text('Chưa có đoạn chat'));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigation(),
         ),
-        bottomNavigationBar: BottomNavigation(),
       ),
     );
   }

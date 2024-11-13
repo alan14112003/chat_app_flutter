@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/common/widgets/bottom_navigation.dart';
+import 'package:chat_app_flutter/core/common/widgets/pop_scope_screen_navigation.dart';
 import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,99 +23,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final authCubit = context.read<AppAuthCubit>();
     final currentUser = AuthGlobalUtils.getAuth();
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return PopScopeScreenNavigation(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text('Tài khoản cá nhân'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await authCubit.logout();
-              Navigator.push(context, LoginScreen.route());
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 50),
-            CircleAvatar(
-              backgroundImage: NetworkImage(currentUser.avatar!),
-              maxRadius: 50,
-            ),
-            SizedBox(height: 20),
-            Text(
-              currentUser.fullName!,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Họ và tên:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller:
-                          TextEditingController(text: currentUser.fullName!),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Email:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(width: 40),
-                  Expanded(
-                    child: TextField(
-                      controller:
-                          TextEditingController(text: currentUser.email!),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                textStyle: TextStyle(fontSize: 16),
-              ),
-              child: Text('Cập nhật'),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Text('Tài khoản cá nhân'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                await authCubit.logout();
+                Navigator.push(context, LoginScreen.route());
+              },
             ),
           ],
         ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 50),
+              CircleAvatar(
+                backgroundImage: NetworkImage(currentUser.avatar!),
+                maxRadius: 50,
+              ),
+              SizedBox(height: 20),
+              Text(
+                currentUser.fullName!,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Họ và tên:',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        controller:
+                            TextEditingController(text: currentUser.fullName!),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Email:',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(width: 40),
+                    Expanded(
+                      child: TextField(
+                        controller:
+                            TextEditingController(text: currentUser.email!),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  textStyle: TextStyle(fontSize: 16),
+                ),
+                child: Text('Cập nhật'),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigation(),
       ),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
