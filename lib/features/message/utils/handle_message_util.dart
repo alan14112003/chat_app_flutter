@@ -59,6 +59,9 @@ class HandleMessageUtil {
     BuildContext context, {
     required Message message,
   }) {
+    if (message.type == MessageTypeEnum.CHAT_BOT) {
+      return;
+    }
     context.read<MessageHandleCubit>().setMessageReply(message);
   }
 

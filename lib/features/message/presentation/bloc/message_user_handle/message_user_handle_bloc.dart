@@ -52,6 +52,7 @@ class MessageUserHandleBloc
         chatId: event.chatId,
         content: event.content,
         replyId: event.replyId,
+        isChatBotContent: event.isChatBotContent,
       ),
     );
 

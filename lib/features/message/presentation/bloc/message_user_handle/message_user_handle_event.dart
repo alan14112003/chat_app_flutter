@@ -11,11 +11,13 @@ final class SendTextMessageEvent extends MessageUserHandleEvent {
   final String chatId;
   final String content;
   final int? replyId;
+  final bool isChatBotContent;
 
   const SendTextMessageEvent({
     required this.chatId,
     required this.content,
     this.replyId,
+    required this.isChatBotContent,
   });
 }
 

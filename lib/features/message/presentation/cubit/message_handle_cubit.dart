@@ -34,4 +34,8 @@ class MessageHandleCubit extends Cubit<MessageHandleState> {
   void toggleMessageReplyAfterActive(Message? messageReplyAfterActive) {
     emit(state.copyWith(messageReplyAfterActive: messageReplyAfterActive));
   }
+
+  void toggleTypeContentMessage() {
+    emit(state.copyWith(isChatBotContent: !state.isChatBotContent));
+  }
 }

@@ -6,6 +6,7 @@ class MessageHandleState extends Equatable {
   final int? messageActive;
   final Message? messageReplyActive;
   final Message? messageReplyAfterActive;
+  final bool isChatBotContent;
 
   const MessageHandleState({
     required this.chatId,
@@ -13,6 +14,7 @@ class MessageHandleState extends Equatable {
     this.messageActive,
     this.messageReplyActive,
     this.messageReplyAfterActive,
+    this.isChatBotContent = false,
   });
 
   @override
@@ -22,6 +24,7 @@ class MessageHandleState extends Equatable {
         messageActive,
         messageReplyActive,
         messageReplyAfterActive,
+        isChatBotContent,
       ];
 
   MessageHandleState copyWith({
@@ -30,6 +33,7 @@ class MessageHandleState extends Equatable {
     int? messageId,
     Message? messageReplyActive,
     Message? messageReplyAfterActive,
+    bool? isChatBotContent,
   }) {
     return MessageHandleState(
       chatId: chatId ?? this.chatId,
@@ -37,6 +41,7 @@ class MessageHandleState extends Equatable {
       messageActive: messageId,
       messageReplyActive: messageReplyActive,
       messageReplyAfterActive: messageReplyAfterActive,
+      isChatBotContent: isChatBotContent ?? this.isChatBotContent,
     );
   }
 
@@ -47,6 +52,7 @@ class MessageHandleState extends Equatable {
       messageActive: null,
       messageReplyActive: null,
       messageReplyAfterActive: null,
+      isChatBotContent: false,
     );
   }
 }

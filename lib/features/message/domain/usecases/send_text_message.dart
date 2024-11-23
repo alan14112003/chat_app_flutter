@@ -13,11 +13,13 @@ class SendTextMessageParam {
   final String chatId;
   final String content;
   final int? replyId;
+  final bool isChatBotContent;
 
   SendTextMessageParam({
     required this.chatId,
     required this.content,
     this.replyId,
+    required this.isChatBotContent,
   });
 }
 
@@ -40,6 +42,7 @@ class SendTextMessage implements UseCase<List<Message>, SendTextMessageParam> {
           type: MessageTypeEnum.TEXT,
           text: params.content,
           replyId: params.replyId,
+          isChatBotContent: params.isChatBotContent,
         ),
       );
 

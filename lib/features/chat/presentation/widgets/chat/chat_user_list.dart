@@ -79,6 +79,8 @@ class ChatUserList extends StatelessWidget {
                                     fontSize: 14,
                                     color: Colors.grey.shade500,
                                   ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ]
                             ],

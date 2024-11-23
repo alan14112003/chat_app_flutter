@@ -7,6 +7,7 @@ import 'package:chat_app_flutter/features/message/presentation/widgets/message_i
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/widgets/text_message.dart';
 import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 enum MessageBodyType { normal, reply }
 
@@ -44,6 +45,11 @@ class MessageBody extends StatelessWidget {
           message: message,
           messageBodyType: type,
         );
+      case MessageTypeEnum.CHAT_BOT:
+        return MarkdownBody(
+          data: message.text!,
+          selectable: true,
+        );
       default:
         return const SizedBox();
     }
@@ -64,9 +70,10 @@ class MessageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = message.type == MessageTypeEnum.CHAT_BOT ? 0.75 : 0.6;
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width * 0.6,
+        maxWidth: MediaQuery.of(context).size.width * size,
       ),
       child: MessageReplyAfterActiveHandle(
         message: message,

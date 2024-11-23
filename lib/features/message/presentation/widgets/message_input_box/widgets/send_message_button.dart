@@ -16,6 +16,11 @@ class SendMessageButton extends StatelessWidget {
           messageHandleCubit.state.messageReply,
     );
 
+    bool isChatBotContent = context.select(
+      (MessageHandleCubit messageHandleCubit) =>
+          messageHandleCubit.state.isChatBotContent,
+    );
+
     String? chatId = context.select(
       (MessageHandleCubit messageHandleCubit) =>
           messageHandleCubit.state.chatId,
@@ -37,6 +42,7 @@ class SendMessageButton extends StatelessWidget {
                 chatId: chatId!,
                 content: content,
                 replyId: messageReply?.id,
+                isChatBotContent: isChatBotContent,
               ),
             );
         // làm sạch input

@@ -6,6 +6,7 @@ class SendMessageBody extends Equatable {
   final String? file;
   final String? image;
   final int? replyId;
+  final bool isChatBotContent;
 
   const SendMessageBody({
     required this.type,
@@ -13,10 +14,18 @@ class SendMessageBody extends Equatable {
     this.file,
     this.image,
     this.replyId,
+    this.isChatBotContent = false,
   });
 
   @override
-  List<Object?> get props => [type, text, file, image, replyId];
+  List<Object?> get props => [
+        type,
+        text,
+        file,
+        image,
+        replyId,
+        isChatBotContent,
+      ];
 
   @override
   bool? get stringify => true;
@@ -29,6 +38,7 @@ class SendMessageBody extends Equatable {
       'file': file,
       'image': image,
       'replyId': replyId,
+      'isChatBotContent': isChatBotContent,
     };
   }
 }

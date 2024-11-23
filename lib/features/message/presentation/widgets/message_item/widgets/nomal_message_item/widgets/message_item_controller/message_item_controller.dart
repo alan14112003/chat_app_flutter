@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_item_controller/widgets/message_item_by_auth.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_item_controller/widgets/message_item_by_other.dart';
@@ -37,6 +38,10 @@ class _MessageItemControllerState extends State<MessageItemController> {
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
+    if (widget.message.type == MessageTypeEnum.CHAT_BOT) {
+      return;
+    }
+
     setState(() {
       if (HandleMessageUtil.isMessageByAuth(context, message: widget.message)) {
         if (_offset.dx > 0) {

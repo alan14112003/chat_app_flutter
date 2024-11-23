@@ -5,4 +5,5 @@ class MessageTypeEnum {
   static const int IMAGE = 1;
   static const int FILE = 2;
   static const int SYSTEM = 100;
+  static const int CHAT_BOT = 50;
 }
