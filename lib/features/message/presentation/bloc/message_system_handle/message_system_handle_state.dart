@@ -24,12 +24,16 @@ final class ReceiveNewMessageSuccess extends MessageSystemHandleState {
   final List<Message> messages;
 
   const ReceiveNewMessageSuccess(this.messages);
+  @override
+  List<Object> get props => [messages];
 }
 
 final class ReceivePinMessageSuccess extends MessageSystemHandleState {
   final List<Message> messages;
 
   const ReceivePinMessageSuccess(this.messages);
+  @override
+  List<Object> get props => [messages];
 }
 
 final class ReceiveRecallMessageSuccess extends MessageSystemHandleState {

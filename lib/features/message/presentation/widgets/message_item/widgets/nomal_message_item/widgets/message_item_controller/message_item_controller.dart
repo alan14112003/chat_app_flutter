@@ -25,6 +25,16 @@ class MessageItemController extends StatefulWidget {
 class _MessageItemControllerState extends State<MessageItemController> {
   Offset _offset = Offset.zero;
   bool _isDragging = false;
+  bool _isTranslate = false;
+
+  void handleTranSlateMessage() {
+    if (HandleMessageUtil.isMessageByAuth(context, message: widget.message)) {
+      return;
+    }
+    setState(() {
+      _isTranslate = !_isTranslate;
+    });
+  }
 
   void _handleDragUpdate(DragUpdateDetails details) {
     setState(() {
@@ -81,6 +91,7 @@ class _MessageItemControllerState extends State<MessageItemController> {
       onTap: () {
         context.read<MessageHandleCubit>().activeMessage(widget.message.id!);
       },
+      onDoubleTap: handleTranSlateMessage,
       onLongPress: () {
         HandleMessageUtil.showMessageOptions(
           context,
@@ -104,6 +115,12 @@ class _MessageItemControllerState extends State<MessageItemController> {
                 messages: widget.messages,
                 message: widget.message,
                 index: widget.index,
+                isTranslate: _isTranslate,
+                handleBack: () {
+                  setState(() {
+                    _isTranslate = false;
+                  });
+                },
               ),
       ),
     );

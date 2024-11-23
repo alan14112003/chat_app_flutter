@@ -9,6 +9,7 @@ import 'package:chat_app_flutter/features/message/presentation/widgets/message_b
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:translator/translator.dart';
 
 class HandleMessageUtil {
   static bool isRenderInfoSender(
@@ -124,5 +125,20 @@ class HandleMessageUtil {
     // lấy ra chatId từ cubit
     final chatId = context.read<MessageHandleCubit>().state.chatId;
     return chatId == message.chatId;
+  }
+
+  static Future<Map<String, dynamic>> translateMessage(Message message) async {
+    final translator = GoogleTranslator();
+    // lấy ra chatId từ cubit
+    final textTrans = await translator.translate(message.text!, to: 'vi');
+    Message messageTrans = Message.fromJson({
+      ...message.toJson(),
+      'text': textTrans.text,
+    });
+
+    return {
+      'message': messageTrans,
+      'from': textTrans.sourceLanguage.code,
+    };
   }
 }

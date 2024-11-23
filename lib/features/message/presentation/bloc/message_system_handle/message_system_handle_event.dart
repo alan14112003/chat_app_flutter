@@ -13,6 +13,9 @@ final class ReceiveNewMessageEvent extends MessageSystemHandleEvent {
   const ReceiveNewMessageEvent({
     required this.message,
   });
+
+  @override
+  List<Object> get props => [message];
 }
 
 final class ReceivePinMessageEvent extends MessageSystemHandleEvent {

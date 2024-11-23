@@ -1,4 +1,5 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
+import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_body/message_body.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_item/widgets/nomal_message_item/widgets/message_item_controller/widgets/ondragging_reply_icon.dart';
@@ -10,6 +11,8 @@ class MessageItemByOther extends StatelessWidget {
   final List<Message> messages;
   final int index;
   final bool isDragging;
+  final bool isTranslate;
+  final dynamic handleBack;
 
   const MessageItemByOther({
     super.key,
@@ -17,6 +20,8 @@ class MessageItemByOther extends StatelessWidget {
     required this.messages,
     required this.index,
     required this.isDragging,
+    required this.isTranslate,
+    required this.handleBack,
   });
 
   @override
@@ -75,12 +80,56 @@ class MessageItemByOther extends StatelessWidget {
                     ),
                   ),
                 ],
-                MessageBody(message: message),
+                if (!isTranslate)
+                  MessageBody(message: message)
+                else
+                  // Sử dụng FutureBuilder cho renderBody
+                  ...[
+                  FutureBuilder<Widget>(
+                    future: renderBody(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      return snapshot.data!;
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (handleBack != null) {
+                          handleBack();
+                        }
+                      },
+                      child: Text(
+                        'Bản gốc',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 134, 3, 157),
+                        ),
+                      ),
+                    ),
+                  )
+                ]
               ],
             )
           ],
         ),
       ],
     );
+  }
+
+  Future<Widget> renderBody() async {
+    if (message.type != MessageTypeEnum.TEXT) {
+      return MessageBody(message: message);
+    }
+    final translateData = await HandleMessageUtil.translateMessage(message);
+    if (translateData['from'] == 'vi') {
+      return MessageBody(message: message);
+    }
+    return MessageBody(message: translateData['message']);
   }
 }
