@@ -13,4 +13,7 @@ final class GetChatEvent extends ChatInfoViewEvent {
   const GetChatEvent({
     required this.chatId,
   });
+
+  @override
+  List<Object> get props => [chatId];
 }

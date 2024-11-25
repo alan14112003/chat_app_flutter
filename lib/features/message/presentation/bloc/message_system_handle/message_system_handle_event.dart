@@ -24,6 +24,9 @@ final class ReceivePinMessageEvent extends MessageSystemHandleEvent {
   const ReceivePinMessageEvent({
     required this.message,
   });
+
+  @override
+  List<Object> get props => [message];
 }
 
 final class ReceiveRecallMessageEvent extends MessageSystemHandleEvent {
@@ -32,4 +35,7 @@ final class ReceiveRecallMessageEvent extends MessageSystemHandleEvent {
   const ReceiveRecallMessageEvent({
     required this.message,
   });
+
+  @override
+  List<Object> get props => [message];
 }
