@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/constants/message_type_enum.dart';
 import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
@@ -12,6 +13,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:translator/translator.dart';
 
 class HandleMessageUtil {
+  static final AudioPlayer _audioPlayer = AudioPlayer();
+
   static bool isRenderInfoSender(
     BuildContext context, {
     required List<Message> messages,
@@ -143,5 +146,17 @@ class HandleMessageUtil {
       'message': messageTrans,
       'from': textTrans.sourceLanguage.code,
     };
+  }
+
+  static Future<void> playNotificationSound() async {
+    try {
+      await _audioPlayer.play(
+        AssetSource(
+          'sounds/dog_notification_sound.mp3',
+        ),
+      );
+    } catch (e) {
+      print('Error playing sound: $e');
+    }
   }
 }

@@ -37,6 +37,9 @@ class MessageEventSocket extends SocketListener {
       try {
         Message message = Message.fromJson(data);
 
+        // phát âm thanh thông báo
+        HandleMessageUtil.playNotificationSound();
+
         // nếu message của đoạn chat đang mở thì thực hiện thêm nó vào danh sách
         if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
           context.read<MessageSystemHandleBloc>().add(
@@ -87,6 +90,10 @@ class MessageEventSocket extends SocketListener {
     return (data) async {
       try {
         Message message = Message.fromJson(data);
+
+        // phát âm thanh thông báo
+        HandleMessageUtil.playNotificationSound();
+
         // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
         if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
           context.read<MessageSystemHandleBloc>().add(
@@ -137,6 +144,10 @@ class MessageEventSocket extends SocketListener {
     return (data) async {
       try {
         Message message = Message.fromJson(data);
+
+        // phát âm thanh thông báo
+        HandleMessageUtil.playNotificationSound();
+
         // nếu message của đoạn chat đang mở thì thực hiện load lại danh sách
         if (HandleMessageUtil.isMessageInActiveChat(context, message)) {
           context.read<MessageSystemHandleBloc>().add(
