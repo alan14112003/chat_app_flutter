@@ -39,9 +39,19 @@ class MessageItemByOther extends StatelessWidget {
           message: message,
           index: index,
         ))
-          CircleAvatar(
-            radius: 12,
-            backgroundImage: NetworkImage(message.sender?.avatar ?? ''),
+          Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.blue, // Màu của viền
+                width: 1.0, // Độ dày của viền
+              ),
+            ),
+            child: CircleAvatar(
+              radius: 12,
+              backgroundImage: NetworkImage(message.sender?.avatar ?? ''),
+            ),
           )
         else
           const SizedBox(

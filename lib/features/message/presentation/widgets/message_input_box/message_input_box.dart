@@ -5,6 +5,7 @@ import 'package:chat_app_flutter/features/message/presentation/widgets/message_i
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/send_message_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/speech_to_text_button.dart';
 import 'package:chat_app_flutter/features/message/presentation/widgets/message_input_box/widgets/type_content_button.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,20 +38,6 @@ class _MessageInputBoxState extends State<MessageInputBox> {
     super.dispose();
     _focusNode.dispose();
     _controller.dispose();
-  }
-
-  String ensureGeminiPrefix(String input, {bool remove = false}) {
-    const geminiPrefix = '@gemini-ai:';
-    final hasGeminiPrefix = input.startsWith(geminiPrefix);
-
-    if (remove) {
-      // Nếu cần xóa @gemini, kiểm tra và xóa nó
-      return hasGeminiPrefix
-          ? input.substring(geminiPrefix.length).trim()
-          : input;
-    }
-    // Nếu cần thêm @gemini, kiểm tra và thêm nó
-    return hasGeminiPrefix ? input : '$geminiPrefix $input';
   }
 
   @override
@@ -95,10 +82,12 @@ class _MessageInputBoxState extends State<MessageInputBox> {
                   child: BlocListener<MessageHandleCubit, MessageHandleState>(
                     listener: (context, state) {
                       if (state.isChatBotContent) {
-                        _controller.text = ensureGeminiPrefix(_controller.text);
+                        _controller.text = HandleMessageUtil.ensureGeminiPrefix(
+                          _controller.text,
+                        );
                         return;
                       }
-                      _controller.text = ensureGeminiPrefix(
+                      _controller.text = HandleMessageUtil.ensureGeminiPrefix(
                         _controller.text,
                         remove: true,
                       );

@@ -7,6 +7,7 @@ import 'package:chat_app_flutter/features/message/domain/usecases/delete_message
 import 'package:chat_app_flutter/features/message/domain/usecases/recall_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_image_message.dart';
 import 'package:chat_app_flutter/features/message/domain/usecases/send_text_message.dart';
+import 'package:chat_app_flutter/features/message/utils/handle_message_util.dart';
 import 'package:equatable/equatable.dart';
 
 part 'message_user_handle_event.dart';
@@ -47,10 +48,12 @@ class MessageUserHandleBloc
     SendTextMessageEvent event,
     Emitter<MessageUserHandleState> emit,
   ) async {
+    final geminiContent = HandleMessageUtil.ensureGeminiPrefix(event.content);
+
     final res = await _sendTextMessage.call(
       SendTextMessageParam(
         chatId: event.chatId,
-        content: event.content,
+        content: event.isChatBotContent ? geminiContent : event.content,
         replyId: event.replyId,
         isChatBotContent: event.isChatBotContent,
       ),

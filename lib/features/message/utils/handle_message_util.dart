@@ -161,4 +161,18 @@ class HandleMessageUtil {
       }
     });
   }
+
+  static String ensureGeminiPrefix(String input, {bool remove = false}) {
+    const geminiPrefix = '@gemini-ai:';
+    final hasGeminiPrefix = input.startsWith(geminiPrefix);
+
+    if (remove) {
+      // Nếu cần xóa @gemini, kiểm tra và xóa nó
+      return hasGeminiPrefix
+          ? input.substring(geminiPrefix.length).trim()
+          : input;
+    }
+    // Nếu cần thêm @gemini, kiểm tra và thêm nó
+    return hasGeminiPrefix ? input : '$geminiPrefix $input';
+  }
 }
