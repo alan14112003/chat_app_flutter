@@ -149,14 +149,16 @@ class HandleMessageUtil {
   }
 
   static Future<void> playNotificationSound() async {
-    try {
-      await _audioPlayer.play(
-        AssetSource(
-          'sounds/dog_notification_sound.mp3',
-        ),
-      );
-    } catch (e) {
-      print('Error playing sound: $e');
-    }
+    Future.delayed(Duration(seconds: 1), () async {
+      try {
+        await _audioPlayer.play(
+          AssetSource(
+            'sounds/dog_notification_sound.mp3',
+          ),
+        );
+      } catch (e) {
+        print('Error playing sound: $e');
+      }
+    });
   }
 }
