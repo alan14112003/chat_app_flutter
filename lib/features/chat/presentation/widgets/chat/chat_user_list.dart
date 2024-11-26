@@ -1,6 +1,7 @@
 import 'package:chat_app_flutter/core/common/models/chat.dart';
 import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/core/utils/format_time_difference.dart';
+import 'package:chat_app_flutter/core/utils/message_global_utils.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -74,7 +75,7 @@ class ChatUserList extends StatelessWidget {
                               SizedBox(height: 6),
                               if (lastMsg != null) ...[
                                 Text(
-                                  '${lastMsg.sender?.firstName}: ${lastMsg.text}',
+                                  '${lastMsg.sender?.firstName}: ${MessageGlobalUtils.getTextRender(lastMsg)}',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey.shade500,

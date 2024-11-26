@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/core/common/models/message.dart';
 import 'package:chat_app_flutter/core/theme/app_theme.dart';
+import 'package:chat_app_flutter/core/utils/message_global_utils.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,9 +70,12 @@ class _MessageReplyBoxState extends State<MessageReplyBox> {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.8),
-                        child: Text(messageReply.text ?? ''))
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.8),
+                      child: Text(
+                        MessageGlobalUtils.getTextRender(messageReply),
+                      ),
+                    )
                   ],
                 ),
                 Container(
