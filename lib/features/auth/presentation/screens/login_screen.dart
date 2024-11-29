@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           context.read<AuthLoginCubit>().passwordChanged(value);
                         },
                         errorText: state.isSubmitted && !state.isValidPassword
-                            ? 'Mật khẩu phải tối thiểu 6 ký tự'
+                            ? 'Mật khẩu phải tối thiểu 3 ký tự'
                             : null,
                       );
                     },

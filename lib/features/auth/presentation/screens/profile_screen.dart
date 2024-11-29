@@ -103,16 +103,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  textStyle: TextStyle(fontSize: 16),
-                ),
-                child: Text('Cập nhật'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Colors.blueAccent,
+              //     foregroundColor: Colors.white,
+              //     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              //     textStyle: TextStyle(fontSize: 16),
+              //   ),
+              //   child: Text('Cập nhật'),
+              // ),
             ],
           ),
         ),
