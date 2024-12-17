@@ -152,6 +152,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   void initState() {
     super.initState();
+
+    context.read<VideoCallHandleCubit>().setRoomId(widget.roomId);
     connectWebRTC();
   }
 

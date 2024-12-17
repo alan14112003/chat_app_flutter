@@ -8,6 +8,10 @@ part 'video_call_handle_state.dart';
 class VideoCallHandleCubit extends Cubit<VideoCallHandleState> {
   VideoCallHandleCubit() : super(VideoCallInitialState());
 
+  void setRoomId(String roomId) {
+    emit(state.copyWith(roomId: roomId));
+  }
+
   void setLocalStream(LocalStream localStream) {
     emit(state.copyWith(localStream: localStream));
   }
@@ -51,6 +55,7 @@ class VideoCallHandleCubit extends Cubit<VideoCallHandleState> {
       isAudioEnable: true,
       showLocalRenderer: true,
       remoteRenderers: [],
+      roomId: '',
     ));
   }
 }

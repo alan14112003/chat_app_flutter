@@ -6,6 +6,7 @@ class VideoCallHandleState extends Equatable {
   final bool isAudioEnable;
   final bool showLocalRenderer;
   final List<Renderer> remoteRenderers;
+  final String roomId;
 
   const VideoCallHandleState({
     required this.localStream,
@@ -13,6 +14,7 @@ class VideoCallHandleState extends Equatable {
     required this.isAudioEnable,
     required this.showLocalRenderer,
     required this.remoteRenderers,
+    required this.roomId,
   });
 
   VideoCallHandleState copyWith({
@@ -21,6 +23,7 @@ class VideoCallHandleState extends Equatable {
     bool? isAudioEnable,
     bool? showLocalRenderer,
     List<Renderer>? remoteRenderers,
+    String? roomId,
   }) {
     return VideoCallHandleState(
       localStream: localStream ?? this.localStream,
@@ -28,6 +31,7 @@ class VideoCallHandleState extends Equatable {
       isAudioEnable: isAudioEnable ?? this.isAudioEnable,
       showLocalRenderer: showLocalRenderer ?? this.showLocalRenderer,
       remoteRenderers: remoteRenderers ?? this.remoteRenderers,
+      roomId: roomId ?? this.roomId,
     );
   }
 
@@ -38,6 +42,7 @@ class VideoCallHandleState extends Equatable {
         isAudioEnable,
         showLocalRenderer,
         remoteRenderers,
+        roomId,
       ];
 }
 
@@ -50,5 +55,6 @@ class VideoCallInitialState extends VideoCallHandleState {
           isAudioEnable: true,
           showLocalRenderer: true,
           remoteRenderers: const [],
+          roomId: '',
         );
 }

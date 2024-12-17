@@ -5,6 +5,7 @@ import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/message/events/message_event_socket.dart';
+import 'package:chat_app_flutter/features/video_call/events/video_call_event_socket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -48,6 +49,9 @@ class _AppState extends State<App> {
               builders: [
                 SocketBuilder(
                   instant: serviceLocator<MessageEventSocket>(),
+                ),
+                SocketBuilder(
+                  instant: serviceLocator<VideoCallEventSocket>(),
                 )
               ],
               child: const ChatScreen(),

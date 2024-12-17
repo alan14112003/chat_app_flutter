@@ -18,6 +18,7 @@ import 'package:chat_app_flutter/features/message/presentation/bloc/message_view
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_system_handle/message_system_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/message_user_handle/message_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/message/presentation/cubit/message_handle_cubit.dart';
+import 'package:chat_app_flutter/features/video_call/presentation/bloc/video_call_user_handle/video_call_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/cubit/video_call_handler/video_call_handle_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -96,6 +97,10 @@ void main() async {
         create: (_) => serviceLocator<BottomNavigationCubit>(),
       ),
 
+      // video call
+      BlocProvider(
+        create: (_) => serviceLocator<VideoCallUserHandleBloc>(),
+      ),
       BlocProvider(
         create: (_) => serviceLocator<VideoCallHandleCubit>(),
       ),
