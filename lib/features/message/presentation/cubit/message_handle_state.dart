@@ -47,7 +47,7 @@ class MessageHandleState extends Equatable {
 
   MessageHandleState clear() {
     return MessageHandleState(
-      chatId: '',
+      chatId: chatId,
       messageReply: null,
       messageActive: null,
       messageReplyActive: null,

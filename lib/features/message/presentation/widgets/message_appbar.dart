@@ -2,6 +2,7 @@ import 'package:chat_app_flutter/core/utils/chat_global_utils.dart';
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/message/presentation/bloc/chat_info_view/chat_info_view_bloc.dart';
+import 'package:chat_app_flutter/features/video_call/presentation/screen/video_call_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,6 +89,19 @@ class _MessageAppbarState extends State<MessageAppbar> {
                 ),
               ),
               centerTitle: false,
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      VideoCallScreen.route(widget.chatId),
+                    );
+                  },
+                  child: Icon(
+                    Icons.video_call,
+                  ),
+                )
+              ],
             ),
           );
         }
