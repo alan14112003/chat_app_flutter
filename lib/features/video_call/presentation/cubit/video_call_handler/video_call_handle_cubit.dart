@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:chat_app_flutter/core/common/models/renderer.dart';
+import 'package:chat_app_flutter/core/constants/video_call_state_enum.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_ion/flutter_ion.dart';
 
@@ -56,6 +57,25 @@ class VideoCallHandleCubit extends Cubit<VideoCallHandleState> {
       showLocalRenderer: true,
       remoteRenderers: [],
       roomId: '',
+      videoCallState: VideoCallStateEnum.UNKNOWN,
+    ));
+  }
+
+  void receiveRequesVideoCall(
+    String roomId,
+    int videoCallState,
+  ) {
+    emit(state.copyWith(
+      roomId: roomId,
+      videoCallState: videoCallState,
+    ));
+  }
+
+  void setVideoCallState(
+    int videoCallState,
+  ) {
+    emit(state.copyWith(
+      videoCallState: videoCallState,
     ));
   }
 }

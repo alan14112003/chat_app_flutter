@@ -5,29 +5,27 @@ import 'package:chat_app_flutter/features/video_call/domain/repositories/video_c
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
-class JoinVideoCallParams {
+class CloseVideoCallParams {
   final String chatId;
 
-  JoinVideoCallParams({
+  CloseVideoCallParams({
     required this.chatId,
   });
 }
 
-class JoinVideoCall implements UseCase<int, JoinVideoCallParams> {
+class CloseVideoCall implements UseCase<void, CloseVideoCallParams> {
   final VideoCallRepository _videoCallRepository;
 
-  JoinVideoCall({
+  CloseVideoCall({
     required VideoCallRepository videoCallRepository,
   }) : _videoCallRepository = videoCallRepository;
 
   @override
-  Future<Either<Failure, int>> call(JoinVideoCallParams params) async {
+  Future<Either<Failure, void>> call(CloseVideoCallParams params) async {
     try {
-      final videoCallState = await _videoCallRepository.joinVideoCall(
-        params.chatId,
-      );
+      await _videoCallRepository.closeVideoCall(params.chatId);
 
-      return right(videoCallState);
+      return right(null);
     } on DioException catch (e) {
       return HandleErrorDio.call(e);
     } catch (e) {

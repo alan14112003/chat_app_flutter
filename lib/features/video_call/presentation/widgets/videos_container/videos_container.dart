@@ -1,8 +1,8 @@
 import 'package:chat_app_flutter/core/common/models/renderer.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/cubit/video_call_handler/video_call_handle_cubit.dart';
+import 'package:chat_app_flutter/features/video_call/presentation/widgets/videos_container/widgets/video_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 class VideosContainer extends StatelessWidget {
   const VideosContainer({
@@ -81,7 +81,7 @@ class VideosContainer extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
-      child: _buildVideoContainer(remoteRenderers, index),
+      child: VideoElement(renderer: remoteRenderers[index]),
     );
   }
 
@@ -90,47 +90,8 @@ class VideosContainer extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(2.0),
-        child: _buildVideoContainer(remoteRenderers, index),
+        child: VideoElement(renderer: remoteRenderers[index]),
       ),
-    );
-  }
-
-  // Widget hiển thị tên
-  Widget _buildVideoContainer(List<Renderer> remoteRenderers, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: [
-            Colors.white.withValues(alpha: 0.2),
-            Colors.white.withValues(alpha: 0.1),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.3),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blueAccent.withValues(alpha: 0.2),
-            blurRadius: 20,
-            spreadRadius: -5,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            if (remoteRenderers[index].videoRenderer != null)
-              Expanded(
-                child: RTCVideoView(remoteRenderers[index].videoRenderer!),
-              ),
-            Text(remoteRenderers[index].name),
-          ],
-        ),
-      ), // Hiển thị tên
     );
   }
 }

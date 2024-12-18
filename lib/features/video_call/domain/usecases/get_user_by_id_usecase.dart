@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/core/common/models/user.dart';
 import 'package:chat_app_flutter/core/error/failures.dart';
 import 'package:chat_app_flutter/core/error/handle_error_dio.dart';
 import 'package:chat_app_flutter/core/usecase/usecase.dart';
@@ -5,29 +6,27 @@ import 'package:chat_app_flutter/features/video_call/domain/repositories/video_c
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
-class JoinVideoCallParams {
-  final String chatId;
+class GetUserByIdUsecaseParams {
+  final String userId;
 
-  JoinVideoCallParams({
-    required this.chatId,
+  GetUserByIdUsecaseParams({
+    required this.userId,
   });
 }
 
-class JoinVideoCall implements UseCase<int, JoinVideoCallParams> {
+class GetUserByIdUsecase implements UseCase<User, GetUserByIdUsecaseParams> {
   final VideoCallRepository _videoCallRepository;
 
-  JoinVideoCall({
+  GetUserByIdUsecase({
     required VideoCallRepository videoCallRepository,
   }) : _videoCallRepository = videoCallRepository;
 
   @override
-  Future<Either<Failure, int>> call(JoinVideoCallParams params) async {
+  Future<Either<Failure, User>> call(GetUserByIdUsecaseParams params) async {
     try {
-      final videoCallState = await _videoCallRepository.joinVideoCall(
-        params.chatId,
-      );
+      final user = await _videoCallRepository.getUserById(params.userId);
 
-      return right(videoCallState);
+      return right(user);
     } on DioException catch (e) {
       return HandleErrorDio.call(e);
     } catch (e) {

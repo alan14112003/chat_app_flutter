@@ -1,8 +1,10 @@
 import 'package:chat_app_flutter/core/common/models/renderer.dart';
 import 'package:chat_app_flutter/core/utils/auth_global_utils.dart';
+import 'package:chat_app_flutter/features/video_call/presentation/bloc/video_call_user_handle/video_call_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/cubit/video_call_handler/video_call_handle_cubit.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/widgets/actions_handler/actions_handler.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/widgets/videos_container/videos_container.dart';
+import 'package:chat_app_flutter/features/video_call/utils/video_call_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -161,6 +163,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   void deactivate() {
     super.deactivate();
     context.read<VideoCallHandleCubit>().cleanData();
+
+    VideoCallUtil.stopNotificationSound();
+    context
+        .read<VideoCallUserHandleBloc>()
+        .add(CloseVideoCallEvent(chatId: widget.roomId));
   }
 
   @override

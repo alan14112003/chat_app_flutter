@@ -22,3 +22,19 @@ class RefuseVideoCallEvent extends VideoCallUserHandleEvent {
     required this.chatId,
   });
 }
+
+class CloseVideoCallEvent extends VideoCallUserHandleEvent {
+  final String chatId;
+
+  const CloseVideoCallEvent({
+    required this.chatId,
+  });
+}
+
+class GetUserByIdEvent extends VideoCallUserHandleEvent {
+  final String userId;
+
+  const GetUserByIdEvent({
+    required this.userId,
+  });
+}

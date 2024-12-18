@@ -92,6 +92,11 @@ class _MessageAppbarState extends State<MessageAppbar> {
               centerTitle: false,
               actions: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: Colors.transparent, // Loại bỏ hiệu ứng bóng
+                    elevation: 0, // Loại bỏ độ nổi
+                    shape: const CircleBorder(),
+                  ),
                   onPressed: () {
                     context
                         .read<VideoCallUserHandleBloc>()
@@ -102,7 +107,8 @@ class _MessageAppbarState extends State<MessageAppbar> {
                     );
                   },
                   child: Icon(
-                    Icons.video_call,
+                    Icons.video_call_rounded,
+                    size: 32,
                   ),
                 )
               ],

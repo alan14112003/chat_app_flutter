@@ -6,6 +6,7 @@ import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen
 import 'package:chat_app_flutter/features/chat/presentation/screens/chat_screen.dart';
 import 'package:chat_app_flutter/features/message/events/message_event_socket.dart';
 import 'package:chat_app_flutter/features/video_call/events/video_call_event_socket.dart';
+import 'package:chat_app_flutter/features/video_call/presentation/widgets/listen_video_call_user_handle_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -54,7 +55,9 @@ class _AppState extends State<App> {
                   instant: serviceLocator<VideoCallEventSocket>(),
                 )
               ],
-              child: const ChatScreen(),
+              child: ListenVideoCallUserHandleState(
+                child: const ChatScreen(),
+              ),
             );
           } else if (state is Unauthenticated) {
             // Trạng thái chưa đăng nhập, hiển thị màn hình Login

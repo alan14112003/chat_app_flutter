@@ -6,4 +6,5 @@ class ChatEventEnum {
   static const String VIDEO_CALL_JOIN = '$_eventName:video_call_join';
   static const String VIDEO_CALL_REFUSE = '$_eventName:video_call_refuse';
   static const String VIDEO_CALL_TERMINATE = '$_eventName:video_call_terminate';
+  static const String VIDEO_CALL_CLOSE = '$_eventName:video_call_close';
 }
