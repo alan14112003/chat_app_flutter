@@ -1,6 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:chat_app_flutter/core/common/cubit/app_lifecycle_impl/app_lifecycle_impl_cubit.dart';
 import 'package:chat_app_flutter/core/common/socket/socket_builder.dart';
 import 'package:chat_app_flutter/core/constants/chat_event_enum.dart';
 import 'package:chat_app_flutter/core/constants/video_call_state_enum.dart';
+import 'package:chat_app_flutter/core/utils/local_notifications.dart';
 import 'package:chat_app_flutter/core/utils/show_snack_bar.dart';
 import 'package:chat_app_flutter/features/message/presentation/screens/message_screen.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/cubit/video_call_handler/video_call_handle_cubit.dart';
@@ -12,6 +17,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 class VideoCallEventSocket extends SocketListener {
   final Socket _socket;
+  Timer? _timer;
 
   VideoCallEventSocket({
     required Socket socket,
@@ -70,12 +76,61 @@ class VideoCallEventSocket extends SocketListener {
     return (data) {
       final [roomId, body] = data as List;
       final videoCallHandleState = context.read<VideoCallHandleCubit>().state;
+      final videoCallId = 'video-call-$roomId'.hashCode;
+
       if (videoCallHandleState.roomId.isNotEmpty) {
         return;
       }
+
       context
           .read<VideoCallHandleCubit>()
           .receiveRequesVideoCall(roomId, VideoCallStateEnum.REQUEST);
+
+      // Phát âm thanh lặp lại khi vào màn hình
+      VideoCallUtil.notifyCallSoundStart();
+
+      // Tự động quay lại màn hình trước đó sau 30 giây
+      _timer = Timer(const Duration(seconds: 30), () {
+        if (VideoCallUtil.isPlaying) {
+          VideoCallUtil.stopNotificationSound();
+
+          context.read<VideoCallHandleCubit>().setRoomId('');
+          context
+              .read<VideoCallHandleCubit>()
+              .setVideoCallState(VideoCallStateEnum.UNKNOWN);
+
+          final AppLifecycleState appLifecycleState =
+              context.read<AppLifecycleImplCubit>().state.state;
+          if (appLifecycleState == AppLifecycleState.resumed) {
+            Navigator.of(context).pop(); // Quay lại màn hình trước đó
+          }
+
+          LocalNotifications.hideNotify(id: videoCallId);
+        }
+      });
+
+      // kiểm tra thao tác hiển thị thông báo hoặc hiển thị màn hình
+      final AppLifecycleState appLifecycleState =
+          context.read<AppLifecycleImplCubit>().state.state;
+
+      if (appLifecycleState == AppLifecycleState.paused) {
+        Map<String, dynamic> payload = {
+          "body": body as Map<String, dynamic>,
+          "roomId": roomId,
+        };
+
+        String payloadJson = jsonEncode(payload);
+
+        LocalNotifications.showNotify(
+          id: videoCallId,
+          title: 'Cuộc gọi đến ',
+          content:
+              '${body['sender']} đã gọi ${body['isGroup'] as bool ? 'đến nhóm ${body['groupName']}' : 'cho bạn'}',
+          payload: 'video_call@:$payloadJson',
+        );
+
+        return;
+      }
 
       Navigator.push(
         context,
@@ -184,9 +239,26 @@ class VideoCallEventSocket extends SocketListener {
       }
 
       if (videoCallHandleState.videoCallState == VideoCallStateEnum.REQUEST) {
-        // bật âm thanh thông báo
         VideoCallUtil.stopNotificationSound();
         VideoCallUtil.terminateCallSoundStart();
+
+        // kiểm tra thao tác hiển thị thông báo hoặc hiển thị màn hình
+        final AppLifecycleState appLifecycleState =
+            context.read<AppLifecycleImplCubit>().state.state;
+
+        if (_timer != null) {
+          _timer!.cancel();
+        }
+
+        if (appLifecycleState == AppLifecycleState.paused) {
+          final videoCallId = 'video-call-$roomId'.hashCode;
+          LocalNotifications.hideNotify(id: videoCallId);
+          context.read<VideoCallHandleCubit>().setRoomId('');
+          context
+              .read<VideoCallHandleCubit>()
+              .setVideoCallState(VideoCallStateEnum.UNKNOWN);
+          return;
+        }
 
         Navigator.pushReplacement(
           context,

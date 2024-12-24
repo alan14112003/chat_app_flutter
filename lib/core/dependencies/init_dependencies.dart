@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/core/common/cubit/app_lifecycle_impl/app_lifecycle_impl_cubit.dart';
 import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:chat_app_flutter/core/common/data/repositories/upload_file_repository_impl.dart';
 import 'package:chat_app_flutter/core/common/data/sources/upload_file_data_source.dart';
@@ -47,6 +48,10 @@ Future<void> initDependencies() async {
 
   serviceLocator.registerFactory(
     () => BottomNavigationCubit(),
+  );
+
+  serviceLocator.registerFactory(
+    () => AppLifecycleImplCubit(),
   );
 
   serviceLocator.registerSingleton<GlobalKey<NavigatorState>>(

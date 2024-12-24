@@ -54,4 +54,6 @@ class VideoCallUtil {
     _path = VideoCallSoundEnum.notify1.path;
     _startNotificationSound(true);
   }
+
+  static bool get isPlaying => _isPlaying;
 }

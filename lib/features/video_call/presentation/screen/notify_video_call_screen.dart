@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chat_app_flutter/core/constants/video_call_state_enum.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/bloc/video_call_user_handle/video_call_user_handle_bloc.dart';
 import 'package:chat_app_flutter/features/video_call/presentation/cubit/video_call_handler/video_call_handle_cubit.dart';
@@ -29,21 +27,11 @@ class NotifyVideoCallScreen extends StatefulWidget {
 }
 
 class _NotifyVideoCallScreenState extends State<NotifyVideoCallScreen> {
-  late Timer _timer;
   bool _isActiveCall = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Phát âm thanh lặp lại khi vào màn hình
-    VideoCallUtil.notifyCallSoundStart();
-
-    // Tự động quay lại màn hình trước đó sau 30 giây
-    _timer = Timer(const Duration(seconds: 30), () {
-      VideoCallUtil.stopNotificationSound();
-      Navigator.of(context).pop(); // Quay lại màn hình trước đó
-    });
   }
 
   @override
@@ -63,7 +51,6 @@ class _NotifyVideoCallScreenState extends State<NotifyVideoCallScreen> {
   void dispose() {
     VideoCallUtil.stopNotificationSound(); // Dừng âm thanh khi màn hình bị hủy
 
-    _timer.cancel(); // Hủy Timer khi màn hình bị hủy
     super.dispose();
   }
 

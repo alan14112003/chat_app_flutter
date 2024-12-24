@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/app.dart';
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
+import 'package:chat_app_flutter/core/common/cubit/app_lifecycle_impl/app_lifecycle_impl_cubit.dart';
 import 'package:chat_app_flutter/core/common/cubit/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/core/utils/local_notifications.dart';
@@ -95,6 +96,10 @@ void main() async {
 
       BlocProvider(
         create: (_) => serviceLocator<BottomNavigationCubit>(),
+      ),
+
+      BlocProvider(
+        create: (_) => serviceLocator<AppLifecycleImplCubit>(),
       ),
 
       // video call

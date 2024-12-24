@@ -1,5 +1,6 @@
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_cubit.dart';
 import 'package:chat_app_flutter/core/common/cubit/app_auth/app_auth_state.dart';
+import 'package:chat_app_flutter/core/common/cubit/app_lifecycle_impl/app_lifecycle_impl_cubit.dart';
 import 'package:chat_app_flutter/core/common/socket/socket_builder.dart';
 import 'package:chat_app_flutter/core/dependencies/init_dependencies.dart';
 import 'package:chat_app_flutter/features/auth/presentation/screens/login_screen.dart';
@@ -18,11 +19,15 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with WidgetsBindingObserver {
   final Socket _socket = serviceLocator<Socket>();
+
   @override
   void initState() {
     super.initState();
+
+    // Đăng ký lắng nghe trạng thái vòng đời ứng dụng
+    WidgetsBinding.instance.addObserver(this);
 
     // connect socket
     _socket.onConnect((_) {
@@ -31,6 +36,37 @@ class _AppState extends State<App> {
 
     // call check authentication
     context.read<AppAuthCubit>().checkUserLoggedIn();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // In trạng thái hiện tại ra console
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("Ứng dụng đang hiển thị (resumed).");
+        break;
+      case AppLifecycleState.inactive:
+        print("Ứng dụng đang không hoạt động (inactive).");
+        break;
+      case AppLifecycleState.paused:
+        print("Ứng dụng đang chạy nền (paused).");
+        break;
+      case AppLifecycleState.detached:
+        print("Ứng dụng đã bị đóng hoặc tách khỏi giao diện (detached).");
+        break;
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
+        print("Không có state.");
+    }
+
+    context.read<AppLifecycleImplCubit>().setState(state);
+  }
+
+  @override
+  void dispose() {
+    // Hủy đăng ký khi không cần lắng nghe nữa
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
